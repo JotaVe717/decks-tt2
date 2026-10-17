@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia de Nivelamento de Decks - Tap Titans 2</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    body {
+      background-color: #0f141c;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+      min-height: 100vh;
+    }
+    .back-btn {
+      align-self: flex-start;
+      max-width: 580px;
+      margin: 0 auto 16px auto;
+      width: 100%;
+      text-decoration: none;
+      color: #8fa0b5;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-block;
+      transition: color 0.2s;
+    }
+    .back-btn:hover {
+      color: #f5a623;
+    }
+    .container {
+      width: 100%;
+      max-width: 580px;
+      background: #18202a;
+      border: 2px solid #283545;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    .title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .title span {
+      color: #f5a623;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #8fa0b5;
+      margin-bottom: 20px;
+    }
+
+    /* CONTROLE INTERATIVO DO NÍVEL BASE */
+    .base-input-box {
+      background: #212c3a;
+      border: 1px solid #3c4f66;
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 22px;
+    }
+    .base-input-box label {
+      font-size: 13px;
+      font-weight: 700;
+      color: #e2b4f7;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .base-input-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .base-input-wrapper input {
+      width: 80px;
+      background: #121921;
+      border: 2px solid #8e44ad;
+      color: #ffffff;
+      font-size: 16px;
+      font-weight: 800;
+      text-align: center;
+      padding: 6px 8px;
+      border-radius: 6px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .base-input-wrapper input:focus {
+      border-color: #f5a623;
+    }
+
+    /* REGRAS DE COMPOSIÇÃO */
+    .section-title {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      color: #50e3c2;
+    }
+    .rules-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 26px;
+    }
+    .rule-card {
+      background: #212c3a;
+      border: 1px solid #324357;
+      border-radius: 8px;
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      text-align: center;
+    }
+    .slot {
+      padding: 8px 4px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      border-right: 1px solid #283545;
+    }
+    .slot:last-child {
+      border-right: none;
+    }
+    .slot-type {
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 3px 2px;
+      border-radius: 4px;
+      color: #ffffff;
+    }
+    .slot-diff {
+      font-size: 11px;
+      font-weight: 600;
+      color: #8fa0b5;
+    }
+    .slot-val {
+      font-size: 15px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+
+    /* CORES POR CATEGORIA */
+    .bg-dano { background: #e74c3c; }
+    .bg-buff { background: #27ae60; }
+    .bg-efeito { background: #2980b9; }
+    .bg-especifico { background: #576574; }
+
+    /* SEÇÃO DE CLASSIFICAÇÃO DE CARTAS */
+    .classes-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .class-group {
+      background: #212c3a;
+      border: 1px solid #324357;
+      border-radius: 10px;
+      padding: 12px;
+    }
+    .class-header {
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .class-header span.tag {
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+    }
+    .cards-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+    }
+    .card-thumb {
+      width: 38px;
+      height: 38px;
+      border-radius: 6px;
+      object-fit: cover;
+      border: 1.5px solid #3b4d63;
+      background: #121921;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .card-thumb:hover {
+      transform: scale(1.15);
+      border-color: #f5a623;
+    }
+    .specific-note {
+      font-size: 12px;
+      color: #b0c0d0;
+      margin-left: 6px;
+      font-style: italic;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .specific-note img {
+      width: 20px;
+      height: 20px;
+      border-radius: 4px;
+      vertical-align: middle;
+    }
+
+    /* AJUSTES RESPONSIVOS PARA MOBILE */
+    @media (max-width: 540px) {
+      body {
+        padding: 16px 10px;
+      }
+      .container {
+        padding: 16px 12px;
+        border-radius: 12px;
+      }
+      .title {
+        font-size: 18px;
+        margin-bottom: 4px;
+      }
+      .subtitle {
+        font-size: 12px;
+        margin-bottom: 16px;
+      }
+      .base-input-box {
+        padding: 10px 12px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      .base-input-wrapper {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .base-input-wrapper input {
+        width: 100px;
+      }
+      .card-thumb {
+        width: 34px;
+        height: 34px;
+      }
+      .slot {
+        padding: 6px 2px;
+      }
+      .slot-type {
+        font-size: 9px;
+      }
+      .slot-diff {
+        font-size: 10px;
+      }
+      .slot-val {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back-btn">&larr; Voltar ao Menu</a>
+
+  <div class="container">
+    <div class="title">Nivelamento de <span>Decks de Raid</span></div>
+    <div class="subtitle">Equilíbrio ideal de nível das cartas baseado na composição do deck</div>
+
+    <!-- CAMPO DO NÍVEL BASE -->
+    <div class="base-input-box">
+      <label for="baseLevel">Seu Nível Base:</label>
+      <div class="base-input-wrapper">
+        <input type="number" id="baseLevel" value="60" min="1" max="100">
+      </div>
+    </div>
+
+    <!-- REGRAS DE COMPOSIÇÃO -->
+    <div class="section-title">Composições de Deck & Níveis Sugeridos</div>
+    
+    <div class="rules-grid">
+      <!-- REGRA 1: Dano (+10) / Buff (Base) / Efeito Fixo (-20) -->
+      <div class="rule-card">
+        <div class="slot">
+          <div class="slot-type bg-dano">Dano</div>
+          <div class="slot-diff">+10 Níveis</div>
+          <div class="slot-val" data-calc="base + 10">70</div>
+        </div>
+        <div class="slot">
+          <div class="slot-type bg-buff">Buff</div>
+          <div class="slot-diff">Nível Base</div>
+          <div class="slot-val" data-calc="base">60</div>
+        </div>
+        <div class="slot">
+          <div class="slot-type bg-efeito">Efeito Fixo</div>
+          <div class="slot-diff">-20 Níveis</div>
+          <div class="slot-val" data-calc="base - 20">40</div>
+        </div>
+      </div>
+
+      <!-- REGRA 2: Dano (-10) / Dano (-10) / Buff (+10) -->
+      <div class="rule-card">
+        <div class="slot">
+          <div class="slot-type bg-dano">Dano</div>
+          <div class="slot-diff">-10 Níveis</div>
+          <div class="slot-val" data-calc="base - 10">50</div>
+        </div>
+        <div class="slot">
+          <div class="slot-type bg-dano">Dano</div>
+          <div class="slot-diff">-10 Níveis</div>
+          <div class="slot-val" data-calc="base - 10">50</div>
+        </div>
+        <div class="slot">
+          <div class="slot-type bg-buff">Buff</div>
+          <div class="slot-diff">+10 Níveis</div>
+          <div class="slot-val" data-calc="base + 10">70</div>
+        </div>
+      </div>
+
+      <!-- REGRA 3: Dano (+10) / Buff (-10) / Buff (-10) -->
+      <div class="rule-card">
+        <div class="slot">
+          <div class="slot-type bg-dano">Dano</div>
+          <div class="slot-diff">+10 Níveis</div>
+          <div class="slot-val" data-calc="base + 10">70</div>
+        </div>
+        <div class="slot">
+          <div class="slot-type bg-buff">Buff</div>
+          <div class="slot-diff">-10 Níveis</div>
+          <div class="slot-val" data-calc="base - 10">50</div>
+        </div>
+        <div class="slot">
+          <div class="slot-type bg-buff">Buff</div>
+          <div class="slot-diff">-10 Níveis</div>
+          <div class="slot-val" data-calc="base - 10">50</div>
+        </div>
+      </div>
+
+      <!-- REGRA 4: Dano (+10) / Efeito Fixo (-10) / Efeito Fixo (-10) -->
+      <div class="rule-card">
+        <div class="slot">
+          <div class="slot-type bg-dano">Dano</div>
+          <div class="slot-diff">+10 Níveis</div>
+          <div class="slot-val" data-calc="base + 10">70</div>
+        </div>
+        <div class="slot">
+          <div class="slot-type bg-efeito">Efeito Fixo</div>
+          <div class="slot-diff">-10 Níveis</div>
+          <div class="slot-val" data-calc="base - 10">50</div>
+        </div>
+        <div class="slot">
+          <div class="slot-type bg-efeito">Efeito Fixo</div>
+          <div class="slot-diff">-10 Níveis</div>
+          <div class="slot-val" data-calc="base - 10">50</div>
+        </div>
+      </div>
+
+      <!-- REGRA 5: Dano (+10) / Específico (20 fixo) / Buff (+10) -->
+      <div class="rule-card">
+        <div class="slot">
+          <div class="slot-type bg-dano">Dano</div>
+          <div class="slot-diff">+10 Níveis</div>
+          <div class="slot-val" data-calc="base + 10">70</div>
+        </div>
+        <div class="slot">
+          <div class="slot-type bg-especifico">Específico</div>
+          <div class="slot-diff">-30 (Mín. 20)</div>
+          <div class="slot-val" data-calc="especifico">20</div>
+        </div>
+        <div class="slot">
+          <div class="slot-type bg-buff">Buff</div>
+          <div class="slot-diff">+10 Níveis</div>
+          <div class="slot-val" data-calc="base + 10">70</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CLASSIFICAÇÃO DE CADA CARTA -->
+    <div class="section-title">Classificação das Cartas</div>
+    
+    <div class="classes-wrapper">
+      
+      <!-- DANO -->
+      <div class="class-group">
+        <div class="class-header">
+          <span class="tag bg-dano">Dano</span>
+          Cartas Atacantes / Explosão / Aflição
+        </div>
+        <div class="cards-row">
+          <img src="Cards/33 - MirrorForce.png" class="card-thumb" alt="Mirror Force" title="Mirror Force">
+          <img src="Cards/8 - barragem do clã.png" class="card-thumb" alt="Barragem do Clã" title="Barragem do Clã">
+          <img src="Cards/35 - CelestialStatic.png" class="card-thumb" alt="Celestial Static" title="Celestial Static">
+          <img src="Cards/wol.png" class="card-thumb" alt="Whip of Lightning" title="Whip of Lightning">
+          <img src="Cards/34 - ChainLightning.png" class="card-thumb" alt="Chain Lightning" title="Chain Lightning">
+          <img src="Cards/11 - flak.png" class="card-thumb" alt="Flak Shot" title="Flak Shot">
+          <img src="Cards/29 - moon beam.png" class="card-thumb" alt="Moon Beam" title="Moon Beam">
+          <img src="Cards/22 - skull bash.png" class="card-thumb" alt="Skull Bash" title="Skull Bash">
+          <img src="Cards/12 - frag.png" class="card-thumb" alt="Fragmentize" title="Fragmentize">
+          <img src="Cards/21 - razor wind.png" class="card-thumb" alt="Razor Wind" title="Razor Wind">
+          <img src="Cards/24 - Psychic_Chain.png" class="card-thumb" alt="Psychic Chain" title="Psychic Chain">
+          <img src="Cards/pb.png" class="card-thumb" alt="Carta Dano" title="Carta Dano">
+          <img src="Cards/6 - haymaker.png" class="card-thumb" alt="Haymaker" title="Haymaker">
+          <img src="Cards/zz.jpg" class="card-thumb" alt="Crushing Instinct" title="Crushing Instinct">
+          <img src="Cards/31 - RuinousRust.png" class="card-thumb" alt="Ruinous Rust" title="Ruinous Rust">
+          <img src="Cards/26 - lfq03KF.png" class="card-thumb" alt="Thriving Plague" title="Thriving Plague">
+          <img src="Cards/13 - Bqn8Pri.png" class="card-thumb" alt="Carta Dano" title="Carta Dano">
+          <img src="Cards/19 - 7xV2uQz.png" class="card-thumb" alt="Radioactivity" title="Radioactivity">
+          <img src="Cards/4 - inferno.png" class="card-thumb" alt="Blazing Inferno" title="Blazing Inferno">
+          <img src="Cards/10 - GPtmrPN.png" class="card-thumb" alt="Decaying Strike" title="Decaying Strike">
+          <img src="Cards/16 - Ravenous_Swarm.png" class="card-thumb" alt="Ravenous Swarm" title="Ravenous Swarm">
+          <img src="Cards/37 - PowerBubble-300x300.png" class="card-thumb" alt="Corrosive Bubbles" title="Corrosive Bubbles">
+          <img src="Cards/14 - jbnuVrr.png" class="card-thumb" alt="Grim Shadow" title="Grim Shadow">
+          <img src="Cards/1 - acid.png" class="card-thumb" alt="Acid Drench" title="Acid Drench">
+          <img src="Cards/am.jpg" class="card-thumb" alt="Prismatic Rift" title="Amplify">
+        </div>
+      </div>
+
+      <!-- BUFF -->
+      <div class="class-group">
+        <div class="class-header">
+          <span class="tag bg-buff">Buff</span>
+          Cartas de Amplificação de Dano
+        </div>
+        <div class="cards-row">
+          <img src="Cards/27 - EHwr8tt.png" class="card-thumb" alt="Inspiring Force" title="Inspiring Force">
+          <img src="Cards/15 - PlP9PeN.png" class="card-thumb" alt="Radiant Kaleidoscope" title="Radiant Kaleidoscope">
+          <img src="Cards/5 - maelstrom.png" class="card-thumb" alt="Maelstrom" title="Maelstrom">
+          <img src="Cards/41 - guard break.png" class="card-thumb" alt="Guard Break" title="Guard Break">
+          <img src="Cards/25 - Totem_of_Power.png" class="card-thumb" alt="Totem of Power" title="Totem of Power">
+          <img src="Cards/9 - martelo.png" class="card-thumb" alt="Martelo" title="Martelo">
+          <img src="Cards/23 - HzJvo3G.png" class="card-thumb" alt="Buff de Peito" title="Buff de Peito">
+          <img src="Cards/rk.png" class="card-thumb" alt="Triangle Support" title="Triangle Support">
+          <img src="Cards/32 - smash.png" class="card-thumb" alt="Smash" title="Smash">
+          <img src="Cards/36 - astral echo.png" class="card-thumb" alt="Astral Echo" title="Astral Echo">
+          <img src="Cards/30 - TeamTactics.png" class="card-thumb" alt="Team Tactics" title="Team Tactics">
+        </div>
+      </div>
+
+      <!-- EFEITO FIXO -->
+      <div class="class-group">
+        <div class="class-header">
+          <span class="tag bg-efeito">Efeito Fixo</span>
+          Cartas com Escala Reduzida ou Bônus Fixo
+        </div>
+        <div class="cards-row">
+          <img src="Cards/3 - ancestral.png" class="card-thumb" alt="Ancestral Favor" title="Ancestral Favor">
+          <img src="Cards/rg.png" class="card-thumb" alt="Efeito Fixo" title="Efeito Fixo">
+          <img src="Cards/36 - astral echo.png" class="card-thumb" alt="Efeito Fixo" title="Efeito Fixo">
+          <img src="Cards/30 - TeamTactics.png" class="card-thumb" alt="Team Tactics" title="Team Tactics">
+        </div>
+      </div>
+
+      <!-- ESPECÍFICO -->
+      <div class="class-group">
+        <div class="class-header">
+          <span class="tag bg-especifico">Específico</span>
+          Casos Especiais de Sinergia
+        </div>
+        <div class="cards-row">
+          <img src="Cards/40 - ampulheta.png" class="card-thumb" alt="Ampulheta" title="Ampulheta">
+          <span class="specific-note">
+            (carta de <img src="Cards/a.png" alt="Aflição"> que coopera com <img src="Cards/pb.png" alt="Whip">)
+          </span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const baseInput = document.getElementById('baseLevel');
+    const calcSlots = document.querySelectorAll('.slot-val');
+
+    function updateLevels() {
+      let base = parseInt(baseInput.value, 10);
+      if (isNaN(base)) base = 0;
+
+      calcSlots.forEach(slot => {
+        const formula = slot.getAttribute('data-calc');
+        if (formula === 'especifico') {
+          slot.textContent = Math.max(20, base - 30);
+        } else if (formula === 'base') {
+          slot.textContent = Math.max(0, base);
+        } else if (formula === 'base + 10') {
+          slot.textContent = Math.max(0, base + 10);
+        } else if (formula === 'base - 10') {
+          slot.textContent = Math.max(0, base - 10);
+        } else if (formula === 'base - 20') {
+          slot.textContent = Math.max(0, base - 20);
+        }
+      });
+    }
+
+    baseInput.addEventListener('input', updateLevels);
+    updateLevels();
+  </script>
+
+</body>
+</html>
