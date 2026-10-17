@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Como Montar seu Deck de Plague</title>
+  <title>Como Montar seu Deck de Foguetes</title>
   <style>
     * {
       box-sizing: border-box;
@@ -137,6 +137,15 @@
       border: 1px solid #324357;
       letter-spacing: 0.5px;
     }
+    .footer-note {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 13px;
+      color: #ff9f43;
+      font-weight: 600;
+      padding-top: 14px;
+      border-top: 1px solid #283545;
+    }
 
     /* AJUSTES RESPONSIVOS PARA DISPOSITIVOS MÓVEIS */
     @media (max-width: 540px) {
@@ -173,15 +182,20 @@
         height: 20px;
       }
       .tree-lines::before {
-        display: none; /* Oculta a linha ramificada no ecrã estreito */
+        display: none;
       }
       .columns {
-        flex-direction: column; /* Empilha as secções verticalmente */
+        flex-direction: column;
         gap: 16px;
       }
       .col-header {
         font-size: 13px;
         padding: 6px 8px;
+      }
+      .footer-note {
+        font-size: 12px;
+        margin-top: 16px;
+        padding-top: 12px;
       }
     }
   </style>
@@ -191,14 +205,14 @@
   <a href="index.html" class="back-btn">&larr; Voltar ao Menu</a>
 
   <div class="container">
-    <div class="title">COMO MONTAR <span>SEU DECK DE PLAGUE</span></div>
+    <div class="title">COMO MONTAR <span>SEU DECK DE FOGUETES</span></div>
 
     <!-- 1. CARTA PRINCIPAL -->
     <div class="card-box main-card">
-      <img src="Cards/26 - lfq03KF.png" class="card-img" alt="Plague">
+      <img src="Cards/8 - barragem do clã.png" class="card-img" alt="Barragem do Clã">
       <div class="card-info">
-        <h3 class="green">1. CARTA PRINCIPAL</h3>
-        <p><strong>PLAGUE</strong> (Obrigatória - Usar com carta de aflição + suporte)</p>
+        <h3 class="green">1. CARTA PRINCIPAL: FOGUETES</h3>
+        <p>(Obrigatória - Usar com carta de explosão + suporte/GB)</p>
       </div>
     </div>
 
@@ -208,31 +222,39 @@
     <!-- 2 E 3: COLUNAS DE APOIO E SUPORTE -->
     <div class="columns">
       
-      <!-- SLOT 2: APOIO (AFLIÇÃO) -->
+      <!-- SLOT 2: APOIO (EXPLOSÃO) -->
       <div class="col">
-        <div class="col-header">2. CARTA DE APOIO (AFLIÇÃO)</div>
+        <div class="col-header">2. CARTA DE APOIO (EXPLOSÃO)</div>
         
         <div class="card-box">
-          <img src="Cards/40 - ampulheta.png" class="card-img" alt="Ampulheta">
+          <img src="Cards/33 - MirrorForce.png" class="card-img" alt="Mirror Force">
           <div class="card-info">
-            <h3>AMPULHETA</h3>
-            <p>(Padrão / Melhor Geral)</p>
+            <h3>MIRROR FORCE</h3>
+            <p>(Uso geral / Qualquer parte)</p>
           </div>
         </div>
 
         <div class="card-box">
-          <img src="Cards/4 - inferno.png" class="card-img" alt="Inferno">
+          <img src="Cards/43 - moonstar.jpg" class="card-img" alt="Morningstar">
           <div class="card-info">
-            <h3>INFERNO</h3>
-            <p>(Se o buff for de Dano | Não upar)</p>
+            <h3>MORNINGSTAR</h3>
+            <p>(No corpo c/ 5 armaduras ativas, ou o inverso)</p>
           </div>
         </div>
 
         <div class="card-box">
-          <img src="Cards/19 - 7xV2uQz.png" class="card-img" alt="Radioactivity">
+          <img src="Cards/12 - frag.png" class="card-img" alt="Frag">
           <div class="card-info">
-            <h3>RADIOACTIVITY</h3>
-            <p>(Se o buff for de Duração/Chance | Não upar)</p>
+            <h3>FRAG</h3>
+            <p>(Contra Armadura / Alvo amaldiçoado)</p>
+          </div>
+        </div>
+
+        <div class="card-box">
+          <img src="Cards/11 - flak.png" class="card-img" alt="Flak">
+          <div class="card-info">
+            <h3>FLAK</h3>
+            <p>(Contra Armadura c/ peças expostas)</p>
           </div>
         </div>
       </div>
@@ -242,23 +264,25 @@
         <div class="col-header">3. CARTA DE SUPORTE</div>
 
         <div class="card-box">
-          <img src="Cards/iv.png" class="card-img" alt="Void">
+          <img src="Cards/3 - ancestral.png" class="card-img" alt="Ancestral">
           <div class="card-info">
-            <h3>VOID</h3>
-            <p>(Contra Corpo)</p>
+            <h3>ANCESTRAL</h3>
+            <p>(Buff geral / Todo o Titã)</p>
           </div>
         </div>
 
         <div class="card-box">
-          <img src="Cards/32 - smash.png" class="card-img" alt="Smash">
+          <img src="Cards/41 - guard break.png" class="card-img" alt="Guard Break">
           <div class="card-info">
-            <h3>SMASH</h3>
-            <p>(Contra Armadura)</p>
+            <h3>GUARD BREAK</h3>
+            <p>(Foco direto na parte atacada)</p>
           </div>
         </div>
       </div>
 
     </div>
+
+    <div class="footer-note">- Obs: Não use Flak com Guard Break</div>
   </div>
 
 </body>
