@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Membros do Clã - Tap Titans 2</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    body {
+      background-color: #0f141c;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+      min-height: 100vh;
+    }
+    .back-btn {
+      align-self: flex-start;
+      max-width: 820px;
+      margin: 0 auto 16px auto;
+      width: 100%;
+      text-decoration: none;
+      color: #8fa0b5;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-block;
+      transition: color 0.2s;
+    }
+    .back-btn:hover {
+      color: #f5a623;
+    }
+    .container {
+      width: 100%;
+      max-width: 820px;
+      background: #18202a;
+      border: 1px solid #283545;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    .title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .title span {
+      color: #f5a623;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #8fa0b5;
+      margin-bottom: 24px;
+    }
+    .layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 16px;
+    }
+    .members-col {
+      background: #212c3a;
+      border: 1px solid #324357;
+      border-radius: 10px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 520px;
+      overflow-y: auto;
+    }
+    .member-btn {
+      background: #18202a;
+      border: 1px solid #324357;
+      border-radius: 8px;
+      padding: 10px 12px;
+      color: #ffffff;
+      font-size: 13px;
+      font-weight: 600;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .member-btn:hover {
+      border-color: #f5a623;
+      background: #253344;
+    }
+    .member-btn.active {
+      border-color: #4cd964;
+      background: #1f3329;
+    }
+    .cards-col {
+      background: #212c3a;
+      border: 1px solid #324357;
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .player-header {
+      border-bottom: 1px solid #324357;
+      padding-bottom: 12px;
+      margin-bottom: 14px;
+    }
+    .player-header h3 {
+      font-size: 16px;
+      color: #f5a623;
+    }
+    .player-header p {
+      font-size: 12px;
+      color: #8fa0b5;
+      margin-top: 4px;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 10px;
+      max-height: 420px;
+      overflow-y: auto;
+    }
+    .card-item {
+      background: #18202a;
+      border: 1px solid #324357;
+      border-radius: 8px;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .card-thumb {
+      width: 36px;
+      height: 36px;
+      border-radius: 6px;
+      object-fit: cover;
+      background: #0f141c;
+      border: 1px solid #3b4d63;
+      flex-shrink: 0;
+    }
+    .card-meta span {
+      display: block;
+    }
+    .card-meta .c-name {
+      font-size: 11px;
+      color: #8fa0b5;
+      font-weight: 600;
+    }
+    .card-meta .c-lvl {
+      font-size: 13px;
+      color: #ffffff;
+      font-weight: 800;
+    }
+
+    @media (max-width: 600px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+      .members-col {
+        max-height: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back-btn">&larr; Voltar ao Menu</a>
+
+  <div class="container">
+    <div class="title">Raid Clã: <span>Cartas & Níveis</span></div>
+    <div class="subtitle">Selecione um jogador para inspecionar os níveis de cada carta</div>
+
+    <div class="layout">
+      <!-- LISTA DE JOGADORES -->
+      <div class="members-col" id="membersList">
+        <p style="color: #8fa0b5; font-size: 12px; text-align: center;">Carregando dados do clã...</p>
+      </div>
+
+      <!-- PAINEL DE CARTAS DO JOGADOR -->
+      <div class="cards-col">
+        <div class="player-header">
+          <h3 id="selectedName">Nenhum jogador selecionado</h3>
+          <p id="selectedInfo">Clique em um membro da lista para ver suas cartas.</p>
+        </div>
+        <div class="cards-grid" id="cardsGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // LENDO DIRETO DO ARQUIVO LOCAL
+    const API_URL = "cla.json";
+
+    // MAPEAMENTO PARA OS ARQUIVOS DA PASTA CARDS/
+    const CARD_IMAGES = {
+      "PurifyingBlast": "Cards/pb.png",
+      "ThrivingPlague": "Cards/tp.png",
+      "ClanShip": "Cards/cs.png",
+      "AncestralFavor": "Cards/af.png",
+      "MirrorForce": "Cards/mf.png",
+      "Void": "Cards/iv.png",
+      "Smash": "Cards/ss.png",
+      "AcidDrench": "Cards/ad.png",
+      "CorrosiveBubbles": "Cards/bb.png",
+      "MoonBeam": "Cards/bm.jpg",
+      "ChainLightning": "Cards/ch.png",
+      "CelestialStatic": "Cards/ci.png",
+      "DecayingStrike": "Cards/ds.png",
+      "FlakShot": "Cards/fb.png",
+      "Fragmentize": "Cards/fr.png",
+      "GrimShadow": "Cards/fs.png",
+      "Radioactivity": "Cards/ra.png",
+      "RavenousSwarm": "Cards/rs.png",
+      "RazorWind": "Cards/rw.png",
+      "SkullBash": "Cards/sb.png",
+      "WhipOfLightning": "Cards/wol.png",
+      "Zap": "Cards/zz.jpg",
+      "BattleDrums": "Cards/bd.jpg",
+      "GuardBreak": "Cards/gb.png",
+      "InspiringForce": "Cards/if.png",
+      "Maelstrom": "Cards/ma.png",
+      "RadiantKaleidoscope": "Cards/rk.png",
+      "TotemOfPower": "Cards/tot.png",
+      "TeamTactics": "Cards/tt.png",
+      "AstralEcho": "Cards/ae.png",
+      "Hourglass": "Cards/a.png"
+    };
+
+    let clanMembers = [];
+
+    async function carregarDadosCla() {
+      const listContainer = document.getElementById("membersList");
+      listContainer.innerHTML = '<p style="color: #8fa0b5; font-size: 12px; text-align: center;">Carregando dados do clã...</p>';
+
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+          throw new Error(`Erro ao acessar cla.json: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        // Normaliza a lista de membros vinda do JSON
+        const rawList = Array.isArray(data) ? data : (data.players || data.data || data.members || []);
+
+        clanMembers = rawList.map(m => {
+          const cardsObj = m.cards || m.card_levels || m.raid_cards || [];
+          const normalizedCards = Array.isArray(cardsObj)
+            ? cardsObj.map(c => ({
+                id: c.id || c.card_id || c.name,
+                name: c.name || c.id || c.card_id,
+                level: c.level || c.card_level || 0
+              }))
+            : Object.keys(cardsObj).map(k => ({
+                id: k,
+                name: k,
+                level: cardsObj[k]
+              }));
+
+          return {
+            name: m.name || m.player_name || m.username || "Jogador",
+            code: m.code || m.player_code || m.id || "",
+            role: m.role || "",
+            raidLevel: m.raid_level || m.raidLevel || 0,
+            cards: normalizedCards
+          };
+        });
+
+        clanMembers.sort((a, b) => a.name.localeCompare(b.name));
+        renderMembers();
+      } catch (err) {
+        console.error("Falha ao carregar cla.json:", err);
+        listContainer.innerHTML = `
+          <p style="color: #ff5e57; font-size: 12px; text-align: center; padding: 10px;">
+            Não foi possível ler o arquivo cla.json.<br>
+            <small style="color: #8fa0b5;">Confirme se o arquivo cla.json foi salvo na mesma pasta do projeto e se a página está aberta via Live Server.</small>
+          </p>
+        `;
+      }
+    }
+
+    function renderMembers() {
+      const listContainer = document.getElementById("membersList");
+      listContainer.innerHTML = "";
+
+      if (clanMembers.length === 0) {
+        listContainer.innerHTML = '<p style="color: #8fa0b5; font-size: 12px; text-align: center;">Nenhum membro encontrado no arquivo.</p>';
+        return;
+      }
+
+      clanMembers.forEach((member, index) => {
+        const btn = document.createElement("button");
+        btn.className = "member-btn";
+        btn.innerHTML = `<span>${member.name}</span><small style="color:#8fa0b5;">${member.cards.length} cartas</small>`;
+        btn.onclick = () => selectMember(member, btn);
+        listContainer.appendChild(btn);
+
+        if (index === 0) selectMember(member, btn);
+      });
+    }
+
+    function selectMember(member, btnElement) {
+      document.querySelectorAll(".member-btn").forEach(b => b.classList.remove("active"));
+      if (btnElement) btnElement.classList.add("active");
+
+      document.getElementById("selectedName").textContent = member.name;
+      document.getElementById("selectedInfo").textContent = `Código: ${member.code || "N/A"} ${member.role ? "| Cargo: " + member.role : ""} — Cartas registradas: ${member.cards.length}`;
+
+      const grid = document.getElementById("cardsGrid");
+      grid.innerHTML = "";
+
+      if (member.cards.length === 0) {
+        grid.innerHTML = '<p style="color: #6c7d93; font-size: 13px;">Sem dados de cartas registrados para este jogador.</p>';
+        return;
+      }
+
+      member.cards.forEach(card => {
+        const imgSrc = CARD_IMAGES[card.id] || "Cards/wc.png";
+        const cardBox = document.createElement("div");
+        cardBox.className = "card-item";
+        cardBox.innerHTML = `
+          <img src="${imgSrc}" class="card-thumb" alt="${card.name}">
+          <div class="card-meta">
+            <span class="c-name">${card.name}</span>
+            <span class="c-lvl">Nv. ${card.level}</span>
+          </div>
+        `;
+        grid.appendChild(cardBox);
+      });
+    }
+
+    // Inicializa a leitura
+    carregarDadosCla();
+  </script>
+</body>
+</html>
