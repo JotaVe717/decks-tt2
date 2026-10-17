@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <title>Tabela de Aflições - Tap Titans 2</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+    body {
+      background-color: #0f141c;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+      min-height: 100vh;
+    }
+    .back-btn {
+      align-self: flex-start;
+      max-width: 900px;
+      margin: 0 auto 16px auto;
+      width: 100%;
+      text-decoration: none;
+      color: #8fa0b5;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .container {
+      width: 100%;
+      max-width: 900px;
+      background: #18202a;
+      border: 1px solid #283545;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+    }
+    h1 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #f5a623;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      padding: 10px 8px;
+      text-align: center;
+      border-bottom: 1px solid #283545;
+    }
+    th {
+      background: #212c3a;
+      color: #8fa0b5;
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+    th.group-1 { color: #50e3c2; }
+    th.group-2 { color: #f5a623; }
+    tr:hover { background: #1f2a38; }
+    .card-col {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-align: left;
+    }
+    .card-img {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      border: 1px solid #3b4d63;
+      object-fit: cover;
+      background: #0f141c;
+    }
+    .unchanged { color: #6c7d93; }
+    .highlight-blue { color: #4aa3ff; font-weight: 700; }
+    .highlight-red { color: #ff5e57; font-weight: 700; }
+    .note-box {
+      margin-top: 20px;
+      padding: 12px 16px;
+      background: #212c3a;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: #b0c0d0;
+      border: 1px solid #324357;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back-btn">&larr; Voltar ao Menu</a>
+
+  <div class="container">
+    <h1>Guia de Aflições: Partes & Bónus de Dano</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th rowspan="2" style="text-align: left;">Carta</th>
+          <th rowspan="2">Dano Base</th>
+          <th colspan="3" class="group-1">Quantas partes bater?</th>
+          <th colspan="2" class="group-2">Aumento de Dano (%)</th>
+        </tr>
+        <tr>
+          <th class="group-1">Padrão</th>
+          <th class="group-1">x1.3 Chance</th>
+          <th class="group-1">+0.5 Duração</th>
+          <th class="group-2">x1.3 Chance</th>
+          <th class="group-2">+0.5 Duração</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="card-col"><img src="Cards/31 - RuinousRust.png" class="card-img" alt="Ruinous Rust"> Ruinous Rain</td>
+          <td>248M</td><td>1 parte</td><td class="unchanged">inalterado</td><td class="unchanged">inalterado</td>
+          <td class="highlight-blue">48%</td><td>0%</td>
+        </tr>
+        <tr>
+          <td class="card-col"><img src="Cards/zz.jpg" class="card-img" alt="Crushing Instinct"> Electro Zap</td>
+          <td>225M</td><td>1 parte</td><td class="unchanged">inalterado</td><td class="unchanged">inalterado</td>
+          <td>27%</td><td class="highlight-blue">43%</td>
+        </tr>
+        <tr>
+          <td class="card-col"><img src="Cards/37 - PowerBubble-300x300.png" class="card-img" alt="Corrosive Bubbles"> Corrosive Bubbles</td>
+          <td>206M</td><td>2 partes</td><td class="unchanged">inalterado</td><td class="unchanged">inalterado</td>
+          <td>28%</td><td class="highlight-red">12%</td>
+        </tr>
+        <tr>
+          <td class="card-col"><img src="Cards/1 - acid.png" class="card-img" alt="Acid Drench"> Acid Drench</td>
+          <td>220M</td><td>2 partes</td><td>3 partes</td><td>4 partes</td>
+          <td>31%</td><td>34%</td>
+        </tr>
+        <tr>
+          <td class="card-col"><img src="Cards/14 - jbnuVrr.png" class="card-img" alt="Grim Shadow"> Grim Shadow</td>
+          <td>241M</td><td>2 partes</td><td>3 partes</td><td>3 partes</td>
+          <td>26%</td><td>32%</td>
+        </tr>
+        <tr>
+          <td class="card-col"><img src="Cards/10 - GPtmrPN.png" class="card-img" alt="Decaying Strike"> Decaying Strike</td>
+          <td>264M</td><td>2 partes</td><td>3 partes</td><td>3 partes</td>
+          <td>28%</td><td class="highlight-blue">42%</td>
+        </tr>
+        <tr>
+          <td class="card-col"><img src="Cards/19 - 7xV2uQz.png" class="card-img" alt="Radioactivity"> Radioactivity</td>
+          <td>212M</td><td>4/5/6 partes</td><td>5/6/7 partes</td><td>5/6/7 partes</td>
+          <td>27%</td><td>38%</td>
+        </tr>
+        <tr>
+          <td class="card-col"><img src="Cards/am.jpg" class="card-img" alt="Prismatic Rift"> Amplify</td>
+          <td>222M</td><td>4 a 8 partes</td><td>5 a 8 partes</td><td>5 a 8 partes</td>
+          <td>27%</td><td>36%</td>
+        </tr>
+        <tr>
+          <td class="card-col"><img src="Cards/16 - Ravenous_Swarm.png" class="card-img" alt="Ravenous Swarm"> Ravenous Swarm</td>
+          <td>214M</td><td>6/7/8 partes</td><td class="unchanged">inalterado</td><td class="unchanged">inalterado</td>
+          <td>24%</td><td>33%</td>
+        </tr>
+        <tr>
+          <td class="card-col"><img src="Cards/26 - lfq03KF.png" class="card-img" alt="Thriving Plague"> Thriving Plague</td>
+          <td>200M</td><td>6/7/8 partes</td><td class="unchanged">inalterado</td><td class="unchanged">inalterado</td>
+          <td>31%</td><td class="highlight-blue">45%</td>
+        </tr>
+        <tr>
+          <td class="card-col"><img src="Cards/13 - Bqn8Pri.png" class="card-img" alt="Whip of Lightning"> Fusion Bomb</td>
+          <td>258M</td><td>6/7/8 partes</td><td class="unchanged">inalterado</td><td class="unchanged">inalterado</td>
+          <td class="highlight-red">16%</td><td>19%</td>
+        </tr>
+        <tr>
+          <td class="card-col"><img src="Cards/4 - inferno.png" class="card-img" alt="Blazing Inferno"> Blazing Inferno</td>
+          <td>232M</td><td>6/7/8 partes</td><td class="unchanged">inalterado</td><td class="unchanged">inalterado</td>
+          <td class="highlight-red">7%</td><td class="highlight-red">5%</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="note-box">
+      <img src="Cards/rg.png" class="card-img" alt="Rancid Gás">
+      <span><strong>Rancid Gás</strong> funciona de forma idêntica ao buff de Chance — também aumenta o número de partes que necessitam de ser atacadas.</span>
+    </div>
+  </div>
+
+</body>
+</html>

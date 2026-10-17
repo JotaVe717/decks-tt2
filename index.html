@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guias de Decks & Raids - Tap Titans 2</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    body {
+      background-color: #0f141c;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 40px 20px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 36px;
+    }
+    .header h1 {
+      font-size: 28px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .header h1 span {
+      color: #f5a623;
+    }
+    .header p {
+      color: #8fa0b5;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    .deck-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 900px;
+    }
+    .deck-card {
+      background: #19222d;
+      border: 1px solid #2b394a;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .deck-card:hover {
+      transform: translateY(-3px);
+      border-color: #4cd964;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+    }
+    .deck-card.highlight:hover {
+      border-color: #50e3c2;
+    }
+    .deck-thumb {
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 2px solid #3a4b60;
+      background-color: #121921;
+      flex-shrink: 0;
+    }
+    .deck-info h2 {
+      font-size: 17px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .deck-info p {
+      font-size: 12px;
+      color: #8fa0b5;
+      line-height: 1.4;
+    }
+    .deck-badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      color: #f5a623;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .deck-badge.cyan {
+      color: #50e3c2;
+    }
+    footer {
+      margin-top: auto;
+      padding-top: 40px;
+      color: #55687d;
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <h1>Guia de Decks & Raids <span>Tap Titans 2</span></h1>
+    <p>Selecione um guia ou tabela abaixo para visualizar as composições ideais e métricas de dano.</p>
+  </div>
+
+  <div class="deck-grid">
+    <!-- DECK DE PLAGUE -->
+    <a href="deck_plague.html" class="deck-card">
+      <img src="Cards/26 - lfq03KF.png" alt="Plague" class="deck-thumb">
+      <div class="deck-info">
+        <span class="deck-badge">Aflição + Suporte</span>
+        <h2>Deck de Plague</h2>
+        <p>Plague acompanhada de cartas de aflição e suporte (Void / Smash).</p>
+      </div>
+    </a>
+
+    <!-- DECK DE FOGUETES -->
+    <a href="deck_foguetes.html" class="deck-card">
+      <img src="Cards/8 - barragem do clã.png" alt="Barragem do Clã" class="deck-thumb">
+      <div class="deck-info">
+        <span class="deck-badge">Explosão + Suporte</span>
+        <h2>Deck de Foguetes</h2>
+        <p>Barragem do Clã com cartas de explosão e suporte/GB.</p>
+      </div>
+    </a>
+
+    <!-- DECK DE PURIFY -->
+    <a href="deck_purify.html" class="deck-card">
+      <img src="Cards/pb.png" alt="Purify" class="deck-thumb">
+      <div class="deck-info">
+        <span class="deck-badge">Aflição + Suporte</span>
+        <h2>Deck de Purify</h2>
+        <p>Purifying Blast com ativadores de aflição, Zap e suportes de dano.</p>
+      </div>
+    </a>
+
+    <!-- TABELA DE AFLIÇÕES -->
+    <a href="tabela_aflicoes.html" class="deck-card highlight">
+      <img src="Cards/a.png" alt="Tabela de Aflições" class="deck-thumb">
+      <div class="deck-info">
+        <span class="deck-badge cyan">Guia de Ataque</span>
+        <h2>Tabela de Aflições</h2>
+        <p>Quantas partes bater por buff (Chance / Duração) e bônus de dano de cada carta.</p>
+      </div>
+    </a>
+  </div>
+
+  <footer>
+    Guia tático de raids — Tap Titans 2
+  </footer>
+
+</body>
+</html>

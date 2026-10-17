@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Como Montar seu Deck de Plague</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Arial, sans-serif;
+    }
+    body {
+      background-color: #0f141c;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px 15px;
+      min-height: 100vh;
+    }
+    .back-btn {
+      align-self: flex-start;
+      max-width: 580px;
+      margin: 0 auto 16px auto;
+      width: 100%;
+      text-decoration: none;
+      color: #8fa0b5;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-block;
+      transition: color 0.2s;
+    }
+    .back-btn:hover {
+      color: #f5a623;
+    }
+    .container {
+      width: 100%;
+      max-width: 580px;
+      background: #18202a;
+      border: 2px solid #283545;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    }
+    .title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+    }
+    .title span {
+      color: #f5a623;
+    }
+    .card-box {
+      display: flex;
+      align-items: center;
+      background: #212c3a;
+      border: 1px solid #324357;
+      border-radius: 10px;
+      padding: 12px;
+      gap: 14px;
+    }
+    .main-card {
+      border: 1px solid #3c4f66;
+    }
+    .card-img {
+      width: 68px;
+      height: 68px;
+      border-radius: 10px;
+      object-fit: cover;
+      border: 2px solid #3b4d63;
+      background: #121921;
+      flex-shrink: 0;
+    }
+    .main-card .card-img {
+      width: 86px;
+      height: 86px;
+      border-color: #f5a623;
+    }
+    .card-info h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 4px;
+    }
+    .card-info h3.green {
+      color: #4cd964;
+    }
+    .card-info p {
+      font-size: 13px;
+      color: #b0c0d0;
+      line-height: 1.35;
+    }
+    .tree-lines {
+      display: flex;
+      justify-content: space-around;
+      height: 32px;
+      position: relative;
+    }
+    .tree-lines::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 25%;
+      right: 25%;
+      height: 16px;
+      border-left: 2px solid #4cd964;
+      border-right: 2px solid #00a8ff;
+      border-top: 2px solid #4b627d;
+    }
+    .columns {
+      display: flex;
+      gap: 16px;
+    }
+    .col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .col-header {
+      font-size: 14px;
+      font-weight: 700;
+      padding: 8px 10px;
+      border-radius: 8px;
+      background: #212c3a;
+      text-align: center;
+      border: 1px solid #324357;
+      letter-spacing: 0.5px;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back-btn">&larr; Voltar ao Menu</a>
+
+  <div class="container">
+    <div class="title">COMO MONTAR <span>SEU DECK DE PLAGUE</span></div>
+
+    <!-- 1. CARTA PRINCIPAL -->
+    <div class="card-box main-card">
+      <img src="Cards/26 - lfq03KF.png" class="card-img" alt="Plague">
+      <div class="card-info">
+        <h3 class="green">1. CARTA PRINCIPAL</h3>
+        <p><strong>PLAGUE</strong> (Obrigatória - Usar com carta de aflição + suporte)</p>
+      </div>
+    </div>
+
+    <!-- RAMIFICAÇÃO -->
+    <div class="tree-lines"></div>
+
+    <!-- 2 E 3: COLUNAS DE APOIO E SUPORTE -->
+    <div class="columns">
+      
+      <!-- SLOT 2: APOIO (AFLIÇÃO) -->
+      <div class="col">
+        <div class="col-header">2. CARTA DE APOIO (AFLIÇÃO)</div>
+        
+        <div class="card-box">
+          <img src="Cards/40 - ampulheta.png" class="card-img" alt="Ampulheta">
+          <div class="card-info">
+            <h3>AMPULHETA</h3>
+            <p>(Padrão / Melhor Geral)</p>
+          </div>
+        </div>
+
+        <div class="card-box">
+          <img src="Cards/4 - inferno.png" class="card-img" alt="Inferno">
+          <div class="card-info">
+            <h3>INFERNO</h3>
+            <p>(Se o buff for de Dano | Não upar)</p>
+          </div>
+        </div>
+
+        <div class="card-box">
+          <img src="Cards/19 - 7xV2uQz.png" class="card-img" alt="Radioactivity">
+          <div class="card-info">
+            <h3>RADIOACTIVITY</h3>
+            <p>(Se o buff for de Duração/Chance | Não upar)</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLOT 3: SUPORTE -->
+      <div class="col">
+        <div class="col-header">3. CARTA DE SUPORTE</div>
+
+        <div class="card-box">
+          <img src="Cards/iv.png" class="card-img" alt="Void">
+          <div class="card-info">
+            <h3>VOID</h3>
+            <p>(Contra Corpo)</p>
+          </div>
+        </div>
+
+        <div class="card-box">
+          <img src="Cards/32 - smash.png" class="card-img" alt="Smash">
+          <div class="card-info">
+            <h3>SMASH</h3>
+            <p>(Contra Armadura)</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>
