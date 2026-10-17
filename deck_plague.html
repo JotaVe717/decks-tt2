@@ -81,6 +81,10 @@
       height: 86px;
       border-color: #f5a623;
     }
+    .card-info {
+      flex: 1;
+      min-width: 0;
+    }
     .card-info h3 {
       font-size: 15px;
       font-weight: 700;
@@ -94,6 +98,7 @@
       font-size: 13px;
       color: #b0c0d0;
       line-height: 1.35;
+      word-break: normal;
     }
     .tree-lines {
       display: flex;
@@ -132,6 +137,53 @@
       border: 1px solid #324357;
       letter-spacing: 0.5px;
     }
+
+    /* AJUSTES RESPONSIVOS PARA DISPOSITIVOS MÓVEIS */
+    @media (max-width: 540px) {
+      body {
+        padding: 16px 10px;
+      }
+      .container {
+        padding: 16px 12px;
+        border-radius: 12px;
+      }
+      .title {
+        font-size: 18px;
+        margin-bottom: 18px;
+      }
+      .main-card .card-img {
+        width: 72px;
+        height: 72px;
+      }
+      .card-img {
+        width: 58px;
+        height: 58px;
+      }
+      .card-box {
+        padding: 10px;
+        gap: 10px;
+      }
+      .card-info h3 {
+        font-size: 14px;
+      }
+      .card-info p {
+        font-size: 12px;
+      }
+      .tree-lines {
+        height: 20px;
+      }
+      .tree-lines::before {
+        display: none; /* Oculta a linha ramificada no ecrã estreito */
+      }
+      .columns {
+        flex-direction: column; /* Empilha as secções verticalmente */
+        gap: 16px;
+      }
+      .col-header {
+        font-size: 13px;
+        padding: 6px 8px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -146,68 +198,4 @@
       <img src="Cards/26 - lfq03KF.png" class="card-img" alt="Plague">
       <div class="card-info">
         <h3 class="green">1. CARTA PRINCIPAL</h3>
-        <p><strong>PLAGUE</strong> (Obrigatória - Usar com carta de aflição + suporte)</p>
-      </div>
-    </div>
-
-    <!-- RAMIFICAÇÃO -->
-    <div class="tree-lines"></div>
-
-    <!-- 2 E 3: COLUNAS DE APOIO E SUPORTE -->
-    <div class="columns">
-      
-      <!-- SLOT 2: APOIO (AFLIÇÃO) -->
-      <div class="col">
-        <div class="col-header">2. CARTA DE APOIO (AFLIÇÃO)</div>
-        
-        <div class="card-box">
-          <img src="Cards/40 - ampulheta.png" class="card-img" alt="Ampulheta">
-          <div class="card-info">
-            <h3>AMPULHETA</h3>
-            <p>(Padrão / Melhor Geral)</p>
-          </div>
-        </div>
-
-        <div class="card-box">
-          <img src="Cards/4 - inferno.png" class="card-img" alt="Inferno">
-          <div class="card-info">
-            <h3>INFERNO</h3>
-            <p>(Se o buff for de Dano | Não upar)</p>
-          </div>
-        </div>
-
-        <div class="card-box">
-          <img src="Cards/19 - 7xV2uQz.png" class="card-img" alt="Radioactivity">
-          <div class="card-info">
-            <h3>RADIOACTIVITY</h3>
-            <p>(Se o buff for de Duração/Chance | Não upar)</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- SLOT 3: SUPORTE -->
-      <div class="col">
-        <div class="col-header">3. CARTA DE SUPORTE</div>
-
-        <div class="card-box">
-          <img src="Cards/iv.png" class="card-img" alt="Void">
-          <div class="card-info">
-            <h3>VOID</h3>
-            <p>(Contra Corpo)</p>
-          </div>
-        </div>
-
-        <div class="card-box">
-          <img src="Cards/32 - smash.png" class="card-img" alt="Smash">
-          <div class="card-info">
-            <h3>SMASH</h3>
-            <p>(Contra Armadura)</p>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-</body>
-</html>
+        <p><strong>PLAGUE</strong> (Obrigatória - Usar com carta de aflição + suporte)</p
