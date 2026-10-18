@@ -3,7 +3,7 @@ name: Sincronizar Clã GameHive
 on:
   schedule:
     # Executa a cada 12 horas para cumprir o limite imposto pela GameHive
-    - cron: '0 */12 * * *'
+    - cron: '0 */1 * * *'
   workflow_dispatch:
 
 permissions:
