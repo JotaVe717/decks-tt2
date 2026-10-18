@@ -2,25 +2,41 @@ import json
 import os
 import requests
 
-# Puxa o seu token seguro que voce salvou nos Secrets do GitHub
-TOKEN = os.getenv("TITANTECH_TOKEN")
+TOKEN = os.getenv("GH_APP_TOKEN", "cd880d55-80c3-44cf-9857-e4ab5ccdaa0a")
+URL = "https://tt2-public.gamehivegames.com/raid/clan_data"
 
-# Monta o endereco completo com a sua chave
-URL = f"https://titantech.silical.dev/{TOKEN}"
+headers = {
+    "accept": "application/json",
+    "Content-Type": "application/json",
+    "API-Authenticate": TOKEN
+}
+
+payload = {
+    "player_token": TOKEN,
+    "properties": [
+        "name",
+        "player_code",
+        "role",
+        "max_stage",
+        "player_raid_level",
+        "total_card_level",
+        "weekly_ticket_count",
+        "cards",
+        "titan_cards"
+    ]
+}
 
 try:
-    print(f"Buscando dados em: {URL}")
-    resposta = requests.get(URL, timeout=20)
+    print("Conectando ao servidor oficial da GameHive...")
+    resposta = requests.post(URL, headers=headers, json=payload, timeout=30)
     resposta.raise_for_status()
 
-    # Tenta ler a resposta como dados em formato JSON
     dados = resposta.json()
 
-    # Salva os dados atualizados dentro do cla.json
     with open("cla.json", "w", encoding="utf-8") as f:
         json.dump(dados, f, indent=2, ensure_ascii=False)
 
-    print("Arquivo cla.json atualizado com sucesso!")
+    print("cla.json gerado com sucesso!")
 except Exception as erro:
-    print(f"Ocorreu um erro ao atualizar: {erro}")
+    print(f"Erro ao consultar a GameHive: {erro}")
     exit(1)
