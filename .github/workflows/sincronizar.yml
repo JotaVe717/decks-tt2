@@ -1,0 +1,37 @@
+name: Sincronizar cla.json Automaticamente
+
+on:
+  schedule:
+    # Executa automaticamente de 2 em 2 horas
+    - cron: '0 */1 * * *'
+  # Cria um botao para poderes testar manualmente quando quiseres
+  workflow_dispatch:
+
+jobs:
+  atualizar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Descarregar o repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: Instalar biblioteca de pedidos
+        run: pip install requests
+
+      - name: Executar o script de atualizacao
+        env:
+          TITANTECH_TOKEN: ${{ secrets.TITANTECH_TOKEN }}
+        run: python atualizar.py
+
+      - name: Guardar alteracoes no repositorio
+        run: |
+          git config --global user.name "Robo TitanTech"
+          git config --global user.email "bot@github.com"
+          git add cla.json
+          git commit -m "Auto: cla.json atualizado via TitanTech" || exit 0
+          git push
