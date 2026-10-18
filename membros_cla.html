@@ -326,116 +326,93 @@
   </div>
 
   <script>
-    const API_URL = "cla.json";
-
-    // MAPEAMENTO PARA AS IMAGENS DA PASTA CARDS/
-    const CARD_IMAGES = {
-      "PurifyingBlast": "Cards/pb.png",
-      "ThrivingPlague": "Cards/tp.png",
-      "ClanShip": "Cards/cs.png",
-      "AncestralFavor": "Cards/af.png",
-      "MirrorForce": "Cards/mf.png",
-      "Void": "Cards/iv.png",
-      "Smash": "Cards/ss.png",
-      "AcidDrench": "Cards/ad.png",
-      "CorrosiveBubbles": "Cards/bb.png",
-      "MoonBeam": "Cards/bm.jpg",
-      "ChainLightning": "Cards/ch.png",
-      "CelestialStatic": "Cards/ci.png",
-      "DecayingStrike": "Cards/ds.png",
-      "FlakShot": "Cards/fb.png",
-      "Fragmentize": "Cards/fr.png",
-      "GrimShadow": "Cards/fs.png",
-      "Radioactivity": "Cards/ra.png",
-      "RavenousSwarm": "Cards/rs.png",
-      "RazorWind": "Cards/rw.png",
-      "SkullBash": "Cards/sb.png",
-      "WhipOfLightning": "Cards/wol.png",
-      "Zap": "Cards/zz.jpg",
-      "BattleDrums": "Cards/bd.jpg",
-      "GuardBreak": "Cards/gb.png",
-      "InspiringForce": "Cards/if.png",
-      "Maelstrom": "Cards/ma.png",
-      "RadiantKaleidoscope": "Cards/rk.png",
-      "TotemOfPower": "Cards/tot.png",
-      "TeamTactics": "Cards/tt.png",
-      "AstralEcho": "Cards/ae.png",
-      "Hourglass": "Cards/a.png"
+    // DADOS REAIS DO CLÃ EMBUTIDOS (DISPENSA FETCH E EVITA ERRO 404/403)
+    const DADOS_LOCAIS = {
+      "raid_id": "ea7ff893-7556-462d-a416-450a2b4af162",
+      "players_data": [
+        { "player_id": "f23d122b-8109-4384-9dd1-595f156344a9", "player_name": "MBR | JotaVe", "total_damage": 10325533947, "average_damage": 344184465, "max_damage": 452920407, "min_damage": 221840593, "attack_count": 30, "team_tactics_used": 0, "mirror_force_used": 5 },
+        { "player_id": "59e3a6a9-7014-4eaf-93bc-9bba237136c6", "player_name": "V Λ Z I O", "total_damage": 13669737362, "average_damage": 455657912, "max_damage": 526003794, "min_damage": 339659121, "attack_count": 30, "team_tactics_used": 0, "mirror_force_used": 5 },
+        { "player_id": "f0341415-0bf4-474d-a9d4-d3fcfde49c01", "player_name": "MBR | RuSSo™", "total_damage": 6730092901, "average_damage": 232072169, "max_damage": 338601322, "min_damage": 167472526, "attack_count": 29, "team_tactics_used": 0, "mirror_force_used": 4 },
+        { "player_id": "a860958e-dac0-4d02-9ed0-64ced016125e", "player_name": "NEW | JULLEN", "total_damage": 6509306124, "average_damage": 232475219, "max_damage": 321981298, "min_damage": 151415785, "attack_count": 28, "team_tactics_used": 3, "mirror_force_used": 4 },
+        { "player_id": "4733fdf8-7c7b-471b-bdad-35c4d295d1bc", "player_name": "MBR | Blaff", "total_damage": 6258069792, "average_damage": 208602326, "max_damage": 377676858, "min_damage": 102767398, "attack_count": 30, "team_tactics_used": 0, "mirror_force_used": 5 },
+        { "player_id": "5304a0bd-802f-4f3b-852c-ceeec3f906e0", "player_name": "MBR | CESRG", "total_damage": 6180307992, "average_damage": 206010266, "max_damage": 301108397, "min_damage": 155385407, "attack_count": 30, "team_tactics_used": 5, "mirror_force_used": 5 },
+        { "player_id": "d92d35f2-715a-4f28-b3f9-7fc0f38f41f0", "player_name": "Exodia", "total_damage": 6150195933, "average_damage": 212075722, "max_damage": 339356964, "min_damage": 114787519, "attack_count": 29, "team_tactics_used": 2, "mirror_force_used": 5 },
+        { "player_id": "31c45b78-a819-4713-b313-4c6fb0a8c5b9", "player_name": "SOLDIER", "total_damage": 6141363736, "average_damage": 204712125, "max_damage": 362364839, "min_damage": 120689107, "attack_count": 30, "team_tactics_used": 4, "mirror_force_used": 5 },
+        { "player_id": "0a55da14-6b3e-4c49-9089-1045df74ae57", "player_name": "HIGOR", "total_damage": 5625924497, "average_damage": 187530817, "max_damage": 274506696, "min_damage": 106262279, "attack_count": 30, "team_tactics_used": 4, "mirror_force_used": 5 },
+        { "player_id": "8804aeb5-a712-43b2-be60-5ee0368f5fa7", "player_name": "Ramiris", "total_damage": 5536273118, "average_damage": 230678047, "max_damage": 362501586, "min_damage": 151700616, "attack_count": 24, "team_tactics_used": 0, "mirror_force_used": 4 },
+        { "player_id": "846e46a7-8311-45b4-8630-431ca0fda1b4", "player_name": "WILDCATS", "total_damage": 5241803749, "average_damage": 174726792, "max_damage": 299106423, "min_damage": 125502526, "attack_count": 30, "team_tactics_used": 5, "mirror_force_used": 5 },
+        { "player_id": "80392694-fcea-4f09-8e85-0d66b10851c4", "player_name": "Tunado", "total_damage": 4891484513, "average_damage": 163049484, "max_damage": 226469753, "min_damage": 0, "attack_count": 30, "team_tactics_used": 5, "mirror_force_used": 5 },
+        { "player_id": "b38703c3-81f9-4dc1-aed8-027cdce17886", "player_name": "Ciesto", "total_damage": 4878183301, "average_damage": 162606110, "max_damage": 221372834, "min_damage": 71934736, "attack_count": 30, "team_tactics_used": 5, "mirror_force_used": 5 },
+        { "player_id": "aca30a15-539d-45d9-acef-a2c3f74d7cb4", "player_name": "Teedzada", "total_damage": 4612954282, "average_damage": 153765143, "max_damage": 213444278, "min_damage": 104103901, "attack_count": 30, "team_tactics_used": 5, "mirror_force_used": 5 },
+        { "player_id": "797ca50b-1271-4959-b3a7-717734881035", "player_name": "ᴹᴿᴰ l RUMßLEツ", "total_damage": 4469114534, "average_damage": 148970484, "max_damage": 268673818, "min_damage": 94888482, "attack_count": 30, "team_tactics_used": 0, "mirror_force_used": 4 },
+        { "player_id": "6c91f0bd-41de-4f1b-b827-ff415d232469", "player_name": "Ophyxz", "total_damage": 3913591051, "average_damage": 130453035, "max_damage": 174586968, "min_damage": 73599527, "attack_count": 30, "team_tactics_used": 0, "mirror_force_used": 5 },
+        { "player_id": "b69abb74-b10c-4e7c-8a8d-748a96ff395c", "player_name": "MBR | ATMAN", "total_damage": 3704247560, "average_damage": 148169902, "max_damage": 225106284, "min_damage": 72280234, "attack_count": 25, "team_tactics_used": 4, "mirror_force_used": 5 },
+        { "player_id": "4afbf06d-2bbb-4f4f-83eb-a6884c4e80c4", "player_name": "MBR|CrazyMoves..", "total_damage": 3290158187, "average_damage": 182786566, "max_damage": 235809297, "min_damage": 131657367, "attack_count": 18, "team_tactics_used": 0, "mirror_force_used": 3 },
+        { "player_id": "4415b833-7111-41e0-aa96-885432ef02d2", "player_name": "MBR | bngood", "total_damage": 3259764368, "average_damage": 108658812, "max_damage": 151312076, "min_damage": 70652058, "attack_count": 30, "team_tactics_used": 5, "mirror_force_used": 5 },
+        { "player_id": "f96d4dc2-95d4-405d-84f0-39de4db8ee04", "player_name": "MBR | Carecalvo™", "total_damage": 3212670427, "average_damage": 133861268, "max_damage": 227472160, "min_damage": 82582789, "attack_count": 24, "team_tactics_used": 4, "mirror_force_used": 4 },
+        { "player_id": "b01544f6-d5f3-48cf-8cf5-d2a9b897126c", "player_name": "BigJohnson", "total_damage": 3032332667, "average_damage": 101077756, "max_damage": 152942243, "min_damage": 17619377, "attack_count": 30, "team_tactics_used": 5, "mirror_force_used": 4 },
+        { "player_id": "c80bc022-416d-44a7-9d16-b2fbb4013013", "player_name": "Ring", "total_damage": 3010930749, "average_damage": 100364358, "max_damage": 147966225, "min_damage": 47985810, "attack_count": 30, "team_tactics_used": 5, "mirror_force_used": 5 },
+        { "player_id": "a14b50e5-78c8-42cc-ab6b-1886bfe9afe9", "player_name": "MBR | mln_98", "total_damage": 2963835202, "average_damage": 123493133, "max_damage": 254866537, "min_damage": 67031404, "attack_count": 24, "team_tactics_used": 3, "mirror_force_used": 3 },
+        { "player_id": "4272cf56-8b62-46fa-a046-bebd37c4f1f8", "player_name": "MBR | Kenjimiro", "total_damage": 2858686753, "average_damage": 95289558, "max_damage": 156373839, "min_damage": 56592979, "attack_count": 30, "team_tactics_used": 5, "mirror_force_used": 5 },
+        { "player_id": "e51f91c2-acac-4323-b9d2-d5dc5ff1ef2d", "player_name": "MBR | Darsh666", "total_damage": 2750949228, "average_damage": 114622885, "max_damage": 201585829, "min_damage": 45652937, "attack_count": 24, "team_tactics_used": 4, "mirror_force_used": 4 },
+        { "player_id": "84ce33f6-cc52-4858-a146-d2e7245f8db6", "player_name": "MBR | Spartanow⁰", "total_damage": 2708122095, "average_damage": 90270737, "max_damage": 143320328, "min_damage": 47056395, "attack_count": 30, "team_tactics_used": 4, "mirror_force_used": 5 },
+        { "player_id": "db22c1cc-8848-4420-9e43-053a950aa513", "player_name": "MBR | Yesk", "total_damage": 2703909521, "average_damage": 90130317, "max_damage": 173608245, "min_damage": 66150910, "attack_count": 30, "team_tactics_used": 0, "mirror_force_used": 2 },
+        { "player_id": "20e0c865-6837-4f48-a398-af1d107a296f", "player_name": "Mƃɺ┆JPegitex", "total_damage": 2627363107, "average_damage": 87578770, "max_damage": 150101070, "min_damage": 49462111, "attack_count": 30, "team_tactics_used": 4, "mirror_force_used": 5 },
+        { "player_id": "b1724d1f-21f5-4d92-be24-2978be59efc0", "player_name": "MBR | ANDRESSA", "total_damage": 2569163078, "average_damage": 107048462, "max_damage": 187660374, "min_damage": 63590160, "attack_count": 24, "team_tactics_used": 4, "mirror_force_used": 4 },
+        { "player_id": "c47cd649-3e11-4d1a-9e80-47649a9556c4", "player_name": "MBR | Akira", "total_damage": 2536933139, "average_damage": 105705547, "max_damage": 183324411, "min_damage": 60531097, "attack_count": 24, "team_tactics_used": 3, "mirror_force_used": 4 },
+        { "player_id": "eb114773-8eb4-4e0b-b9b7-52be0c4dd7a3", "player_name": "MBR | Zer0", "total_damage": 2484479634, "average_damage": 108020854, "max_damage": 164149970, "min_damage": 50743348, "attack_count": 23, "team_tactics_used": 2, "mirror_force_used": 3 },
+        { "player_id": "b1800393-e2b5-478e-a07a-a0f5766c1b8c", "player_name": "MBR | Drouve", "total_damage": 2413839823, "average_damage": 150864989, "max_damage": 217033810, "min_damage": 99224252, "attack_count": 16, "team_tactics_used": 3, "mirror_force_used": 3 },
+        { "player_id": "515e7d4c-7a00-4af6-9088-04fb55d98e83", "player_name": "MBR | lcsxd", "total_damage": 2124396247, "average_damage": 70813208, "max_damage": 113784741, "min_damage": 46932602, "attack_count": 30, "team_tactics_used": 1, "mirror_force_used": 4 },
+        { "player_id": "c3550ae6-5d6b-4d81-9318-47cbd5d5f12b", "player_name": "MBR | SouCrazy", "total_damage": 1929106984, "average_damage": 64303566, "max_damage": 134221613, "min_damage": 34530250, "attack_count": 30, "team_tactics_used": 5, "mirror_force_used": 5 },
+        { "player_id": "0d5b4ce1-c0ba-42ca-a997-bef88ebc2b7f", "player_name": "FredKruger", "total_damage": 1903995535, "average_damage": 63466518, "max_damage": 100696158, "min_damage": 25268174, "attack_count": 30, "team_tactics_used": 4, "mirror_force_used": 5 },
+        { "player_id": "c3111880-6b92-4ac1-8fbf-69edc1030278", "player_name": "NEW | JpmmTT2", "total_damage": 1848303952, "average_damage": 61610132, "max_damage": 84634323, "min_damage": 32189411, "attack_count": 30, "team_tactics_used": 5, "mirror_force_used": 5 },
+        { "player_id": "53c98d25-6126-41c1-9cb7-5a48bde4ec06", "player_name": "KMarcelo", "total_damage": 1759529730, "average_damage": 58650991, "max_damage": 83022394, "min_damage": 30664536, "attack_count": 30, "team_tactics_used": 4, "mirror_force_used": 5 },
+        { "player_id": "fac26e96-8ca1-413c-b9c3-d2913f191200", "player_name": "MBR |╰Sspy╮", "total_damage": 1678470974, "average_damage": 69936291, "max_damage": 92528283, "min_damage": 35992791, "attack_count": 24, "team_tactics_used": 4, "mirror_force_used": 4 },
+        { "player_id": "49316666-aad9-40d0-ad71-53a8b65d01ef", "player_name": "MBR | CLIQUET", "total_damage": 1593044400, "average_damage": 75859257, "max_damage": 116201186, "min_damage": 18310284, "attack_count": 21, "team_tactics_used": 2, "mirror_force_used": 3 },
+        { "player_id": "51e57e12-baf8-4cbb-8da0-fbcd68a876f7", "player_name": "Modafoca", "total_damage": 1592959407, "average_damage": 66373309, "max_damage": 99484663, "min_damage": 44215034, "attack_count": 24, "team_tactics_used": 4, "mirror_force_used": 4 },
+        { "player_id": "46413501-4bb2-4dbe-9b30-18f64475032d", "player_name": "TBRlombra", "total_damage": 1551862836, "average_damage": 73898230, "max_damage": 109226569, "min_damage": 41854330, "attack_count": 21, "team_tactics_used": 4, "mirror_force_used": 4 },
+        { "player_id": "3c1aae94-df48-4d15-a60c-39acc1f7340b", "player_name": "Vasher", "total_damage": 1548649709, "average_damage": 64527071, "max_damage": 99054880, "min_damage": 27435056, "attack_count": 24, "team_tactics_used": 4, "mirror_force_used": 4 },
+        { "player_id": "2f252300-21de-488d-b678-880258679096", "player_name": "GHOST.014", "total_damage": 1512211313, "average_damage": 50407044, "max_damage": 71369343, "min_damage": 25070769, "attack_count": 30, "team_tactics_used": 2, "mirror_force_used": 5 },
+        { "player_id": "26bfa3c2-eae7-4a11-8687-dcf5d625bc72", "player_name": "Matsuda", "total_damage": 1445027164, "average_damage": 48167572, "max_damage": 85776524, "min_damage": 10388380, "attack_count": 30, "team_tactics_used": 1, "mirror_force_used": 4 },
+        { "player_id": "79026b94-4fbf-41d8-9535-ff079ce98c7f", "player_name": "MBR  MARINHO", "total_damage": 1317400820, "average_damage": 62733372, "max_damage": 107388797, "min_damage": 37521258, "attack_count": 21, "team_tactics_used": 3, "mirror_force_used": 3 },
+        { "player_id": "9cd40418-1021-48da-9216-c15a9b1d8aa7", "player_name": "☩DarkLurker☩", "total_damage": 1280717670, "average_damage": 53363236, "max_damage": 70664021, "min_damage": 39309392, "attack_count": 24, "team_tactics_used": 4, "mirror_force_used": 4 },
+        { "player_id": "3ac37a52-0e0a-483e-890d-23f4c5f55e71", "player_name": "Juniiiow", "total_damage": 1149096236, "average_damage": 47879010, "max_damage": 69073147, "min_damage": 29780167, "attack_count": 24, "team_tactics_used": 4, "mirror_force_used": 4 },
+        { "player_id": "c70993b8-cfff-4599-ae48-317739f3de05", "player_name": "FNB cf", "total_damage": 1037088996, "average_damage": 47140409, "max_damage": 76341235, "min_damage": 24790853, "attack_count": 22, "team_tactics_used": 2, "mirror_force_used": 4 },
+        { "player_id": "12ad003c-db2b-4b8c-8684-073b38c0d886", "player_name": "Evangelista", "total_damage": 962957690, "average_damage": 41867726, "max_damage": 72082774, "min_damage": 12653351, "attack_count": 23, "team_tactics_used": 2, "mirror_force_used": 2 },
+        { "player_id": "efba32f4-3970-4fd4-856b-214887d997c6", "player_name": "MBR|Meraki²", "total_damage": 474856504, "average_damage": 79142751, "max_damage": 122458855, "min_damage": 56449358, "attack_count": 6, "team_tactics_used": 1, "mirror_force_used": 1 }
+      ]
     };
 
     let clanMembers = [];
 
-    // Formata números grandes em formato legível brasileiro (ex: 10.325.533.947)
     function formatarNumero(num) {
       if (!num && num !== 0) return "0";
       return Number(num).toLocaleString('pt-BR');
     }
 
-    async function carregarDadosCla() {
-      const listContainer = document.getElementById("membersList");
+    function carregarDadosCla() {
+      const rawList = DADOS_LOCAIS.players_data;
 
-      try {
-        const response = await fetch(API_URL);
-        if (!response.ok) {
-          throw new Error(`Erro ao acessar cla.json: status ${response.status}`);
-        }
+      clanMembers = rawList.map(m => ({
+        id: m.player_id,
+        name: m.player_name || "Membro",
+        totalDamage: m.total_damage || 0,
+        averageDamage: m.average_damage || 0,
+        maxDamage: m.max_damage || 0,
+        minDamage: m.min_damage || 0,
+        attackCount: m.attack_count || 0,
+        ttUsed: m.team_tactics_used || 0,
+        mfUsed: m.mirror_force_used || 0
+      }));
 
-        const data = await response.json();
-
-        // Aceita tanto players_data quanto members ou players
-        const rawList = data.players_data || data.players || data.members || (Array.isArray(data) ? data : []);
-
-        clanMembers = rawList.map(m => {
-          const cardsObj = m.cards || m.card_levels || m.raid_cards || [];
-          const normalizedCards = Array.isArray(cardsObj)
-            ? cardsObj.map(c => ({
-                id: c.id || c.card_id || c.name,
-                name: c.name || c.id || c.card_id,
-                level: c.level || c.card_level || 0
-              }))
-            : Object.keys(cardsObj).map(k => ({
-                id: k,
-                name: k,
-                level: cardsObj[k]
-              }));
-
-          return {
-            id: m.player_id || m.id || m.code || "",
-            name: m.player_name || m.name || m.username || "Membro",
-            totalDamage: m.total_damage || 0,
-            averageDamage: m.average_damage || 0,
-            maxDamage: m.max_damage || 0,
-            minDamage: m.min_damage || 0,
-            attackCount: m.attack_count || 0,
-            ttUsed: m.team_tactics_used || 0,
-            mfUsed: m.mirror_force_used || 0,
-            cards: normalizedCards
-          };
-        });
-
-        // Ordena por dano total decrescente (maior dano no topo)
-        clanMembers.sort((a, b) => b.totalDamage - a.totalDamage);
-
-        renderMembers();
-      } catch (err) {
-        console.error("Falha ao processar cla.json:", err);
-        listContainer.innerHTML = `
-          <p style="color: #ff5e57; font-size: 12px; text-align: center; padding: 12px;">
-            Não foi possível carregar o arquivo cla.json.<br>
-            <small style="color: #8fa0b5;">Confirme se o arquivo está na pasta do projeto e se você abriu com o Live Server.</small>
-          </p>
-        `;
-      }
+      // Ordena por dano total decrescente
+      clanMembers.sort((a, b) => b.totalDamage - a.totalDamage);
+      renderMembers();
     }
 
     function renderMembers() {
       const listContainer = document.getElementById("membersList");
       listContainer.innerHTML = "";
-
-      if (clanMembers.length === 0) {
-        listContainer.innerHTML = '<p style="color: #8fa0b5; font-size: 12px; text-align: center; padding: 12px;">Nenhum jogador encontrado no arquivo.</p>';
-        return;
-      }
 
       clanMembers.forEach((member, index) => {
         const btn = document.createElement("button");
@@ -447,7 +424,6 @@
         btn.onclick = () => selectMember(member, btn);
         listContainer.appendChild(btn);
 
-        // Seleciona automaticamente o top 1 do ranking
         if (index === 0) selectMember(member, btn);
       });
     }
@@ -457,9 +433,8 @@
       if (btnElement) btnElement.classList.add("active");
 
       document.getElementById("selectedName").textContent = member.name;
-      document.getElementById("selectedInfo").textContent = `ID: ${member.id || "Não informado"}`;
+      document.getElementById("selectedInfo").textContent = `ID do Jogador: ${member.id}`;
 
-      // Monta as estatísticas
       const statsGrid = document.getElementById("statsGrid");
       statsGrid.innerHTML = `
         <div class="stat-card">
@@ -471,8 +446,8 @@
           <span class="stat-value">${formatarNumero(member.averageDamage)}</span>
         </div>
         <div class="stat-card">
-          <span class="stat-label">Ataques Realizados</span>
-          <span class="stat-value">${member.attackCount}</span>
+          <span class="stat-label">Ataques Feitos</span>
+          <span class="stat-value">${member.attackCount} / 30</span>
         </div>
         <div class="stat-card">
           <span class="stat-label">Maior Dano</span>
@@ -484,36 +459,11 @@
         </div>
       `;
 
-      // Buffs usados
       document.getElementById("ttCount").textContent = `${member.ttUsed}x`;
       document.getElementById("mfCount").textContent = `${member.mfUsed}x`;
-
-      // Renderização de cartas (se houver no JSON)
-      const cardsSection = document.getElementById("cardsSection");
-      const cardsGrid = document.getElementById("cardsGrid");
-
-      if (member.cards && member.cards.length > 0) {
-        cardsSection.style.display = "block";
-        cardsGrid.innerHTML = "";
-        member.cards.forEach(card => {
-          const imgSrc = CARD_IMAGES[card.id] || "Cards/wc.png";
-          const cardBox = document.createElement("div");
-          cardBox.className = "card-item";
-          cardBox.innerHTML = `
-            <img src="${imgSrc}" class="card-thumb" alt="${card.name}" onerror="this.src='Cards/wc.png'">
-            <div class="card-meta">
-              <span class="c-name">${card.name}</span>
-              <span class="c-lvl">Nv. ${card.level}</span>
-            </div>
-          `;
-          cardsGrid.appendChild(cardBox);
-        });
-      } else {
-        cardsSection.style.display = "none";
-      }
     }
 
-    // Dispara a leitura
+    // Inicialização direta
     carregarDadosCla();
   </script>
 </body>
