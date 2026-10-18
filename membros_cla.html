@@ -236,21 +236,21 @@
 
   <div class="container">
     <div class="header-clan">
-      <div class="title" id="clanTitle">Clã: <span>Carregando...</span></div>
+      <div class="title" id="clanTitle">Clã: <span>A carregar...</span></div>
       <div class="subtitle" id="clanSubtitle">Sincronizado diretamente com a GameHive</div>
     </div>
 
     <div class="layout">
       <!-- LISTA DE MEMBROS -->
       <div class="members-col" id="membersList">
-        <p class="status-msg">Buscando cla.json...</p>
+        <p class="status-msg">A procurar cla.json...</p>
       </div>
 
       <!-- DETALHES DO JOGADOR -->
       <div class="details-col">
         <div class="player-header">
           <h3 id="selectedName">Selecione um membro</h3>
-          <p id="selectedInfo">Clique em um jogador para carregar os dados oficiais da GameHive.</p>
+          <p id="selectedInfo">Clique num jogador para carregar os dados oficiais da GameHive.</p>
         </div>
 
         <div>
@@ -280,7 +280,7 @@
         </div>
 
         <div id="cardsSection" style="display: none;">
-          <div class="section-title">Cartas de Raid Registradas</div>
+          <div class="section-title">Cartas de Raid Registadas</div>
           <div class="cards-grid" id="cardsGrid"></div>
         </div>
 
@@ -293,7 +293,7 @@
 
     function formatarNumero(num) {
       if (!num && num !== 0) return "0";
-      return Number(num).toLocaleString('pt-BR');
+      return Number(num).toLocaleString('pt-PT');
     }
 
     function formatarCargo(role) {
@@ -313,7 +313,7 @@
 
       try {
         const resposta = await fetch('cla.json');
-        if (!resposta.ok) throw new Error("Arquivo cla.json não encontrado ou indisponível");
+        if (!resposta.ok) throw new Error("Ficheiro cla.json não encontrado");
 
         const json = await resposta.json();
 
@@ -325,7 +325,7 @@
         }
 
         const rawList = json.players_data || json.players || [];
-        if (!rawList.length) throw new Error("Nenhum jogador retornado no arquivo");
+        if (!rawList.length) throw new Error("Nenhum jogador devolvido no ficheiro");
 
         clanMembers = rawList.map(p => ({
           code: p.player_code || "N/A",
@@ -338,12 +338,11 @@
           cards: p.titan_cards || p.cards || []
         }));
 
-        // Ordena pela maior fase alcançada
         clanMembers.sort((a, b) => b.maxStage - a.maxStage);
         renderizarLista();
 
       } catch (err) {
-        listContainer.innerHTML = `<p class="status-msg" style="color: #ff6b6b;">Erro: ${err.message}. Aguarde a execução do robô para gerar o arquivo cla.json.</p>`;
+        listContainer.innerHTML = `<p class="status-msg" style="color: #ff6b6b;">${err.message}. Execute o robô nas Actions do GitHub para gerar o cla.json pela primeira vez.</p>`;
       }
     }
 

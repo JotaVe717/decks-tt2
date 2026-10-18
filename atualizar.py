@@ -2,6 +2,7 @@ import json
 import os
 import requests
 
+# Token de aplicacao ativo da GameHive
 TOKEN = os.getenv("GH_APP_TOKEN", "cd880d55-80c3-44cf-9857-e4ab5ccdaa0a")
 URL = "https://tt2-public.gamehivegames.com/raid/clan_data"
 
@@ -11,6 +12,7 @@ headers = {
     "API-Authenticate": TOKEN
 }
 
+# Propriedades oficiais aceites pela GameHive
 payload = {
     "player_token": TOKEN,
     "properties": [
@@ -27,9 +29,12 @@ payload = {
 }
 
 try:
-    print("Conectando ao servidor oficial da GameHive...")
+    print("A contactar o servidor oficial da GameHive...")
     resposta = requests.post(URL, headers=headers, json=payload, timeout=30)
-    resposta.raise_for_status()
+    
+    if resposta.status_code != 200:
+        print(f"Erro da GameHive (Codigo {resposta.status_code}): {resposta.text}")
+        resposta.raise_for_status()
 
     dados = resposta.json()
 
@@ -38,5 +43,5 @@ try:
 
     print("cla.json gerado com sucesso!")
 except Exception as erro:
-    print(f"Erro ao consultar a GameHive: {erro}")
+    print(f"Falha na sincronizacao: {erro}")
     exit(1)
