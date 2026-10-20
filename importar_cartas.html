@@ -317,7 +317,7 @@
     <!-- 1. EXPLOSÃO (BURST) -->
     <div class="section-category" id="secBurst">
       <div class="category-header">
-        <span class="category-title title-burst">Explosão (Burst)</span>
+        <span class="category-title title-burst">Explosão</span>
       </div>
       <div class="cards-grid-6" id="gridBurst"></div>
     </div>
@@ -343,48 +343,48 @@
   <script>
     const CARD_METADATA = {
       // EXPLOSÃO (BURST)
-      "MoonBeam": { type: "Burst", img: "Cards/bm.jpg" },
+      "MoonBeam": { type: "Burst", img: "Cards/mb.png" },
       "Fragmentize": { type: "Burst", img: "Cards/fr.png" },
       "SkullBash": { type: "Burst", img: "Cards/sb.png" },
       "RazorWind": { type: "Burst", img: "Cards/rw.png" },
       "WhipOfLightning": { type: "Burst", img: "Cards/wol.png" },
       "BurstCount": { type: "Burst", img: "Cards/csb.png" },
       "Purify": { type: "Burst", img: "Cards/pb.png" },
-      "LimbBurst": { type: "Burst", img: "Cards/wc.png" },
-      "FlakShot": { type: "Burst", img: "Cards/fb.png" },
-      "Haymaker": { type: "Burst", img: "Cards/wc.png" },
-      "ChainLightning": { type: "Burst", img: "Cards/ch.png" },
+      "LimbBurst": { type: "Burst", img: "Cards/ps.png" },
+      "FlakShot": { type: "Burst", img: "Cards/fs.png" },
+      "Haymaker": { type: "Burst", img: "Cards/ch.png" },
+      "ChainLightning": { type: "Burst", img: "Cards/cov.png" },
       "MirrorForce": { type: "Burst", img: "Cards/mf.png" },
-      "CelestialStatic": { type: "Burst", img: "Cards/ci.png" },
+      "CelestialStatic": { type: "Burst", img: "Cards/cs.png" },
 
       // AFLIÇÃO (AFFLICTION)
-      "BurningAttack": { type: "Affliction", img: "Cards/wc.png" },
+      "BurningAttack": { type: "Affliction", img: "Cards/bi.png" },
       "PoisonAttack": { type: "Affliction", img: "Cards/ad.png" },
       "DecayingAttack": { type: "Affliction", img: "Cards/ds.png" },
-      "Fuse": { type: "Affliction", img: "Cards/wc.png" },
+      "Fuse": { type: "Affliction", img: "Cards/fb.png" },
       "Shadow": { type: "Affliction", img: "Cards/fs.png" },
       "PlagueAttack": { type: "Affliction", img: "Cards/tp.png" },
       "Disease": { type: "Affliction", img: "Cards/ra.png" },
       "Swarm": { type: "Affliction", img: "Cards/rs.png" },
-      "RuinousRust": { type: "Affliction", img: "Cards/wc.png" },
+      "RuinousRust": { type: "Affliction", img: "Cards/rr.png" },
       "PowerBubble": { type: "Affliction", img: "Cards/bb.png" },
       "RuneAttack": { type: "Affliction", img: "Cards/ma.png" },
 
       // SUPORTE (SUPPORT)
-      "Weaken": { type: "Support", img: "Cards/gb.png" },
-      "BarbedMorningstar": { type: "Support", img: "Cards/wc.png" },
-      "MagicPotion": { type: "Support", img: "Cards/wc.png" },
-      "SandsOfTime": { type: "Support", img: "Cards/wc.png" },
-      "CosmicBarb": { type: "Support", img: "Cards/wc.png" },
-      "ExecutionersAxe": { type: "Support", img: "Cards/wc.png" },
+      "Weaken": { type: "Burst", img: "Cards/gb.png" },
+      "BarbedMorningstar": { type: "Burst", img: "Cards/bm.jpg" },
+      "MagicPotion": { type: "Affliction", img: "Cards/am.jpg" },
+      "SandsOfTime": { type: "Affliction", img: "Cards/sot.png" },
+      "CosmicBarb": { type: "Affliction", img: "Cards/zz.jpg" },
+      "ExecutionersAxe": { type: "Support", img: "Cards/ci.png" },
       "CrushingVoid": { type: "Support", img: "Cards/iv.png" },
-      "MentalFocus": { type: "Support", img: "Cards/wc.png" },
+      "MentalFocus": { type: "Support", img: "Cards/rg.png" },
       "ImpactAttack": { type: "Support", img: "Cards/if.png" },
-      "InnerTruth": { type: "Support", img: "Cards/wc.png" },
+      "InnerTruth": { type: "Support", img: "Cards/sf.png" },
       "FinisherAttack": { type: "Support", img: "Cards/vm.png" },
-      "SuperheatMetal": { type: "Support", img: "Cards/wc.png" },
+      "SuperheatMetal": { type: "Support", img: "Cards/pr.png" },
       "BurstBoost": { type: "Support", img: "Cards/af.png" },
-      "LimbSupport": { type: "Support", img: "Cards/wc.png" },
+      "LimbSupport": { type: "Support", img: "Cards/gv.png" },
       "TotemFairySkill": { type: "Support", img: "Cards/tot.png" },
       "TeamTactics": { type: "Support", img: "Cards/tt.png" },
       "SpinalTap": { type: "Support", img: "Cards/ss.png" },
