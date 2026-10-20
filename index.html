@@ -65,6 +65,9 @@
     .deck-card.highlight:hover {
       border-color: #50e3c2;
     }
+    .deck-card.gold-highlight:hover {
+      border-color: #f5a623;
+    }
     .deck-thumb {
       width: 64px;
       height: 64px;
@@ -72,6 +75,18 @@
       object-fit: cover;
       border: 2px solid #3a4b60;
       background-color: #121921;
+      flex-shrink: 0;
+    }
+    .deck-icon-thumb {
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      border: 2px solid #3a4b60;
+      background-color: #121921;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
       flex-shrink: 0;
     }
     .deck-info h2 {
@@ -96,6 +111,9 @@
     }
     .deck-badge.cyan {
       color: #50e3c2;
+    }
+    .deck-badge.gold {
+      color: #f5a623;
     }
     footer {
       margin-top: auto;
@@ -170,6 +188,16 @@
         <span class="deck-badge" style="color: #a29bfe;">Gestão do Clã</span>
         <h2>Membros & Cartas</h2>
         <p>Inspecione o nível das cartas de cada integrante do clã.</p>
+      </div>
+    </a>
+
+    <!-- MÓDULO DE REDUÇÕES -->
+    <a href="reducoes.html" class="deck-card gold-highlight">
+      <div class="deck-icon-thumb">⚖️</div>
+      <div class="deck-info">
+        <span class="deck-badge gold">Mecânicas de Jogo</span>
+        <h2>Tabela de Reduções</h2>
+        <p>Conversão matemática para All Damage e All Gold com calculadora.</p>
       </div>
     </a>
   </div>
