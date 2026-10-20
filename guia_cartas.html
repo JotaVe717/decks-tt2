@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Guia de Cartas de Raid - Tap Titans 2</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    }
+    body {
+      background-color: #0f141c;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 14px;
+      min-height: 100vh;
+    }
+    .back-btn {
+      align-self: flex-start;
+      max-width: 900px;
+      margin: 0 auto 16px auto;
+      width: 100%;
+      text-decoration: none;
+      color: #8fa0b5;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .back-btn:hover {
+      color: #f5a623;
+    }
+    .container {
+      width: 100%;
+      max-width: 900px;
+      background: #18202a;
+      border: 1px solid #283545;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .title span {
+      color: #f5a623;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #8fa0b5;
+      margin-bottom: 24px;
+    }
+
+    /* FILTROS */
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+      justify-content: center;
+    }
+    .filter-btn {
+      background: #212c3a;
+      border: 1px solid #324357;
+      border-radius: 8px;
+      padding: 8px 14px;
+      color: #d1dbe5;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover {
+      border-color: #f5a623;
+      color: #ffffff;
+    }
+    .filter-btn.active {
+      background: #f5a623;
+      border-color: #f5a623;
+      color: #0f141c;
+      font-weight: 700;
+    }
+
+    /* LISTA DE CARTAS */
+    .cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .card-row {
+      background: #1e2836;
+      border: 1px solid #2b394a;
+      border-radius: 10px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: border-color 0.2s;
+    }
+    .card-row:hover {
+      border-color: #3b4d63;
+    }
+    .card-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #0f141c;
+      border: 1px solid #3b4d63;
+      flex-shrink: 0;
+    }
+    .card-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .card-header-line {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .card-name {
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .type-badge {
+      font-size: 10px;
+      text-transform: uppercase;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    /* CORES PERSONALIZADAS */
+    .badge-burst { 
+      background: rgba(255, 69, 0, 0.2); 
+      color: #ff5722; 
+      border: 1px solid rgba(255, 69, 0, 0.5); 
+    }
+    .badge-affliction { 
+      background: rgba(56, 161, 243, 0.18); 
+      color: #38a1f3; 
+      border: 1px solid rgba(56, 161, 243, 0.45); 
+    }
+    .badge-support { 
+      background: rgba(76, 217, 100, 0.18); 
+      color: #4cd964; 
+      border: 1px solid rgba(76, 217, 100, 0.45); 
+    }
+
+    .card-condition {
+      font-size: 12.5px;
+      color: #8fa0b5;
+      line-height: 1.4;
+    }
+    .parts-badge {
+      font-size: 11px;
+      font-weight: 700;
+      background: #141c24;
+      color: #f5a623;
+      border: 1px solid #2d3b4d;
+      padding: 4px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      text-align: center;
+      min-width: 65px;
+    }
+
+    @media (max-width: 600px) {
+      .card-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+      .parts-badge {
+        align-self: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back-btn">&larr; Voltar ao Menu</a>
+
+  <div class="container">
+    <div class="title">Guia de <span>Cartas de Raid</span></div>
+    <div class="subtitle">Condições de ativação, sinergias e alvos prioritários de cada carta</div>
+
+    <!-- BOTÕES DE FILTRO -->
+    <div class="filter-group">
+      <button class="filter-btn active" onclick="filtrarTipo('todos')">Todas as Cartas</button>
+      <button class="filter-btn" onclick="filtrarTipo('burst')">Explosão (Burst)</button>
+      <button class="filter-btn" onclick="filtrarTipo('affliction')">Aflição</button>
+      <button class="filter-btn" onclick="filtrarTipo('support')">Suporte</button>
+    </div>
+
+    <!-- LISTAGEM DINÂMICA -->
+    <div class="cards-list" id="cardsContainer"></div>
+  </div>
+
+  <script>
+    const CARTAS = [
+      // GRUPO 1: PURIFY, PLAGUE E CLAN SHIP
+      { id: "pb", name: "Purifying Blast", type: "burst", img: "Cards/pb.png", parts: "5 ou 6 partes", desc: "Usar com Aflição e Suporte." },
+      { id: "tp", name: "Thriving Plague", type: "affliction", img: "Cards/tp.png", parts: "1 a 3 partes", desc: "Usar com Aflição e Suporte." },
+      { id: "csb", name: "Barragem do Clã (Clan Ship)", type: "burst", img: "Cards/csb.png", parts: "-", desc: "Usar com Explosão e Suporte." },
+
+      // SUPORTES E SINERGIAS
+      { id: "ss", name: "Skeletal Smash", type: "support", img: "Cards/ss.png", parts: "1 parte", desc: "Suporte de ativação focada num único alvo." },
+      { id: "tot", name: "Totem of Power", type: "support", img: "Cards/tot.png", parts: "-", desc: "Não usar acompanhado com outro Suporte." },
+      { id: "af", name: "Ancestral Favor", type: "support", img: "Cards/af.png", parts: "-", desc: "Usar com cartas de Explosão e Suporte." },
+      { id: "ma", name: "Maelstrom", type: "support", img: "Cards/ma.png", parts: "-", desc: "Usar com Aflição e Suporte." },
+      { id: "iv", name: "Insanity Void", type: "support", img: "Cards/iv.png", parts: "-", desc: "Usar com Aflição e Suporte." },
+      { id: "rk", name: "Radiant Kaleidoscope", type: "support", img: "Cards/rk.png", parts: "-", desc: "Usar com Explosão e Aflição." },
+
+      // CARTAS PROGRESSIVAS DE CICLO
+      { id: "mf", name: "Mirror Force", type: "burst", img: "Cards/mf.png", parts: "-", desc: "Cada utilização aumenta o dano da própria carta no ciclo seguinte." },
+      { id: "tt", name: "Team Tactics", type: "support", img: "Cards/tt.png", parts: "-", desc: "Cada utilização aumenta o dano de todo o clã nos ciclos seguintes." },
+
+      // AUMENTO DE DANO NA PARTE AFETADA
+      { id: "ad", name: "Acid Drench", type: "affliction", img: "Cards/ad.png", parts: "-", desc: "Causa bônus de dano na parte afetada." },
+      { id: "ci", name: "Celestial Static", type: "burst", img: "Cards/ci.png", parts: "-", desc: "Causa bônus de dano na parte afetada." },
+
+      // EXECUÇÕES E CONDIÇÕES DE ARMADURA / CORPO
+      { id: "gb", name: "Guard Break", type: "support", img: "Cards/gb.png", parts: "Armadura", desc: "Requer 1 parte destruída para potenciar o efeito." },
+      { id: "vm", name: "Victory March", type: "support", img: "Cards/vm.png", parts: "Armadura", desc: "Requer 1 parte viva sem Armadura." },
+      { id: "a", name: "Hourglass", type: "support", img: "Cards/a.png", parts: "-", desc: "Ativa com 6 partes destruídas." },
+      { id: "ch", name: "Chain Lightning", type: "burst", img: "Cards/ch.png", parts: "-", desc: "Requer 6 partes vivas sem Armadura." },
+      { id: "fr", name: "Fragmentize", type: "burst", img: "Cards/fr.png", parts: "Armadura", desc: "Potencial máximo em 5 partes vivas sem Armadura." },
+      { id: "ds", name: "Decaying Strike", type: "affliction", img: "Cards/ds.png", parts: "Corpo", desc: "Potencial máximo com 5 partes com Armadura." },
+
+      // DANO EM ARMADURA AMALDIÇOADA
+      { id: "bb", name: "Corrosive Bubbles", type: "affliction", img: "Cards/bb.png", parts: "Armadura", desc: "Causa dano adicional em Armadura Amaldiçoada." },
+      { id: "rs", name: "Ravenous Swarm", type: "affliction", img: "Cards/rs.png", parts: "Armadura", desc: "Causa dano adicional em Armadura Amaldiçoada." },
+
+      // ALVOS MÚLTIPLOS (6 PARTES)
+      { id: "rw", name: "Razor Wind", type: "burst", img: "Cards/rw.png", parts: "6 partes", desc: "Espalha dano por até 6 partes." },
+      { id: "ra", name: "Radioactivity", type: "affliction", img: "Cards/ra.png", parts: "6 partes", desc: "Dano contínuo distribuído por até 6 partes." },
+      { id: "wol", name: "Whip of Lightning", type: "burst", img: "Cards/wol.png", parts: "6 partes", desc: "Explosões rápidas em até 6 partes." },
+      { id: "fs", name: "Grim Shadow", type: "affliction", img: "Cards/fs.png", parts: "6 partes", desc: "Acumulação de aflição em até 6 partes." },
+      { id: "fb", name: "Flak Shot", type: "burst", img: "Cards/fb.png", parts: "6 partes", desc: "Disparos de fragmentação em até 6 partes." },
+      { id: "fb", name: "Flak Shot", type: "burst", img: "Cards/fb.png", parts: "6 partes", desc: "Disparos de fragmentação em até 6 partes." },
+
+      // ALVOS FOCADOS (2 PARTES)
+      { id: "bm", name: "Moon Beam", type: "burst", img: "Cards/bm.png", parts: "2 partes", desc: "Foco concentrado de explosão em 2 partes." },
+      { id: "bm", name: "Moon Beam", type: "burst", img: "Cards/bm.png", parts: "2 partes", desc: "Foco concentrado de explosão em 2 partes." },
+      { id: "bm", name: "Moon Beam", type: "burst", img: "Cards/bm.png", parts: "2 partes", desc: "Foco concentrado de explosão em 2 partes." },
+      { id: "zz", name: "Zap", type: "burst", img: "Cards/zz.png", parts: "2 partes", desc: "Foco concentrado em 2 partes." },
+
+      // LOCALIZAÇÕES ESPECÍFICAS
+      { id: "sb", name: "Skull Bash", type: "burst", img: "Cards/sb.png", parts: "Cabeça / Pernas", desc: "Foco exclusivo em Cabeça ou Pernas." },
+      { id: "sb", name: "Moon Beam", type: "burst", img: "Cards/mb.png", parts: "Cabeça / Pernas", desc: "Foco exclusivo em Cabeça ou Pernas." },
+      { id: "sb", name: "Psychic Shackles", type: "burst", img: "Cards/ps.png", parts: "Cabeça / Pernas", desc: "Foco exclusivo em Cabeça ou Pernas." },
+      { id: "if", name: "Grasping Vines", type: "support", img: "Cards/gv.png", parts: "Corpo", desc: "Bônus de dano direto aplicado ao Corpo." },
+      { id: "bd", name: "Razor Wind", type: "burst", img: "Cards/rw.png", parts: "Membros", desc: "Suporte de ativação focada nos Membros." },
+
+      // CELESTIAL E HAYMAKER
+      { id: "sb", name: "Celestial Static", type: "burst", img: "Cards/cs.png", parts: "Cabeça / Pernas", desc: "Foco exclusivo em Cabeça ou Pernas." },
+      { id: "if", name: "Cosmic Haymaker", type: "burst", img: "Cards/ch.png", parts: "Corpo", desc: "Bônus de dano direto aplicado ao Corpo." },
+      { id: "bd", name: "Astral Echo", type: "support", img: "Cards/ae.jpg", parts: "Membros", desc: "Suporte de ativação focada nos Membros." },
+
+      // ZAP
+      { id: "zz", name: "Electro Zap", type: "affliction", img: "Cards/zz.jpg", parts: "Cabeça / Pernas", desc: "Foco exclusivo em Cabeça ou Pernas." }
+    ];
+
+    function renderCartas(lista) {
+      const container = document.getElementById("cardsContainer");
+      container.innerHTML = "";
+
+      lista.forEach(carta => {
+        let badgeClass = "badge-burst";
+        let typeName = "Explosão";
+
+        if (carta.type === "affliction") {
+          badgeClass = "badge-affliction";
+          typeName = "Aflição";
+        } else if (carta.type === "support") {
+          badgeClass = "badge-support";
+          typeName = "Suporte";
+        }
+
+        const div = document.createElement("div");
+        div.className = "card-row";
+        div.innerHTML = `
+          <img src="${carta.img}" class="card-thumb" alt="${carta.name}" onerror="this.src='Cards/wc.png'">
+          <div class="card-main">
+            <div class="card-header-line">
+              <span class="card-name">${carta.name}</span>
+              <span class="type-badge ${badgeClass}">${typeName}</span>
+            </div>
+            <div class="card-condition">${carta.desc}</div>
+          </div>
+          <div class="parts-badge">${carta.parts}</div>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    function filtrarTipo(tipo) {
+      document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+      event.target.classList.add("active");
+
+      if (tipo === "todos") {
+        renderCartas(CARTAS);
+      } else {
+        const filtradas = CARTAS.filter(c => c.type === tipo);
+        renderCartas(filtradas);
+      }
+    }
+
+    // Inicialização
+    renderCartas(CARTAS);
+  </script>
+</body>
+</html>

@@ -64,87 +64,6 @@
       margin-bottom: 24px;
     }
 
-    /* CARD EXPLICATIVO COM TEXTO MELHORADO */
-    .concept-card {
-      background: #212c3a;
-      border-left: 4px solid #f5a623;
-      border-radius: 8px;
-      padding: 16px 18px;
-      margin-bottom: 24px;
-      font-size: 13.5px;
-      line-height: 1.6;
-      color: #d1dbe5;
-    }
-    .concept-card h4 {
-      color: #f5a623;
-      font-size: 15px;
-      margin-bottom: 6px;
-    }
-    .formula-tag {
-      background: #0f141c;
-      padding: 3px 8px;
-      border-radius: 4px;
-      color: #50e3c2;
-      font-family: 'Consolas', monospace;
-      font-weight: 600;
-      border: 1px solid #2d3c4e;
-    }
-
-    /* CALCULADORA PRÁTICA INTERATIVA */
-    .calc-card {
-      background: #121922;
-      border: 1px dashed #3a4b60;
-      border-radius: 10px;
-      padding: 16px;
-      margin-bottom: 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-    .calc-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: #50e3c2;
-      text-transform: uppercase;
-    }
-    .calc-inputs {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      align-items: center;
-    }
-    .calc-inputs input {
-      background: #18202a;
-      border: 1px solid #324357;
-      border-radius: 6px;
-      padding: 8px 10px;
-      color: #fff;
-      font-size: 13px;
-      flex: 1;
-      min-width: 140px;
-    }
-    .calc-btn {
-      background: #f5a623;
-      border: none;
-      color: #0f141c;
-      font-weight: 700;
-      padding: 8px 16px;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 13px;
-      transition: opacity 0.2s;
-    }
-    .calc-btn:hover {
-      opacity: 0.9;
-    }
-    .calc-result {
-      font-size: 13px;
-      color: #d1dbe5;
-      background: #18202a;
-      padding: 10px 14px;
-      border-radius: 6px;
-    }
-
     /* SELETORES EM BOTÕES ESTILIZADOS */
     .section-label {
       font-size: 12px;
@@ -235,6 +154,32 @@
       background: rgba(255, 94, 87, 0.15);
       color: #ff5e57;
     }
+
+    /* CARD EXPLICATIVO NA PARTE DE BAIXO */
+    .concept-card {
+      background: #212c3a;
+      border-left: 4px solid #f5a623;
+      border-radius: 8px;
+      padding: 16px 18px;
+      margin-top: 10px;
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: #d1dbe5;
+    }
+    .concept-card h4 {
+      color: #f5a623;
+      font-size: 15px;
+      margin-bottom: 6px;
+    }
+    .formula-tag {
+      background: #0f141c;
+      padding: 3px 8px;
+      border-radius: 4px;
+      color: #50e3c2;
+      font-family: 'Consolas', monospace;
+      font-weight: 600;
+      border: 1px solid #2d3c4e;
+    }
   </style>
 </head>
 <body>
@@ -244,21 +189,6 @@
   <div class="container">
     <div class="title">Tabela de <span>Reduções</span></div>
     <div class="subtitle">Entenda como o jogo normaliza todos os bônus para All Damage e All Gold</div>
-
-    <!-- TEXTO EXPLICATIVO POLIDO -->
-    <div class="concept-card">
-      <h4>Como funciona o algoritmo de conversão?</h4>
-      No <em>Tap Titans 2</em>, todo multiplicador específico de dano é padronizado pelo jogo como se fosse <strong>All Damage</strong> (Todos os Danos), assim como cada bônus econômico é convertido em <strong>All Gold</strong> (Todo Ouro).<br><br>
-      Essa conversão ocorre por meio de uma operação <strong>exponencial</strong> utilizando o expoente de eficiência de cada atributo:
-      <div style="margin: 8px 0;">
-        <span class="formula-tag">Valor Real = (Bônus do Atributo) ^ (Expoente de Redução)</span>
-      </div>
-      <strong>Exemplo prático:</strong> Se você joga com a build de <em>Shadow Clone (SC)</em> e possui um artefato ou equipamento que concede <strong>500.000.000</strong> (500M) de <em>Acerto Mortal</em>, a tabela indica que a taxa de redução é de <strong>0,6</strong>. O jogo processa:
-      <div style="margin: 6px 0;">
-        <span class="formula-tag">500.000.000 ^ 0.6 ≈ 165.726 (165K)</span>
-      </div>
-      Portanto, seus 500M de Acerto Mortal equivalem a <strong>~165K de All Damage</strong> para a sua build.
-    </div>
 
     <!-- SELETOR DE BUILDS (DANO) -->
     <div class="section-label">1. Escolha a sua Build de Dano:</div>
@@ -303,17 +233,19 @@
       </table>
     </div>
 
-    <!-- CALCULADORA RÁPIDA -->
-    <div class="calc-card">
-      <div class="calc-title">Simulador de Conversão Exponencial</div>
-      <div class="calc-inputs">
-        <input type="number" id="calcVal" placeholder="Valor do bônus (ex: 500000000)" value="500000000">
-        <input type="number" step="0.05" id="calcExp" placeholder="Expoente (ex: 0.6)" value="0.6">
-        <button class="calc-btn" onclick="calcularReducao()">Converter</button>
+    <!-- CARD EXPLICATIVO MOVIDO PARA A PARTE DE BAIXO -->
+    <div class="concept-card">
+      <h4>Como funciona o algoritmo de conversão?</h4>
+      No <em>Tap Titans 2</em>, todo multiplicador específico de dano é padronizado pelo jogo como se fosse <strong>All Damage</strong> (Todos os Danos), assim como cada bônus econômico é convertido em <strong>All Gold</strong> (Todo Ouro).<br><br>
+      Essa conversão ocorre por meio de uma operação <strong>exponencial</strong> utilizando o expoente de eficiência de cada atributo:
+      <div style="margin: 8px 0;">
+        <span class="formula-tag">Valor Real = (Bônus do Atributo) ^ (Expoente de Redução)</span>
       </div>
-      <div class="calc-result" id="calcOutput">
-        Resultado: <strong>165.726,55</strong> de bônus convertido.
+      <strong>Exemplo prático:</strong> Se você joga com a build de <em>Shadow Clone (SC)</em> e possui um artefato ou equipamento que concede <strong>500.000.000</strong> (500M) de <em>Acerto Mortal</em>, a tabela indica que a taxa de redução é de <strong>0,6</strong>. O jogo processa:
+      <div style="margin: 6px 0;">
+        <span class="formula-tag">500.000.000 ^ 0.6 ≈ 165.726 (165K)</span>
       </div>
+      Portanto, seus 500M de Acerto Mortal equivalem a <strong>~165K de All Damage</strong> para a sua build.
     </div>
 
   </div>
@@ -392,16 +324,6 @@
         `;
         tbody.appendChild(tr);
       });
-    }
-
-    function calcularReducao() {
-      const base = parseFloat(document.getElementById("calcVal").value) || 0;
-      const exp = parseFloat(document.getElementById("calcExp").value) || 0;
-      const result = Math.pow(base, exp);
-
-      document.getElementById("calcOutput").innerHTML = `
-        Resultado: <strong>${result.toLocaleString('pt-BR', { maximumFractionDigits: 2 })}</strong> de bônus convertido.
-      `;
     }
 
     // Inicializa as tabelas na tela
