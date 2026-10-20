@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Importar Perfil & Cartas - Tap Titans 2</title>
   <style>
     * {
@@ -10,6 +10,7 @@
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
     body {
       background-color: #0f141c;
@@ -17,13 +18,14 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 18px 10px;
+      padding: 16px 8px 60px 8px;
       min-height: 100vh;
+      overflow-x: hidden;
     }
     .back-btn {
       align-self: flex-start;
       max-width: 900px;
-      margin: 0 auto 14px auto;
+      margin: 0 auto 12px auto;
       width: 100%;
       text-decoration: none;
       color: #8fa0b5;
@@ -43,7 +45,7 @@
       background: #18202a;
       border: 1px solid #283545;
       border-radius: 16px;
-      padding: 18px 12px;
+      padding: 16px 10px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
     .title {
@@ -61,7 +63,7 @@
       text-align: center;
       font-size: 12px;
       color: #8fa0b5;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
     /* ENTRADA DE DADOS */
@@ -69,11 +71,11 @@
       background: #212c3a;
       border: 1px dashed #3a4b60;
       border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 18px;
+      padding: 12px;
+      margin-bottom: 16px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
     .import-actions {
       display: flex;
@@ -115,7 +117,7 @@
     }
     textarea {
       width: 100%;
-      height: 60px;
+      height: 55px;
       background: #141c24;
       border: 1px solid #2d3c4e;
       border-radius: 8px;
@@ -136,39 +138,39 @@
       border: 1px solid #283545;
       border-radius: 10px;
       padding: 12px;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
       display: none;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      gap: 8px;
       text-align: center;
     }
     .summary-item {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 2px;
     }
     .summary-item span {
-      font-size: 10px;
+      font-size: 9.5px;
       color: #8fa0b5;
       text-transform: uppercase;
       font-weight: 700;
       letter-spacing: 0.5px;
     }
     .summary-item strong {
-      font-size: 15px;
+      font-size: 14px;
       color: #50e3c2;
     }
 
-    /* SEÇÕES DE CATEGORIA */
+    /* CATEGORIAS */
     .section-category {
-      margin-bottom: 24px;
+      margin-bottom: 22px;
       display: none;
     }
     .category-header {
       display: flex;
       align-items: center;
       gap: 8px;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
       padding-bottom: 4px;
       border-bottom: 1px solid #283545;
     }
@@ -186,7 +188,7 @@
     .cards-grid-6 {
       display: grid;
       grid-template-columns: repeat(6, 1fr) !important;
-      gap: 6px;
+      gap: 5px;
       width: 100%;
     }
 
@@ -194,7 +196,7 @@
     .card-tile {
       position: relative;
       aspect-ratio: 1 / 1;
-      border-radius: 8px;
+      border-radius: 6px;
       background: #0f141c;
       border: 1.5px solid #2b394a;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
@@ -202,9 +204,11 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
+      user-select: none;
       transition: transform 0.15s ease, border-color 0.15s ease;
     }
-    .card-tile:hover {
+    .card-tile:hover,
+    .card-tile.active-touch {
       transform: translateY(-2px);
       border-color: #f5a623;
       z-index: 50;
@@ -214,7 +218,7 @@
       height: 100%;
       object-fit: cover;
       display: block;
-      border-radius: 6px;
+      border-radius: 5px;
     }
 
     /* NÍVEL SOBRESCRITO */
@@ -222,24 +226,23 @@
       position: absolute;
       bottom: 2px;
       right: 2px;
-      background: rgba(15, 20, 28, 0.88);
+      background: rgba(15, 20, 28, 0.9);
       border: 1px solid rgba(255, 255, 255, 0.25);
-      backdrop-filter: blur(2px);
       color: #ffffff;
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 800;
-      padding: 1px 4px;
+      padding: 1px 3px;
       border-radius: 4px;
       line-height: 1;
       text-shadow: 0 1px 2px #000;
       pointer-events: none;
     }
 
-    /* BALÃO DE TOOLTIP BASE */
+    /* TOOLTIP PADRÃO (DESKTOP) */
     .card-tooltip {
       visibility: hidden;
       opacity: 0;
-      width: 185px;
+      width: 190px;
       background-color: #121922;
       color: #fff;
       text-align: left;
@@ -250,7 +253,7 @@
       bottom: 112%;
       left: 50%;
       transform: translateX(-50%);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
       border: 1px solid #3a4b60;
       transition: opacity 0.2s ease, transform 0.2s ease;
       pointer-events: none;
@@ -265,68 +268,42 @@
       border-style: solid;
       border-color: #3a4b60 transparent transparent transparent;
     }
-    .card-tile:hover .card-tooltip,
-    .card-tile.active-touch .card-tooltip {
-      visibility: visible;
-      opacity: 1;
-      transform: translateX(-50%) translateY(-4px);
+
+    @media (min-width: 601px) {
+      .card-tile:hover .card-tooltip,
+      .card-tile.active-touch .card-tooltip {
+        visibility: visible;
+        opacity: 1;
+        transform: translateX(-50%) translateY(-4px);
+      }
+      /* Previne cortes nas bordas no Desktop */
+      .cards-grid-6 .card-tile:nth-child(6n+1) .card-tooltip {
+        left: 0;
+        transform: translateX(0);
+      }
+      .cards-grid-6 .card-tile:nth-child(6n+1) .card-tooltip::after {
+        left: 20px;
+        margin-left: 0;
+      }
+      .cards-grid-6 .card-tile:nth-child(6n+1):hover .card-tooltip {
+        transform: translateX(0) translateY(-4px);
+      }
+
+      .cards-grid-6 .card-tile:nth-child(6n) .card-tooltip {
+        left: 100%;
+        transform: translateX(-100%);
+      }
+      .cards-grid-6 .card-tile:nth-child(6n) .card-tooltip::after {
+        left: auto;
+        right: 20px;
+        margin-left: 0;
+      }
+      .cards-grid-6 .card-tile:nth-child(6n):hover .card-tooltip {
+        transform: translateX(-100%) translateY(-4px);
+      }
     }
 
-    /* REGRAS ANTI-CORTE: POSICIONAMENTO DINÂMICO NAS BORDAS */
-    .cards-grid-6 .card-tile:nth-child(6n+1) .card-tooltip {
-      left: 0;
-      transform: translateX(0);
-    }
-    .cards-grid-6 .card-tile:nth-child(6n+1) .card-tooltip::after {
-      left: 20px;
-      margin-left: 0;
-    }
-    .cards-grid-6 .card-tile:nth-child(6n+1):hover .card-tooltip,
-    .cards-grid-6 .card-tile:nth-child(6n+1).active-touch .card-tooltip {
-      transform: translateX(0) translateY(-4px);
-    }
-
-    .cards-grid-6 .card-tile:nth-child(6n+2) .card-tooltip {
-      left: 10%;
-      transform: translateX(-20%);
-    }
-    .cards-grid-6 .card-tile:nth-child(6n+2) .card-tooltip::after {
-      left: 30%;
-      margin-left: -5px;
-    }
-    .cards-grid-6 .card-tile:nth-child(6n+2):hover .card-tooltip,
-    .cards-grid-6 .card-tile:nth-child(6n+2).active-touch .card-tooltip {
-      transform: translateX(-20%) translateY(-4px);
-    }
-
-    .cards-grid-6 .card-tile:nth-child(6n+5) .card-tooltip {
-      left: 90%;
-      transform: translateX(-80%);
-    }
-    .cards-grid-6 .card-tile:nth-child(6n+5) .card-tooltip::after {
-      left: 80%;
-      margin-left: -5px;
-    }
-    .cards-grid-6 .card-tile:nth-child(6n+5):hover .card-tooltip,
-    .cards-grid-6 .card-tile:nth-child(6n+5).active-touch .card-tooltip {
-      transform: translateX(-80%) translateY(-4px);
-    }
-
-    .cards-grid-6 .card-tile:nth-child(6n) .card-tooltip {
-      left: 100%;
-      transform: translateX(-100%);
-    }
-    .cards-grid-6 .card-tile:nth-child(6n) .card-tooltip::after {
-      left: auto;
-      right: 20px;
-      margin-left: 0;
-    }
-    .cards-grid-6 .card-tile:nth-child(6n):hover .card-tooltip,
-    .cards-grid-6 .card-tile:nth-child(6n).active-touch .card-tooltip {
-      transform: translateX(-100%) translateY(-4px);
-    }
-
-    /* CABEÇALHO DO TOOLTIP (NOME À ESQUERDA, RANK À DIREITA) */
+    /* CABEÇALHO DO TOOLTIP COM RANK NO CANTO SUPERIOR DIREITO */
     .tooltip-header {
       display: flex;
       align-items: center;
@@ -346,8 +323,8 @@
       font-size: 10px;
       font-weight: 900;
       color: #ff5722;
-      background: rgba(255, 69, 0, 0.22);
-      border: 1px solid rgba(255, 87, 34, 0.55);
+      background: rgba(255, 69, 0, 0.25);
+      border: 1px solid rgba(255, 87, 34, 0.6);
       padding: 1px 5px;
       border-radius: 4px;
       line-height: 1.1;
@@ -357,7 +334,7 @@
     }
     .tooltip-target {
       display: inline-block;
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 700;
       color: #50e3c2;
       background: rgba(80, 227, 194, 0.12);
@@ -375,9 +352,9 @@
     }
 
     /* BORDAS POR TIPO */
-    .border-burst { border-color: rgba(255, 87, 34, 0.5); }
-    .border-affliction { border-color: rgba(56, 161, 243, 0.5); }
-    .border-support { border-color: rgba(76, 217, 100, 0.5); }
+    .border-burst { border-color: rgba(255, 87, 34, 0.45); }
+    .border-affliction { border-color: rgba(56, 161, 243, 0.45); }
+    .border-support { border-color: rgba(76, 217, 100, 0.45); }
 
     .empty-state {
       text-align: center;
@@ -386,34 +363,40 @@
       padding: 30px 10px;
     }
 
-    @media (max-width: 480px) {
-      .container {
-        padding: 14px 6px;
-      }
-      .cards-grid-6 {
-        gap: 4px;
-      }
-      .card-tile {
-        border-radius: 6px;
-      }
+    /* COMPORTAMENTO EXCLUSIVO PARA MOBILE (POPUP FIXO DE RODAPÉ) */
+    @media (max-width: 600px) {
       .card-overlay-lvl {
-        font-size: 9.5px;
-        padding: 1px 3px;
+        font-size: 9px;
+        padding: 1px 2px;
         bottom: 1px;
         right: 1px;
       }
       .card-tooltip {
-        width: 150px;
-        padding: 6px 8px;
+        position: fixed;
+        bottom: 12px;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: 92vw;
+        max-width: 400px;
+        padding: 12px 14px;
+        background: #141c26;
+        border: 1.5px solid #f5a623;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.95);
+        border-radius: 10px;
+        z-index: 9999;
       }
-      .tooltip-rank { font-size: 9px; padding: 1px 4px; }
-      .tooltip-name { font-size: 11px; }
-      .tooltip-target { font-size: 9.5px; }
-      .tooltip-desc { font-size: 9.5px; }
-      .player-summary {
-        grid-template-columns: repeat(2, 1fr);
-        gap: 8px;
+      .card-tooltip::after {
+        display: none; /* remove triângulo no mobile */
       }
+      .card-tile.active-touch .card-tooltip {
+        visibility: visible;
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .tooltip-name { font-size: 13px; }
+      .tooltip-rank { font-size: 11px; padding: 2px 6px; }
+      .tooltip-target { font-size: 11px; margin-bottom: 6px; }
+      .tooltip-desc { font-size: 11px; }
     }
   </style>
 </head>
@@ -423,7 +406,7 @@
 
   <div class="container">
     <div class="title">Importar <span>Cartas & Níveis</span></div>
-    <div class="subtitle">Passe o mouse ou toque em uma carta para ver o rank, efeito e o alvo de ataque</div>
+    <div class="subtitle">Toque na carta para ver o rank, onde bater e o efeito completo</div>
 
     <!-- ENTRADA -->
     <div class="import-card">
@@ -569,7 +552,6 @@
           return;
         }
 
-        // Atualização do Sumário
         document.getElementById("playerSummary").style.display = "grid";
         document.getElementById("sumStage").textContent = data.playerStats?.["Max Prestige Stage"] || "-";
         document.getElementById("sumRaidLvl").textContent = data.raidStats?.["Raid Level"] || "-";
@@ -608,7 +590,6 @@
           else supportList.push(cardObj);
         }
 
-        // Ordena por nível decrescente
         burstList.sort((a, b) => b.level - a.level);
         afflictionList.sort((a, b) => b.level - a.level);
         supportList.sort((a, b) => b.level - a.level);
@@ -640,10 +621,11 @@
         div.className = `card-tile ${borderClass}`;
 
         div.onclick = (e) => {
-          document.querySelectorAll('.card-tile').forEach(t => {
-            if (t !== div) t.classList.remove('active-touch');
-          });
-          div.classList.toggle('active-touch');
+          const jaAtivo = div.classList.contains('active-touch');
+          document.querySelectorAll('.card-tile').forEach(t => t.classList.remove('active-touch'));
+          if (!jaAtivo) {
+            div.classList.add('active-touch');
+          }
           e.stopPropagation();
         };
 
