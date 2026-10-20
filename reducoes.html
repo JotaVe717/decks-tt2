@@ -276,8 +276,7 @@
         <thead>
           <tr>
             <th>Fonte de Dano</th>
-            <th style="width: 130px; text-align: center;">Expoente (<span id="buildHead">SC</span>)</th>
-            <th>Efeito Prático</th>
+            <th style="width: 160px; text-align: center;">Expoente (<span id="buildHead">SC</span>)</th>
           </tr>
         </thead>
         <tbody id="damageTableBody"></tbody>
@@ -297,8 +296,7 @@
         <thead>
           <tr>
             <th>Fonte de Ouro</th>
-            <th style="width: 130px; text-align: center;">Expoente (<span id="goldHead">Fada</span>)</th>
-            <th>Efeito Prático</th>
+            <th style="width: 160px; text-align: center;">Expoente (<span id="goldHead">Fada</span>)</th>
           </tr>
         </thead>
         <tbody id="goldTableBody"></tbody>
@@ -352,12 +350,6 @@
       return `<span class="exponent-tag exp-partial">^${val}</span>`;
     }
 
-    function getDesc(val) {
-      if (val === 1) return "Eficiência total (escala 1:1)";
-      if (val === 0) return "Não afeta esta build (multiplicador nulo)";
-      return `Conversão reduzida pela potência ^${val}`;
-    }
-
     function selectBuild(buildKey) {
       currentBuild = buildKey;
       document.querySelectorAll("#buildGroup .select-btn").forEach(btn => btn.classList.remove("active"));
@@ -383,7 +375,6 @@
         tr.innerHTML = `
           <td><strong>${item.attr}</strong></td>
           <td style="text-align: center;">${getTag(val)}</td>
-          <td style="color: #8fa0b5; font-size: 12.5px;">${getDesc(val)}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -398,7 +389,6 @@
         tr.innerHTML = `
           <td><strong>${item.attr}</strong></td>
           <td style="text-align: center;">${getTag(val)}</td>
-          <td style="color: #8fa0b5; font-size: 12.5px;">${getDesc(val)}</td>
         `;
         tbody.appendChild(tr);
       });
