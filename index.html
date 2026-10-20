@@ -10,15 +10,17 @@
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', Arial, sans-serif;
+      -webkit-tap-highlight-color: transparent;
     }
     body {
       background-color: #0f141c;
-      /* IMAGEM DE FUNDO COM CAMADA ESCURECIDA PARA CONTRASTE */
       background-image: 
-        linear-gradient(rgba(15, 20, 28, 0.88), rgba(15, 20, 28, 0.94)),
         url('Cards/triade.png'),
+        url('Cards/triade.jpg'),
+        url('Cards/triade.webp'),
         url('triade.png'),
-        url('triade.jpg');
+        url('triade.jpg'),
+        url('triade.webp');
       background-size: cover;
       background-position: center;
       background-attachment: fixed;
@@ -28,41 +30,49 @@
       flex-direction: column;
       align-items: center;
       min-height: 100vh;
-      padding: 40px 20px;
+      padding: 36px 16px 50px 16px;
     }
     .header {
       text-align: center;
-      margin-bottom: 36px;
+      margin-bottom: 28px;
+      background: rgba(15, 20, 28, 0.75);
+      backdrop-filter: blur(6px);
+      padding: 16px 24px;
+      border-radius: 12px;
+      border: 1px solid rgba(43, 57, 74, 0.6);
+      max-width: 900px;
+      width: 100%;
     }
     .header h1 {
       font-size: 28px;
       font-weight: 800;
       letter-spacing: 1px;
       text-transform: uppercase;
-      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.9);
     }
     .header h1 span {
       color: #f5a623;
     }
     .header p {
-      color: #8fa0b5;
+      color: #b0c0d0;
       font-size: 14px;
-      margin-top: 8px;
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+      margin-top: 6px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
     }
     .deck-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      gap: 18px;
       width: 100%;
       max-width: 900px;
+      margin-bottom: 30px;
     }
     .deck-card {
-      background: rgba(25, 34, 45, 0.88);
-      backdrop-filter: blur(8px);
+      background: rgba(25, 34, 45, 0.92);
+      backdrop-filter: blur(10px);
       border: 1px solid #2b394a;
       border-radius: 12px;
-      padding: 20px;
+      padding: 18px;
       display: flex;
       align-items: center;
       gap: 16px;
@@ -73,8 +83,8 @@
     .deck-card:hover {
       transform: translateY(-3px);
       border-color: #4cd964;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-      background: rgba(30, 40, 54, 0.94);
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.7);
+      background: rgba(30, 40, 54, 0.97);
     }
     .deck-card.highlight:hover {
       border-color: #50e3c2;
@@ -83,8 +93,8 @@
       border-color: #f5a623;
     }
     .deck-thumb {
-      width: 64px;
-      height: 64px;
+      width: 62px;
+      height: 62px;
       border-radius: 10px;
       object-fit: cover;
       border: 2px solid #3a4b60;
@@ -92,52 +102,206 @@
       flex-shrink: 0;
     }
     .deck-icon-thumb {
-      width: 64px;
-      height: 64px;
+      width: 62px;
+      height: 62px;
       border-radius: 10px;
       border: 2px solid #3a4b60;
       background-color: #121921;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 30px;
+      font-size: 28px;
       flex-shrink: 0;
     }
     .deck-info h2 {
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
       color: #ffffff;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
     .deck-info p {
       font-size: 12px;
       color: #8fa0b5;
-      line-height: 1.4;
+      line-height: 1.35;
     }
     .deck-badge {
       display: inline-block;
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 700;
       color: #f5a623;
       text-transform: uppercase;
       letter-spacing: 0.5px;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
-    .deck-badge.green {
-      color: #4cd964;
+    .deck-badge.green { color: #4cd964; }
+    .deck-badge.cyan { color: #50e3c2; }
+    .deck-badge.gold { color: #f5a623; }
+
+    /* SEÇÃO DE AUTOR & APOIO (CRÉDITOS) */
+    .credits-section {
+      width: 100%;
+      max-width: 900px;
+      background: rgba(20, 27, 36, 0.94);
+      backdrop-filter: blur(12px);
+      border: 1px solid #314255;
+      border-radius: 14px;
+      padding: 22px 20px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.6);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
-    .deck-badge.cyan {
-      color: #50e3c2;
+    .author-header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #283748;
     }
-    .deck-badge.gold {
+    .author-title-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #141c24;
+      border: 2px solid #f5a623;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: 900;
       color: #f5a623;
     }
-    footer {
-      margin-top: auto;
-      padding-top: 40px;
-      color: #71849a;
+    .author-meta h3 {
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .author-clan-badge {
+      font-size: 10.5px;
+      background: rgba(245, 166, 35, 0.15);
+      border: 1px solid rgba(245, 166, 35, 0.4);
+      color: #f5a623;
+      padding: 2px 7px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+    .author-desc {
       font-size: 12px;
-      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
+      color: #8fa0b5;
+      margin-top: 2px;
+    }
+    .author-desc strong {
+      color: #4cd964;
+    }
+
+    /* CONTATOS & APOIO */
+    .support-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      background: #16202c;
+      border: 1px dashed #35475c;
+      padding: 12px 16px;
+      border-radius: 10px;
+    }
+    .support-text {
+      font-size: 12.5px;
+      color: #c4d1de;
+      line-height: 1.4;
+      flex: 1;
+      min-width: 240px;
+    }
+    .support-text span {
+      color: #f5a623;
+      font-weight: 700;
+    }
+    .support-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-pix {
+      background: #32bcad;
+      color: #0b2220;
+      font-weight: 800;
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-pix:hover {
+      background: #3ee2d1;
+      transform: translateY(-1px);
+    }
+    .btn-discord {
+      background: #5865F2;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 8px 12px;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+    .btn-discord:hover {
+      background: #4752c4;
+      transform: translateY(-1px);
+    }
+
+    /* TOAST DE FEEDBACK */
+    #copyToast {
+      visibility: hidden;
+      min-width: 220px;
+      background-color: #26de81;
+      color: #0d2816;
+      font-weight: 800;
+      text-align: center;
+      border-radius: 8px;
+      padding: 10px 16px;
+      position: fixed;
+      z-index: 10000;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+      font-size: 13px;
+      opacity: 0;
+      transition: opacity 0.3s, bottom 0.3s;
+    }
+    #copyToast.show {
+      visibility: visible;
+      opacity: 1;
+      bottom: 30px;
+    }
+
+    footer {
+      margin-top: 24px;
+      color: #d1dbe5;
+      font-size: 12px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.9);
+      text-align: center;
     }
   </style>
 </head>
@@ -212,9 +376,79 @@
 
   </div>
 
+  <!-- SEÇÃO DE CRÉDITOS & APOIO -->
+  <div class="credits-section">
+    <div class="author-header">
+      <div class="author-title-group">
+        <div class="author-avatar">JV</div>
+        <div class="author-meta">
+          <h3>
+            JotaVe
+            <span class="author-clan-badge">Clã Máfia BR (975xx)</span>
+          </h3>
+          <div class="author-desc">Expert em Raid & Desenvolvedor da ferramenta</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="support-bar">
+      <div class="support-text">
+        Curtiu os guias e ferramentas? <span>Apoie com qualquer valor</span> para manter o projeto ativo e sempre atualizado!
+      </div>
+      <div class="support-actions">
+        <button class="btn-pix" onclick="copiarPix()">
+          ⚡ Copiar Chave PIX
+        </button>
+        <button class="btn-discord" onclick="copiarDiscord()">
+          💬 Discord: jotave717
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- AVISO DE CÓPIA CONCLUÍDA -->
+  <div id="copyToast">Chave PIX copiada com sucesso!</div>
+
   <footer>
-    Guia tático de raids — Tap Titans 2
+    Guia tático de raids — Tap Titans 2 • Criado por JotaVe
   </footer>
 
+  <script>
+    const CHAVE_PIX = "eec03fbb-828a-42be-a53a-1fa6814c7d4e";
+    const TAG_DISCORD = "jotave717";
+
+    function showToast(mensagem) {
+      const toast = document.getElementById("copyToast");
+      toast.textContent = mensagem;
+      toast.className = "show";
+      setTimeout(() => {
+        toast.className = toast.className.replace("show", "");
+      }, 3000);
+    }
+
+    function copiarPix() {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(CHAVE_PIX).then(() => {
+          showToast("Chave PIX copiada com sucesso!");
+        }).catch(() => {
+          prompt("Copie sua chave PIX abaixo:", CHAVE_PIX);
+        });
+      } else {
+        prompt("Copie sua chave PIX abaixo:", CHAVE_PIX);
+      }
+    }
+
+    function copiarDiscord() {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(TAG_DISCORD).then(() => {
+          showToast("Usuário do Discord copiado!");
+        }).catch(() => {
+          prompt("Copie o Discord abaixo:", TAG_DISCORD);
+        });
+      } else {
+        prompt("Copie o Discord abaixo:", TAG_DISCORD);
+      }
+    }
+  </script>
 </body>
 </html>
