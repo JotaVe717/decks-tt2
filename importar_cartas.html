@@ -130,7 +130,7 @@
       border-color: #f5a623;
     }
 
-    /* SUMÁRIO COMPLETO COM WILDCARDS E NECROBEAR */
+    /* SUMÁRIO DO JOGADOR */
     .player-summary {
       background: #121922;
       border: 1px solid #283545;
@@ -159,7 +159,7 @@
       color: #50e3c2;
     }
 
-    /* SEÇÕES DE CATEGORIA COM ESPAÇAMENTO */
+    /* SEÇÕES DE CATEGORIA */
     .section-category {
       margin-bottom: 24px;
       display: none;
@@ -182,7 +182,7 @@
     .title-affliction { color: #38a1f3; }
     .title-support { color: #4cd964; }
 
-    /* FORÇADO ESTRITAMENTE 6 COLUNAS NO DESKTOP E NO MOBILE */
+    /* ESTRITAMENTE 6 COLUNAS */
     .cards-grid-6 {
       display: grid;
       grid-template-columns: repeat(6, 1fr) !important;
@@ -190,32 +190,34 @@
       width: 100%;
     }
 
-    /* CONTAINER DA CARTA COM POSIÇÃO RELATIVA */
+    /* CONTAINER DA CARTA */
     .card-tile {
       position: relative;
       aspect-ratio: 1 / 1;
       border-radius: 8px;
-      overflow: hidden;
       background: #0f141c;
       border: 1.5px solid #2b394a;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
+      cursor: pointer;
       transition: transform 0.15s ease, border-color 0.15s ease;
     }
     .card-tile:hover {
       transform: translateY(-2px);
       border-color: #f5a623;
+      z-index: 50;
     }
     .card-thumb {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      border-radius: 6px;
     }
 
-    /* NÍVEL SOBRESCRITO NO CANTO INFERIOR DIREITO */
+    /* NÍVEL SOBRESCRITO */
     .card-overlay-lvl {
       position: absolute;
       bottom: 2px;
@@ -233,7 +235,69 @@
       pointer-events: none;
     }
 
-    /* CORES DE BORDA POR TIPO */
+    /* BALÃO DE TOOLTIP */
+    .card-tooltip {
+      visibility: hidden;
+      opacity: 0;
+      width: 180px;
+      background-color: #121922;
+      color: #fff;
+      text-align: left;
+      border-radius: 8px;
+      padding: 8px 10px;
+      position: absolute;
+      z-index: 100;
+      bottom: 112%;
+      left: 50%;
+      transform: translateX(-50%);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85);
+      border: 1px solid #3a4b60;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      pointer-events: none;
+    }
+    .card-tooltip::after {
+      content: "";
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      margin-left: -5px;
+      border-width: 5px;
+      border-style: solid;
+      border-color: #3a4b60 transparent transparent transparent;
+    }
+    .card-tile:hover .card-tooltip,
+    .card-tile.active-touch .card-tooltip {
+      visibility: visible;
+      opacity: 1;
+      transform: translateX(-50%) translateY(-4px);
+    }
+    .tooltip-name {
+      font-size: 12px;
+      font-weight: 700;
+      color: #f5a623;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .tooltip-target {
+      display: inline-block;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #50e3c2;
+      background: rgba(80, 227, 194, 0.12);
+      border: 1px solid rgba(80, 227, 194, 0.35);
+      padding: 1px 5px;
+      border-radius: 4px;
+      margin-bottom: 4px;
+      letter-spacing: 0.2px;
+    }
+    .tooltip-desc {
+      font-size: 10.5px;
+      color: #c0ccdc;
+      line-height: 1.35;
+      display: block;
+    }
+
+    /* BORDAS POR TIPO */
     .border-burst { border-color: rgba(255, 87, 34, 0.5); }
     .border-affliction { border-color: rgba(56, 161, 243, 0.5); }
     .border-support { border-color: rgba(76, 217, 100, 0.5); }
@@ -245,7 +309,6 @@
       padding: 30px 10px;
     }
 
-    /* AJUSTE FINO PARA TELAS PEQUENAS (GARANTE 6 POR LINHA SEM ESTICAR) */
     @media (max-width: 480px) {
       .container {
         padding: 14px 6px;
@@ -262,6 +325,13 @@
         bottom: 1px;
         right: 1px;
       }
+      .card-tooltip {
+        width: 145px;
+        padding: 6px 8px;
+      }
+      .tooltip-name { font-size: 11px; }
+      .tooltip-target { font-size: 9.5px; }
+      .tooltip-desc { font-size: 9.5px; }
       .player-summary {
         grid-template-columns: repeat(2, 1fr);
         gap: 8px;
@@ -275,7 +345,7 @@
 
   <div class="container">
     <div class="title">Importar <span>Cartas & Níveis</span></div>
-    <div class="subtitle">Cole o JSON para ver o nível sobrescrito em cada carta por categoria</div>
+    <div class="subtitle">Passe o mouse ou toque em uma carta para ver o efeito e o alvo de ataque</div>
 
     <!-- ENTRADA -->
     <div class="import-card">
@@ -343,54 +413,54 @@
   <script>
     const CARD_METADATA = {
       // EXPLOSÃO (BURST)
-      "MoonBeam": { type: "Burst", img: "Cards/mb.png" },
-      "Fragmentize": { type: "Burst", img: "Cards/fr.png" },
-      "SkullBash": { type: "Burst", img: "Cards/sb.png" },
-      "RazorWind": { type: "Burst", img: "Cards/rw.png" },
-      "WhipOfLightning": { type: "Burst", img: "Cards/wol.png" },
-      "BurstCount": { type: "Burst", img: "Cards/csb.png" },
-      "Purify": { type: "Burst", img: "Cards/pb.png" },
-      "LimbBurst": { type: "Burst", img: "Cards/ps.png" },
-      "FlakShot": { type: "Burst", img: "Cards/fs.png" },
-      "Haymaker": { type: "Burst", img: "Cards/ch.png" },
-      "ChainLightning": { type: "Burst", img: "Cards/cov.png" },
-      "MirrorForce": { type: "Burst", img: "Cards/mf.png" },
-      "CelestialStatic": { type: "Burst", img: "Cards/cs.png" },
+      "MoonBeam": { name: "Moon Beam", type: "Burst", img: "Cards/mb.png", target: "Torso/Braços", desc: "Foco exclusivo de dano explosivo nessas partes." },
+      "Fragmentize": { name: "Fragmentize", type: "Burst", img: "Cards/fr.png", target: "Armadura Amaldiçoada", desc: "Dano aumentado contra partes protegidas por armadura." },
+      "SkullBash": { name: "Skull Bash", type: "Burst", img: "Cards/sb.png", target: "Cabeça/Pernas", desc: "Foco exclusivo de dano explosivo nessas partes." },
+      "RazorWind": { name: "Razor Wind", type: "Burst", img: "Cards/rw.png", target: "Corpo", desc: "Espalha rajadas de vento cortante em armadura." },
+      "WhipOfLightning": { name: "Whip of Lightning", type: "Burst", img: "Cards/wol.png", target: "5 ou 6 Partes", desc: "Golpes elétricos rápidos divididos pelo corpo." },
+      "BurstCount": { name: "Clanship Barrage", type: "Burst", img: "Cards/csb.png", target: "Qualquer Parte", desc: "Disparos do Clan Ship. Usar com Explosão e Suporte." },
+      "Purify": { name: "Purifying Blast", type: "Burst", img: "Cards/pb.png", target: "2 ou 3 Partes", desc: "Detona acúmulos de aflição. Bater espalhado." },
+      "LimbBurst": { name: "Psychic Shackles", type: "Burst", img: "Cards/ps.png", target: "Membros (Braços/Pernas)", desc: "Dano de explosão focado exclusivo nos membros." },
+      "FlakShot": { name: "Flak Shot", type: "Burst", img: "Cards/fs.png", target: "Armadura", desc: "Disparos de estilhaços espalhados por múltiplos alvos." },
+      "Haymaker": { name: "Cosmic Haymaker", type: "Burst", img: "Cards/ch.png", target: "Qualquer Parte", desc: "Dano massivo concentrado no tronco superior." },
+      "ChainLightning": { name: "Chain of Vengeance", type: "Burst", img: "Cards/cov.png", target: "6 Partes", desc: "Ativa dano elétrico em cadeia onde não há armadura." },
+      "MirrorForce": { name: "Mirror Force", type: "Burst", img: "Cards/mf.png", target: "Qualquer Parte", desc: "Cada uso aumenta o dano da própria carta no próximo ciclo." },
+      "CelestialStatic": { name: "Celestial Static", type: "Burst", img: "Cards/cs.png", target: "Membros + Cabeça/Torso", desc: "Causa bônus de dano contínuo na parte que você atacar." },
+      "Weaken": { name: "Guard Break", type: "Burst", img: "Cards/gb.png", target: "Qualquer Parte", desc: "Potencializa o dano quando há partes já destruídas." },
+      "BarbedMorningstar": { name: "Barbed Morningstar", type: "Burst", img: "Cards/bm.jpg", target: "Armadura ou Corpo", desc: "Explosão perfurante de alto impacto." },
 
       // AFLIÇÃO (AFFLICTION)
-      "BurningAttack": { type: "Affliction", img: "Cards/bi.png" },
-      "PoisonAttack": { type: "Affliction", img: "Cards/ad.png" },
-      "DecayingAttack": { type: "Affliction", img: "Cards/ds.png" },
-      "Fuse": { type: "Affliction", img: "Cards/fb.png" },
-      "Shadow": { type: "Affliction", img: "Cards/gs.png" },
-      "PlagueAttack": { type: "Affliction", img: "Cards/tp.png" },
-      "Disease": { type: "Affliction", img: "Cards/ra.png" },
-      "Swarm": { type: "Affliction", img: "Cards/rs.png" },
-      "RuinousRust": { type: "Affliction", img: "Cards/rr.png" },
-      "PowerBubble": { type: "Affliction", img: "Cards/bb.png" },
-      "RuneAttack": { type: "Affliction", img: "Cards/ma.png" },
+      "BurningAttack": { name: "Blazing Inferno", type: "Affliction", img: "Cards/bi.png", target: "Até 6 Partes", desc: "Fogo contínuo que queima múltiplos alvos." },
+      "PoisonAttack": { name: "Acid Drench", type: "Affliction", img: "Cards/ad.png", target: "Parte Afetada", desc: "Veneno corrosivo que amplifica dano na parte atingida." },
+      "DecayingAttack": { name: "Decaying Strike", type: "Affliction", img: "Cards/ds.png", target: "Corpo (+70% Vida)", desc: "Causa dano colossal em partes saudáveis no início." },
+      "Fuse": { name: "Fusion Bomb", type: "Affliction", img: "Cards/fb.png", target: "Múltiplas Partes", desc: "Planta bombas que explodem após contagem regressiva." },
+      "Shadow": { name: "Grim Shadow", type: "Affliction", img: "Cards/fs.png", target: "Até 6 Partes", desc: "Acúmulo de sombras que drena a vida do Titan." },
+      "PlagueAttack": { name: "Thriving Plague", type: "Affliction", img: "Cards/tp.png", target: "1 a 3 Partes", desc: "Praga altamente concentrada. Focar em poucos alvos." },
+      "Disease": { name: "Radioactivity", type: "Affliction", img: "Cards/ra.png", target: "Até 6 Partes", desc: "Radiação contínua por segundo distribuída pelo Titan." },
+      "Swarm": { name: "Ravenous Swarm", type: "Affliction", img: "Cards/rs.png", target: "6 Partes (Armadura)", desc: "Enxame voraz que devora placas de armadura." },
+      "RuinousRust": { name: "Ruinous Rain", type: "Affliction", img: "Cards/rr.png", target: "Armadura", desc: "Chuva corrosiva ácida devastadora contra armaduras." },
+      "PowerBubble": { name: "Corrosive Bubbles", type: "Affliction", img: "Cards/bb.png", target: "Armadura Amaldiçoada", desc: "Causa dano crítico e bônus em partes amaldiçoadas." },
+      "RuneAttack": { name: "Maelstrom", type: "Affliction", img: "Cards/ma.png", target: "Parte Afetada", desc: "Vórtice que aumenta a força de todas as aflições ativas." },
+      "MagicPotion": { name: "Amplify", type: "Affliction", img: "Cards/am.jpg", target: "Todas as Aflições", desc: "Amplifica diretamente o dano de venenos e pragas." },
+      "SandsOfTime": { name: "Sands of Time", type: "Affliction", img: "Cards/sot.png", target: "6 Partes destruídas", desc: "Acelera e prolonga a frequência dos ticks de dano." },
+      "CosmicBarb": { name: "Cosmic Barb", type: "Affliction", img: "Cards/zz.jpg", target: "Armadura Amaldiçoada", desc: "Espinhos contínuos que castigam partes amaldiçoadas." },
 
       // SUPORTE (SUPPORT)
-      "Weaken": { type: "Burst", img: "Cards/gb.png" },
-      "BarbedMorningstar": { type: "Burst", img: "Cards/bm.jpg" },
-      "MagicPotion": { type: "Affliction", img: "Cards/am.jpg" },
-      "SandsOfTime": { type: "Affliction", img: "Cards/sot.png" },
-      "CosmicBarb": { type: "Affliction", img: "Cards/zz.jpg" },
-      "ExecutionersAxe": { type: "Support", img: "Cards/ci.png" },
-      "CrushingVoid": { type: "Support", img: "Cards/iv.png" },
-      "MentalFocus": { type: "Support", img: "Cards/rg.png" },
-      "ImpactAttack": { type: "Support", img: "Cards/if.png" },
-      "InnerTruth": { type: "Support", img: "Cards/sf.png" },
-      "FinisherAttack": { type: "Support", img: "Cards/vm.png" },
-      "SuperheatMetal": { type: "Support", img: "Cards/pr.png" },
-      "BurstBoost": { type: "Support", img: "Cards/af.png" },
-      "LimbSupport": { type: "Support", img: "Cards/gv.png" },
-      "TotemFairySkill": { type: "Support", img: "Cards/tot.png" },
-      "TeamTactics": { type: "Support", img: "Cards/tt.png" },
-      "SpinalTap": { type: "Support", img: "Cards/ss.png" },
-      "AstralEcho": { type: "Support", img: "Cards/ae.png" },
-      "TriangleSupport": { type: "Support", img: "Cards/rk.png" },
-      "BattleDrums": { type: "Support", img: "Cards/bd.jpg" }
+      "ExecutionersAxe": { name: "Crushing Instinct", type: "Support", img: "Cards/ci.png", target: "Geral da Raid", desc: "Aumento passivo na chance crítica e poder do deck." },
+      "CrushingVoid": { name: "Insanity Void", type: "Support", img: "Cards/iv.png", target: "Alvo da Aflição", desc: "Aumenta o dano de cartas de aflição no alvo." },
+      "MentalFocus": { name: "Rancid Gas", type: "Support", img: "Cards/rg.png", target: "Parte com Veneno", desc: "Potencializa a chance de acúmulo contínuo de aflição." },
+      "ImpactAttack": { name: "Inspiring Force", type: "Support", img: "Cards/if.png", target: "Corpo do Titan", desc: "Bônus massivo aplicado exclusivamente em golpes no corpo." },
+      "InnerTruth": { name: "Soul Fire", type: "Support", img: "Cards/sf.png", target: "Peitoral ou Braços", desc: "Chamas de suporte que elevam o dano em tronco e braços." },
+      "FinisherAttack": { name: "Victory March", type: "Support", img: "Cards/vm.png", target: "1 parte viva s/ Armadura", desc: "Bônus gigantesco por cada parte do Titan já destruída." },
+      "SuperheatMetal": { name: "Prismatic Rift", type: "Support", img: "Cards/pr.png", target: "Armadura", desc: "Aquece e destrói armaduras com multiplicador extra." },
+      "BurstBoost": { name: "Ancestral Favor", type: "Support", img: "Cards/af.png", target: "Cartas de Explosão", desc: "Eleva a chance e o poder de ativação dos golpes de Burst." },
+      "LimbSupport": { name: "Grasping Vines", type: "Support", img: "Cards/gv.png", target: "Membros (Braços/Pernas)", desc: "Prende os membros concedendo dano extra a eles." },
+      "TotemFairySkill": { name: "Totem of Power", type: "Support", img: "Cards/tot.png", target: "Fada / Tap Focado", desc: "Invoca fadas de dano cumulativo. Não usar com outro suporte." },
+      "TeamTactics": { name: "Team Tactics", type: "Support", img: "Cards/tt.png", target: "Todo o Clã", desc: "Cada uso eleva o dano de todos os membros nos ciclos seguintes." },
+      "SpinalTap": { name: "Skeletal Smash", type: "Support", img: "Cards/ss.png", target: "1 Única Parte", desc: "Suporte focado de impacto destrutivo concentrado." },
+      "AstralEcho": { name: "Astral Echo", type: "Support", img: "Cards/ae.png", target: "Geral", desc: "Gera ecos astrais que duplicam e sustentam ativações." },
+      "TriangleSupport": { name: "Radiant Kaleidoscope", type: "Support", img: "Cards/rk.png", target: "Burst + Aflição", desc: "Suporte prismático que potencializa composições mistas." },
+      "BattleDrums": { name: "Battle Drums", type: "Support", img: "Cards/bd.jpg", target: "Membros", desc: "Tambores de guerra que aumentam o ritmo e dano nos membros." }
     };
 
     async function colarDoClipboard() {
@@ -421,7 +491,7 @@
           return;
         }
 
-        // Atualização do Sumário (com Wildcards e Necrobear)
+        // Atualização do Sumário
         document.getElementById("playerSummary").style.display = "grid";
         document.getElementById("sumStage").textContent = data.playerStats?.["Max Prestige Stage"] || "-";
         document.getElementById("sumRaidLvl").textContent = data.raidStats?.["Raid Level"] || "-";
@@ -436,9 +506,18 @@
         const supportList = [];
 
         for (const [key, val] of Object.entries(data.raidCards)) {
-          const meta = CARD_METADATA[key] || { type: "Support", img: "Cards/wc.png" };
+          const meta = CARD_METADATA[key] || { 
+            name: key, 
+            type: "Support", 
+            img: "Cards/wc.png", 
+            target: "Geral", 
+            desc: "Sem descrição disponível." 
+          };
           const cardObj = {
             id: key,
+            name: meta.name,
+            target: meta.target,
+            desc: meta.desc,
             type: meta.type,
             img: meta.img,
             level: val.lv || 0
@@ -449,7 +528,7 @@
           else supportList.push(cardObj);
         }
 
-        // Ordena cada grupo do maior nível para o menor
+        // Ordena por nível decrescente
         burstList.sort((a, b) => b.level - a.level);
         afflictionList.sort((a, b) => b.level - a.level);
         supportList.sort((a, b) => b.level - a.level);
@@ -479,13 +558,31 @@
       list.forEach(card => {
         const div = document.createElement("div");
         div.className = `card-tile ${borderClass}`;
+
+        div.onclick = (e) => {
+          document.querySelectorAll('.card-tile').forEach(t => {
+            if (t !== div) t.classList.remove('active-touch');
+          });
+          div.classList.toggle('active-touch');
+          e.stopPropagation();
+        };
+
         div.innerHTML = `
-          <img src="${card.img}" class="card-thumb" alt="" onerror="this.src='Cards/wc.png'">
+          <img src="${card.img}" class="card-thumb" alt="${card.name}" onerror="this.src='Cards/wc.png'">
           <span class="card-overlay-lvl">${card.level}</span>
+          <div class="card-tooltip">
+            <span class="tooltip-name">${card.name}</span>
+            <span class="tooltip-target">${card.target}</span>
+            <span class="tooltip-desc">${card.desc}</span>
+          </div>
         `;
         container.appendChild(div);
       });
     }
+
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.card-tile').forEach(t => t.classList.remove('active-touch'));
+    });
   </script>
 </body>
 </html>
