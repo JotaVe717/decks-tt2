@@ -17,13 +17,13 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 24px 14px;
+      padding: 18px 10px;
       min-height: 100vh;
     }
     .back-btn {
       align-self: flex-start;
       max-width: 900px;
-      margin: 0 auto 16px auto;
+      margin: 0 auto 14px auto;
       width: 100%;
       text-decoration: none;
       color: #8fa0b5;
@@ -43,42 +43,42 @@
       background: #18202a;
       border: 1px solid #283545;
       border-radius: 16px;
-      padding: 24px;
+      padding: 18px 12px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
     .title {
       text-align: center;
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
       letter-spacing: 1px;
       text-transform: uppercase;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .title span {
       color: #f5a623;
     }
     .subtitle {
       text-align: center;
-      font-size: 13px;
+      font-size: 12px;
       color: #8fa0b5;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
     }
 
-    /* ÁREA DE IMPORTAÇÃO */
+    /* ENTRADA DE DADOS */
     .import-card {
       background: #212c3a;
       border: 1px dashed #3a4b60;
       border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 20px;
+      padding: 14px;
+      margin-bottom: 18px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
     .import-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
     }
     .btn-paste {
@@ -86,13 +86,13 @@
       border: none;
       color: #0f141c;
       font-weight: 800;
-      padding: 10px 20px;
+      padding: 9px 18px;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 14px;
+      font-size: 13px;
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       transition: opacity 0.2s;
     }
     .btn-paste:hover {
@@ -103,7 +103,7 @@
       border: 1px solid #324357;
       color: #d1dbe5;
       font-weight: 600;
-      padding: 10px 16px;
+      padding: 9px 14px;
       border-radius: 8px;
       cursor: pointer;
       font-size: 13px;
@@ -115,14 +115,14 @@
     }
     textarea {
       width: 100%;
-      height: 65px;
+      height: 60px;
       background: #141c24;
       border: 1px solid #2d3c4e;
       border-radius: 8px;
-      padding: 10px;
+      padding: 8px;
       color: #a0aec0;
       font-family: monospace;
-      font-size: 12px;
+      font-size: 11px;
       resize: vertical;
     }
     textarea:focus {
@@ -130,16 +130,16 @@
       border-color: #f5a623;
     }
 
-    /* SUMÁRIO LIMPO DO JOGADOR */
+    /* SUMÁRIO COMPLETO COM WILDCARDS E NECROBEAR */
     .player-summary {
       background: #121922;
       border: 1px solid #283545;
       border-radius: 10px;
-      padding: 14px;
-      margin-bottom: 24px;
+      padding: 12px;
+      margin-bottom: 22px;
       display: none;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
       text-align: center;
     }
     .summary-item {
@@ -148,32 +148,32 @@
       gap: 3px;
     }
     .summary-item span {
-      font-size: 11px;
+      font-size: 10px;
       color: #8fa0b5;
       text-transform: uppercase;
       font-weight: 700;
       letter-spacing: 0.5px;
     }
     .summary-item strong {
-      font-size: 16px;
+      font-size: 15px;
       color: #50e3c2;
     }
 
-    /* SEÇÕES DE TIPOS (SEPARADAS COM ESPAÇAMENTO) */
+    /* SEÇÕES DE CATEGORIA COM ESPAÇAMENTO */
     .section-category {
-      margin-bottom: 26px;
+      margin-bottom: 24px;
       display: none;
     }
     .category-header {
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 12px;
-      padding-bottom: 6px;
+      gap: 8px;
+      margin-bottom: 10px;
+      padding-bottom: 4px;
       border-bottom: 1px solid #283545;
     }
     .category-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.8px;
@@ -182,80 +182,89 @@
     .title-affliction { color: #38a1f3; }
     .title-support { color: #4cd964; }
 
-    /* GRELHA DE 6 CARTAS POR LINHA */
+    /* FORÇADO ESTRITAMENTE 6 COLUNAS NO DESKTOP E NO MOBILE */
     .cards-grid-6 {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(6, 1fr) !important;
+      gap: 6px;
+      width: 100%;
     }
 
-    /* CARD COMPACTO: APENAS FOTO E NÍVEL */
-    .compact-card {
-      background: #19222d;
-      border: 1px solid #2b394a;
-      border-radius: 10px;
-      padding: 8px 6px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-      transition: transform 0.15s ease, border-color 0.15s ease;
-    }
-    .compact-card:hover {
-      transform: translateY(-2px);
-      border-color: #f5a623;
-    }
-    .card-img-wrap {
-      width: 58px;
-      height: 58px;
+    /* CONTAINER DA CARTA COM POSIÇÃO RELATIVA */
+    .card-tile {
+      position: relative;
+      aspect-ratio: 1 / 1;
       border-radius: 8px;
       overflow: hidden;
       background: #0f141c;
-      border: 1px solid #3b4d63;
+      border: 1.5px solid #2b394a;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+    .card-tile:hover {
+      transform: translateY(-2px);
+      border-color: #f5a623;
     }
     .card-thumb {
       width: 100%;
       height: 100%;
       object-fit: cover;
-    }
-    .compact-lvl {
-      font-size: 13px;
-      font-weight: 800;
-      color: #ffffff;
-      background: #121922;
-      border: 1px solid #2d3c4e;
-      border-radius: 4px;
-      padding: 2px 6px;
-      min-width: 44px;
-      text-align: center;
+      display: block;
     }
 
-    .border-burst { border-color: rgba(255, 87, 34, 0.4); }
-    .border-affliction { border-color: rgba(56, 161, 243, 0.4); }
-    .border-support { border-color: rgba(76, 217, 100, 0.4); }
+    /* NÍVEL SOBRESCRITO NO CANTO INFERIOR DIREITO */
+    .card-overlay-lvl {
+      position: absolute;
+      bottom: 2px;
+      right: 2px;
+      background: rgba(15, 20, 28, 0.88);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(2px);
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 1px 4px;
+      border-radius: 4px;
+      line-height: 1;
+      text-shadow: 0 1px 2px #000;
+      pointer-events: none;
+    }
+
+    /* CORES DE BORDA POR TIPO */
+    .border-burst { border-color: rgba(255, 87, 34, 0.5); }
+    .border-affliction { border-color: rgba(56, 161, 243, 0.5); }
+    .border-support { border-color: rgba(76, 217, 100, 0.5); }
 
     .empty-state {
       text-align: center;
       color: #8fa0b5;
       font-size: 13px;
-      padding: 30px;
+      padding: 30px 10px;
     }
 
-    @media (max-width: 768px) {
-      .cards-grid-6 {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
+    /* AJUSTE FINO PARA TELAS PEQUENAS (GARANTE 6 POR LINHA SEM ESTICAR) */
     @media (max-width: 480px) {
-      .cards-grid-6 {
-        grid-template-columns: repeat(3, 1fr);
+      .container {
+        padding: 14px 6px;
       }
-      .card-img-wrap {
-        width: 50px;
-        height: 50px;
+      .cards-grid-6 {
+        gap: 4px;
+      }
+      .card-tile {
+        border-radius: 6px;
+      }
+      .card-overlay-lvl {
+        font-size: 9.5px;
+        padding: 1px 3px;
+        bottom: 1px;
+        right: 1px;
+      }
+      .player-summary {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
       }
     }
   </style>
@@ -266,19 +275,18 @@
 
   <div class="container">
     <div class="title">Importar <span>Cartas & Níveis</span></div>
-    <div class="subtitle">Cole o JSON exportado para visualizar o nível de cada carta organizado por tipo</div>
+    <div class="subtitle">Cole o JSON para ver o nível sobrescrito em cada carta por categoria</div>
 
     <!-- ENTRADA -->
     <div class="import-card">
       <div class="import-actions">
         <button class="btn-paste" onclick="colarDoClipboard()">📋 Paste (Colar)</button>
         <button class="btn-secondary" onclick="processarTextoManual()">Processar Texto</button>
-        <span style="font-size: 12px; color: #8fa0b5;">ou cole o código diretamente abaixo:</span>
       </div>
-      <textarea id="jsonInput" placeholder='Cole seu JSON exportado aqui (ex: {"playerStats":..., "raidCards":...})'></textarea>
+      <textarea id="jsonInput" placeholder='Cole seu JSON exportado aqui'></textarea>
     </div>
 
-    <!-- SUMÁRIO DO JOGADOR (SEM CARTAS DESBLOQUEADAS E SEM WILDCARDS) -->
+    <!-- SUMÁRIO DO JOGADOR -->
     <div class="player-summary" id="playerSummary">
       <div class="summary-item">
         <span>Max Stage</span>
@@ -291,6 +299,14 @@
       <div class="summary-item">
         <span>Soma dos Níveis</span>
         <strong id="sumLvlSum">-</strong>
+      </div>
+      <div class="summary-item">
+        <span>Wildcards</span>
+        <strong id="sumWildcards" style="color: #f5a623;">-</strong>
+      </div>
+      <div class="summary-item">
+        <span>Necrobear</span>
+        <strong id="sumNecrobear" style="color: #a29bfe;">-</strong>
       </div>
     </div>
 
@@ -306,7 +322,7 @@
       <div class="cards-grid-6" id="gridBurst"></div>
     </div>
 
-    <!-- 2. AFLIÇÃO -->
+    <!-- 2. AFLIÇÃO (AFFLICTION) -->
     <div class="section-category" id="secAffliction">
       <div class="category-header">
         <span class="category-title title-affliction">Aflição</span>
@@ -314,7 +330,7 @@
       <div class="cards-grid-6" id="gridAffliction"></div>
     </div>
 
-    <!-- 3. SUPORTE -->
+    <!-- 3. SUPORTE (SUPPORT) -->
     <div class="section-category" id="secSupport">
       <div class="category-header">
         <span class="category-title title-support">Suporte</span>
@@ -383,7 +399,7 @@
         document.getElementById("jsonInput").value = text;
         processarJSON(text);
       } catch (err) {
-        alert("Permissão negada ou navegador incompatível. Use Ctrl+V na caixa de texto e clique em 'Processar Texto'.");
+        alert("Permissão negada. Cole o JSON manualmente no campo abaixo e clique em 'Processar Texto'.");
       }
     }
 
@@ -405,11 +421,13 @@
           return;
         }
 
-        // Atualiza Sumário
+        // Atualização do Sumário (com Wildcards e Necrobear)
         document.getElementById("playerSummary").style.display = "grid";
         document.getElementById("sumStage").textContent = data.playerStats?.["Max Prestige Stage"] || "-";
         document.getElementById("sumRaidLvl").textContent = data.raidStats?.["Raid Level"] || "-";
         document.getElementById("sumLvlSum").textContent = data.raidStats?.["Total Raid Card Levels"] || "-";
+        document.getElementById("sumWildcards").textContent = data.raidStats?.["Wildcards"] || "0";
+        document.getElementById("sumNecrobear").textContent = data.playerStats?.["Necrobear Level"] ? `Nv. ${data.playerStats["Necrobear Level"]}` : "-";
 
         document.getElementById("emptyMessage").style.display = "none";
 
@@ -442,7 +460,7 @@
 
       } catch (err) {
         console.error(err);
-        alert("Erro ao ler o código JSON. Certifique-se de copiar todo o conteúdo.");
+        alert("Erro ao ler o JSON. Verifique se copiou o texto completo.");
       }
     }
 
@@ -460,12 +478,10 @@
 
       list.forEach(card => {
         const div = document.createElement("div");
-        div.className = `compact-card ${borderClass}`;
+        div.className = `card-tile ${borderClass}`;
         div.innerHTML = `
-          <div class="card-img-wrap">
-            <img src="${card.img}" class="card-thumb" alt="" onerror="this.src='Cards/wc.png'">
-          </div>
-          <span class="compact-lvl">${card.level}</span>
+          <img src="${card.img}" class="card-thumb" alt="" onerror="this.src='Cards/wc.png'">
+          <span class="card-overlay-lvl">${card.level}</span>
         `;
         container.appendChild(div);
       });
