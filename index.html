@@ -13,6 +13,16 @@
     }
     body {
       background-color: #0f141c;
+      /* IMAGEM DE FUNDO COM CAMADA ESCURECIDA PARA CONTRASTE */
+      background-image: 
+        linear-gradient(rgba(15, 20, 28, 0.88), rgba(15, 20, 28, 0.94)),
+        url('Cards/triade.png'),
+        url('triade.png'),
+        url('triade.jpg');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+      background-repeat: no-repeat;
       color: #ffffff;
       display: flex;
       flex-direction: column;
@@ -29,6 +39,7 @@
       font-weight: 800;
       letter-spacing: 1px;
       text-transform: uppercase;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
     }
     .header h1 span {
       color: #f5a623;
@@ -37,6 +48,7 @@
       color: #8fa0b5;
       font-size: 14px;
       margin-top: 8px;
+      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
     }
     .deck-grid {
       display: grid;
@@ -46,7 +58,8 @@
       max-width: 900px;
     }
     .deck-card {
-      background: #19222d;
+      background: rgba(25, 34, 45, 0.88);
+      backdrop-filter: blur(8px);
       border: 1px solid #2b394a;
       border-radius: 12px;
       padding: 20px;
@@ -60,7 +73,8 @@
     .deck-card:hover {
       transform: translateY(-3px);
       border-color: #4cd964;
-      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      background: rgba(30, 40, 54, 0.94);
     }
     .deck-card.highlight:hover {
       border-color: #50e3c2;
@@ -121,8 +135,9 @@
     footer {
       margin-top: auto;
       padding-top: 40px;
-      color: #55687d;
+      color: #71849a;
       font-size: 12px;
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
     }
   </style>
 </head>
@@ -135,27 +150,7 @@
 
   <div class="deck-grid">
 
-    <!-- FLUXOGRAMAS DE DECKS (PADRONIZADO) -->
-    <a href="decks.html" class="deck-card">
-      <img src="Cards/tp.png" alt="Fluxogramas de Decks" class="deck-thumb" onerror="this.src='Cards/wc.png'">
-      <div class="deck-info">
-        <span class="deck-badge green">Montagem Tática</span>
-        <h2>Fluxogramas de Decks</h2>
-        <p>Diagramas visuais de montagem para Plague, Foguetes e Purify com conexões em SVG.</p>
-      </div>
-    </a>
-
-    <!-- GUIA DE CARTAS (NOVO) -->
-    <a href="guia_cartas.html" class="deck-card highlight">
-      <img src="Cards/tot.png" alt="Guia de Cartas" class="deck-thumb" onerror="this.src='Cards/wc.png'">
-      <div class="deck-info">
-        <span class="deck-badge cyan">Mecânicas de Raid</span>
-        <h2>Guia de Cartas</h2>
-        <p>Condições, sinergias e alvos ideais de cada carta de raid.</p>
-      </div>
-    </a>
-
-    <!-- IMPORTADOR DE PERFIL -->
+    <!-- 1. IMPORTADOR DE PERFIL -->
     <a href="importar_cartas.html" class="deck-card gold-highlight">
       <div class="deck-icon-thumb">📥</div>
       <div class="deck-info">
@@ -165,27 +160,17 @@
       </div>
     </a>
 
-    <!-- DECK DE FOGUETES -->
-    <a href="deck_foguetes.html" class="deck-card">
-      <img src="Cards/csb.png" alt="Barragem do Clã" class="deck-thumb">
+    <!-- 2. FLUXOGRAMAS DE DECKS -->
+    <a href="decks.html" class="deck-card">
+      <img src="Cards/tp.png" alt="Fluxogramas de Decks" class="deck-thumb" onerror="this.src='Cards/wc.png'">
       <div class="deck-info">
-        <span class="deck-badge">Explosão + Suporte</span>
-        <h2>Deck de Foguetes</h2>
-        <p>Barragem do Clã com cartas de explosão e suporte/GB.</p>
+        <span class="deck-badge green">Montagem Tática</span>
+        <h2>Fluxogramas de Decks</h2>
+        <p>Diagramas visuais de montagem para Plague, Foguetes e Purify com conexões em SVG.</p>
       </div>
     </a>
 
-    <!-- DECK DE PURIFY -->
-    <a href="deck_purify.html" class="deck-card">
-      <img src="Cards/pb.png" alt="Purify" class="deck-thumb">
-      <div class="deck-info">
-        <span class="deck-badge">Aflição + Suporte</span>
-        <h2>Deck de Purify</h2>
-        <p>Purifying Blast com ativadores de aflição, Zap e suportes de dano.</p>
-      </div>
-    </a>
-
-    <!-- TABELA DE AFLIÇÕES -->
+    <!-- 3. TABELA DE AFLIÇÕES -->
     <a href="tabela_aflicoes.html" class="deck-card highlight">
       <img src="Cards/a.png" alt="Tabela de Aflições" class="deck-thumb">
       <div class="deck-info">
@@ -195,7 +180,7 @@
       </div>
     </a>
 
-    <!-- GUIA DE NIVELAMENTO -->
+    <!-- 4. GUIA DE NIVELAMENTO -->
     <a href="nivelamento_decks.html" class="deck-card">
       <img src="Cards/wc.png" alt="Nivelamento" class="deck-thumb">
       <div class="deck-info">
@@ -205,7 +190,7 @@
       </div>
     </a>
 
-    <!-- CONSULTA DE MEMBROS -->
+    <!-- 5. CONSULTA DE MEMBROS -->
     <a href="membros_cla.html" class="deck-card">
       <img src="Cards/tt.png" alt="Membros do Clã" class="deck-thumb">
       <div class="deck-info">
@@ -215,7 +200,7 @@
       </div>
     </a>
 
-    <!-- MÓDULO DE REDUÇÕES -->
+    <!-- 6. MÓDULO DE REDUÇÕES -->
     <a href="reducoes.html" class="deck-card gold-highlight">
       <div class="deck-icon-thumb">⚖️</div>
       <div class="deck-info">
