@@ -109,6 +109,9 @@
       letter-spacing: 0.5px;
       margin-bottom: 4px;
     }
+    .deck-badge.green {
+      color: #4cd964;
+    }
     .deck-badge.cyan {
       color: #50e3c2;
     }
@@ -131,13 +134,34 @@
   </div>
 
   <div class="deck-grid">
-    <!-- DECK DE PLAGUE -->
-    <a href="deck_plague.html" class="deck-card">
-      <img src="Cards/tp.png" alt="Plague" class="deck-thumb">
+
+    <!-- FLUXOGRAMAS DE DECKS (PADRONIZADO) -->
+    <a href="decks.html" class="deck-card">
+      <img src="Cards/tp.png" alt="Fluxogramas de Decks" class="deck-thumb" onerror="this.src='Cards/wc.png'">
       <div class="deck-info">
-        <span class="deck-badge">Aflição + Suporte</span>
-        <h2>Deck de Plague</h2>
-        <p>Plague acompanhada de cartas de aflição e suporte (Void / Smash).</p>
+        <span class="deck-badge green">Montagem Tática</span>
+        <h2>Fluxogramas de Decks</h2>
+        <p>Diagramas visuais de montagem para Plague, Foguetes e Purify com conexões em SVG.</p>
+      </div>
+    </a>
+
+    <!-- GUIA DE CARTAS (NOVO) -->
+    <a href="guia_cartas.html" class="deck-card highlight">
+      <img src="Cards/tot.png" alt="Guia de Cartas" class="deck-thumb" onerror="this.src='Cards/wc.png'">
+      <div class="deck-info">
+        <span class="deck-badge cyan">Mecânicas de Raid</span>
+        <h2>Guia de Cartas</h2>
+        <p>Condições, sinergias e alvos ideais de cada carta de raid.</p>
+      </div>
+    </a>
+
+    <!-- IMPORTADOR DE PERFIL -->
+    <a href="importar_cartas.html" class="deck-card gold-highlight">
+      <div class="deck-icon-thumb">📥</div>
+      <div class="deck-info">
+        <span class="deck-badge gold">Perfil & Cartas</span>
+        <h2>Importar Cartas</h2>
+        <p>Cole o JSON do seu jogo para listar todos os seus níveis de cartas e fragmentos.</p>
       </div>
     </a>
 
@@ -199,16 +223,8 @@
         <h2>Tabela de Reduções</h2>
         <p>Conversão matemática para All Damage e All Gold com calculadora.</p>
       </div>
-
-      <!-- IMPORTADOR DE PERFIL -->
-    <a href="importar_cartas.html" class="deck-card gold-highlight">
-      <div class="deck-icon-thumb">📥</div>
-      <div class="deck-info">
-        <span class="deck-badge gold">Perfil & Cartas</span>
-        <h2>Importar Cartas</h2>
-        <p>Cole o JSON do seu jogo para listar todos os seus níveis de cartas e fragmentos.</p>
-      </div>
     </a>
+
   </div>
 
   <footer>
