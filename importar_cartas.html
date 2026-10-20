@@ -18,7 +18,7 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 16px 8px 60px 8px;
+      padding: 16px 8px 70px 8px;
       min-height: 100vh;
       overflow-x: hidden;
     }
@@ -208,10 +208,10 @@
       transition: transform 0.15s ease, border-color 0.15s ease;
     }
     .card-tile:hover,
-    .card-tile.active-touch {
+    .card-tile.active-selected {
       transform: translateY(-2px);
-      border-color: #f5a623;
-      z-index: 50;
+      border-color: #f5a623 !important;
+      z-index: 20;
     }
     .card-thumb {
       width: 100%;
@@ -238,45 +238,55 @@
       pointer-events: none;
     }
 
-    /* TOOLTIP PADRÃO (DESKTOP) */
-    .card-tooltip {
-      visibility: hidden;
-      opacity: 0;
-      width: 190px;
-      background-color: #121922;
-      color: #fff;
-      text-align: left;
-      border-radius: 8px;
-      padding: 8px 10px;
-      position: absolute;
-      z-index: 100;
-      bottom: 112%;
-      left: 50%;
-      transform: translateX(-50%);
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
-      border: 1px solid #3a4b60;
-      transition: opacity 0.2s ease, transform 0.2s ease;
-      pointer-events: none;
-    }
-    .card-tooltip::after {
-      content: "";
-      position: absolute;
-      top: 100%;
-      left: 50%;
-      margin-left: -5px;
-      border-width: 5px;
-      border-style: solid;
-      border-color: #3a4b60 transparent transparent transparent;
+    /* BORDAS POR TIPO */
+    .border-burst { border-color: rgba(255, 87, 34, 0.45); }
+    .border-affliction { border-color: rgba(56, 161, 243, 0.45); }
+    .border-support { border-color: rgba(76, 217, 100, 0.45); }
+
+    .empty-state {
+      text-align: center;
+      color: #8fa0b5;
+      font-size: 13px;
+      padding: 30px 10px;
     }
 
+    /* ---------------- TOOLTIP DESKTOP (FLUTUANTE NAS CARTAS) ---------------- */
     @media (min-width: 601px) {
-      .card-tile:hover .card-tooltip,
-      .card-tile.active-touch .card-tooltip {
+      .card-tooltip {
+        visibility: hidden;
+        opacity: 0;
+        width: 190px;
+        background-color: #121922;
+        color: #fff;
+        text-align: left;
+        border-radius: 8px;
+        padding: 8px 10px;
+        position: absolute;
+        z-index: 100;
+        bottom: 112%;
+        left: 50%;
+        transform: translateX(-50%);
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.9);
+        border: 1px solid #3a4b60;
+        transition: opacity 0.2s ease, transform 0.2s ease;
+        pointer-events: none;
+      }
+      .card-tooltip::after {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #3a4b60 transparent transparent transparent;
+      }
+      .card-tile:hover .card-tooltip {
         visibility: visible;
         opacity: 1;
         transform: translateX(-50%) translateY(-4px);
       }
-      /* Previne cortes nas bordas no Desktop */
+      /* Coluna 1: abre para a direita */
       .cards-grid-6 .card-tile:nth-child(6n+1) .card-tooltip {
         left: 0;
         transform: translateX(0);
@@ -288,7 +298,7 @@
       .cards-grid-6 .card-tile:nth-child(6n+1):hover .card-tooltip {
         transform: translateX(0) translateY(-4px);
       }
-
+      /* Coluna 6: abre para a esquerda */
       .cards-grid-6 .card-tile:nth-child(6n) .card-tooltip {
         left: 100%;
         transform: translateX(-100%);
@@ -301,9 +311,13 @@
       .cards-grid-6 .card-tile:nth-child(6n):hover .card-tooltip {
         transform: translateX(-100%) translateY(-4px);
       }
+
+      /* Painel mobile ocultado no desktop */
+      #mobileCardDrawer {
+        display: none !important;
+      }
     }
 
-    /* CABEÇALHO DO TOOLTIP COM RANK NO CANTO SUPERIOR DIREITO */
     .tooltip-header {
       display: flex;
       align-items: center;
@@ -351,52 +365,98 @@
       display: block;
     }
 
-    /* BORDAS POR TIPO */
-    .border-burst { border-color: rgba(255, 87, 34, 0.45); }
-    .border-affliction { border-color: rgba(56, 161, 243, 0.45); }
-    .border-support { border-color: rgba(76, 217, 100, 0.45); }
-
-    .empty-state {
-      text-align: center;
-      color: #8fa0b5;
-      font-size: 13px;
-      padding: 30px 10px;
-    }
-
-    /* COMPORTAMENTO EXCLUSIVO PARA MOBILE (POPUP FIXO DE RODAPÉ) */
+    /* ---------------- MODAL / DRAWER FIXO EXCLUSIVO MOBILE ---------------- */
     @media (max-width: 600px) {
+      /* Oculta os tooltips internos para não quebrar a tela */
+      .card-tooltip {
+        display: none !important;
+      }
       .card-overlay-lvl {
         font-size: 9px;
         padding: 1px 2px;
         bottom: 1px;
         right: 1px;
       }
-      .card-tooltip {
+      /* Banner Fixo no Rodapé do Mobile */
+      #mobileCardDrawer {
         position: fixed;
         bottom: 12px;
-        left: 50% !important;
-        transform: translateX(-50%) !important;
-        width: 92vw;
-        max-width: 400px;
-        padding: 12px 14px;
-        background: #141c26;
+        left: 50%;
+        transform: translateX(-50%) translateY(120%);
+        width: calc(100vw - 20px);
+        max-width: 420px;
+        background: #141d27;
         border: 1.5px solid #f5a623;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.95);
-        border-radius: 10px;
-        z-index: 9999;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.95);
+        border-radius: 12px;
+        padding: 12px 14px;
+        z-index: 10000;
+        transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
+        opacity: 0;
+        pointer-events: none;
       }
-      .card-tooltip::after {
-        display: none; /* remove triângulo no mobile */
-      }
-      .card-tile.active-touch .card-tooltip {
-        visibility: visible;
+      #mobileCardDrawer.active {
+        transform: translateX(-50%) translateY(0);
         opacity: 1;
         pointer-events: auto;
       }
-      .tooltip-name { font-size: 13px; }
-      .tooltip-rank { font-size: 11px; padding: 2px 6px; }
-      .tooltip-target { font-size: 11px; margin-bottom: 6px; }
-      .tooltip-desc { font-size: 11px; }
+      .drawer-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+      .drawer-title-group {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        overflow: hidden;
+      }
+      .drawer-name {
+        font-size: 13.5px;
+        font-weight: 800;
+        color: #f5a623;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      .drawer-rank {
+        font-size: 10.5px;
+        font-weight: 900;
+        color: #ff5722;
+        background: rgba(255, 69, 0, 0.25);
+        border: 1px solid rgba(255, 87, 34, 0.6);
+        padding: 1px 5px;
+        border-radius: 4px;
+        flex-shrink: 0;
+      }
+      .drawer-close {
+        background: none;
+        border: none;
+        color: #8fa0b5;
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1;
+        padding: 2px 6px;
+        cursor: pointer;
+      }
+      .drawer-target {
+        display: inline-block;
+        font-size: 10.5px;
+        font-weight: 700;
+        color: #50e3c2;
+        background: rgba(80, 227, 194, 0.12);
+        border: 1px solid rgba(80, 227, 194, 0.35);
+        padding: 1px 6px;
+        border-radius: 4px;
+        margin-bottom: 6px;
+      }
+      .drawer-desc {
+        font-size: 11px;
+        color: #d1dbe5;
+        line-height: 1.4;
+      }
     }
   </style>
 </head>
@@ -406,7 +466,7 @@
 
   <div class="container">
     <div class="title">Importar <span>Cartas & Níveis</span></div>
-    <div class="subtitle">Toque na carta para ver o rank, onde bater e o efeito completo</div>
+    <div class="subtitle">Toque na carta para inspecionar rank, alvo e descrição sem cortes</div>
 
     <!-- ENTRADA -->
     <div class="import-card">
@@ -469,6 +529,19 @@
       <div class="cards-grid-6" id="gridSupport"></div>
     </div>
 
+  </div>
+
+  <!-- DRAWER FLUTUANTE EXCLUSIVO PARA MOBILE -->
+  <div id="mobileCardDrawer">
+    <div class="drawer-header">
+      <div class="drawer-title-group">
+        <span class="drawer-name" id="mDrawerName">-</span>
+        <span class="drawer-rank" id="mDrawerRank">S</span>
+      </div>
+      <button class="drawer-close" onclick="fecharMobileDrawer()">&times;</button>
+    </div>
+    <span class="drawer-target" id="mDrawerTarget">-</span>
+    <div class="drawer-desc" id="mDrawerDesc">-</div>
   </div>
 
   <script>
@@ -604,6 +677,24 @@
       }
     }
 
+    function abrirMobileDrawer(card, elemento) {
+      document.querySelectorAll('.card-tile').forEach(t => t.classList.remove('active-selected'));
+      elemento.classList.add('active-selected');
+
+      document.getElementById('mDrawerName').textContent = card.name;
+      document.getElementById('mDrawerRank').textContent = card.rank;
+      document.getElementById('mDrawerTarget').textContent = card.target;
+      document.getElementById('mDrawerDesc').textContent = card.desc;
+
+      const drawer = document.getElementById('mobileCardDrawer');
+      drawer.classList.add('active');
+    }
+
+    function fecharMobileDrawer() {
+      document.querySelectorAll('.card-tile').forEach(t => t.classList.remove('active-selected'));
+      document.getElementById('mobileCardDrawer').classList.remove('active');
+    }
+
     function renderGrid(containerId, sectionId, list, borderClass) {
       const container = document.getElementById(containerId);
       const section = document.getElementById(sectionId);
@@ -621,12 +712,10 @@
         div.className = `card-tile ${borderClass}`;
 
         div.onclick = (e) => {
-          const jaAtivo = div.classList.contains('active-touch');
-          document.querySelectorAll('.card-tile').forEach(t => t.classList.remove('active-touch'));
-          if (!jaAtivo) {
-            div.classList.add('active-touch');
+          if (window.innerWidth <= 600) {
+            abrirMobileDrawer(card, div);
+            e.stopPropagation();
           }
-          e.stopPropagation();
         };
 
         div.innerHTML = `
@@ -645,8 +734,12 @@
       });
     }
 
-    document.addEventListener('click', () => {
-      document.querySelectorAll('.card-tile').forEach(t => t.classList.remove('active-touch'));
+    // Fecha o drawer mobile ao tocar fora
+    document.addEventListener('click', (e) => {
+      const drawer = document.getElementById('mobileCardDrawer');
+      if (drawer && !drawer.contains(e.target) && !e.target.closest('.card-tile')) {
+        fecharMobileDrawer();
+      }
     });
   </script>
 </body>
