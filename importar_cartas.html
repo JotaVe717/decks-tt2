@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Importar Perfil & Cartas - Tap Titans 2</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+    }
+    body {
+      background-color: #0f141c;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 14px;
+      min-height: 100vh;
+    }
+    .back-btn {
+      align-self: flex-start;
+      max-width: 900px;
+      margin: 0 auto 16px auto;
+      width: 100%;
+      text-decoration: none;
+      color: #8fa0b5;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .back-btn:hover {
+      color: #f5a623;
+    }
+    .container {
+      width: 100%;
+      max-width: 900px;
+      background: #18202a;
+      border: 1px solid #283545;
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .title {
+      text-align: center;
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+    .title span {
+      color: #f5a623;
+    }
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #8fa0b5;
+      margin-bottom: 22px;
+    }
+
+    /* ÁREA DE IMPORTAÇÃO */
+    .import-card {
+      background: #212c3a;
+      border: 1px dashed #3a4b60;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .import-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    .btn-paste {
+      background: #f5a623;
+      border: none;
+      color: #0f141c;
+      font-weight: 800;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: opacity 0.2s;
+    }
+    .btn-paste:hover {
+      opacity: 0.9;
+    }
+    .btn-secondary {
+      background: #18202a;
+      border: 1px solid #324357;
+      color: #d1dbe5;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: border-color 0.2s;
+    }
+    .btn-secondary:hover {
+      border-color: #f5a623;
+      color: #fff;
+    }
+    textarea {
+      width: 100%;
+      height: 70px;
+      background: #141c24;
+      border: 1px solid #2d3c4e;
+      border-radius: 8px;
+      padding: 10px;
+      color: #a0aec0;
+      font-family: monospace;
+      font-size: 12px;
+      resize: vertical;
+    }
+    textarea:focus {
+      outline: none;
+      border-color: #f5a623;
+    }
+
+    /* RESUMO DO JOGADOR */
+    .player-summary {
+      background: #121922;
+      border: 1px solid #283545;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 20px;
+      display: none;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+    }
+    .summary-item {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .summary-item span {
+      font-size: 11px;
+      color: #8fa0b5;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .summary-item strong {
+      font-size: 15px;
+      color: #50e3c2;
+    }
+
+    /* BARRA DE CONTROLE E FILTROS */
+    .controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+    .filter-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .filter-btn {
+      background: #212c3a;
+      border: 1px solid #324357;
+      border-radius: 6px;
+      padding: 6px 12px;
+      color: #d1dbe5;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover {
+      border-color: #f5a623;
+      color: #fff;
+    }
+    .filter-btn.active {
+      background: #f5a623;
+      border-color: #f5a623;
+      color: #0f141c;
+      font-weight: 700;
+    }
+    .search-input {
+      background: #141c24;
+      border: 1px solid #324357;
+      border-radius: 6px;
+      padding: 6px 10px;
+      color: #fff;
+      font-size: 12px;
+      width: 160px;
+    }
+
+    /* GRADE DE CARTAS */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 10px;
+    }
+    .card-box {
+      background: #1e2836;
+      border: 1px solid #2b394a;
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      transition: border-color 0.2s;
+    }
+    .card-box:hover {
+      border-color: #3b4d63;
+    }
+    .card-thumb {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      object-fit: cover;
+      background: #0f141c;
+      border: 1px solid #3b4d63;
+      flex-shrink: 0;
+    }
+    .card-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      overflow: hidden;
+    }
+    .card-name {
+      font-size: 13px;
+      font-weight: 700;
+      color: #ffffff;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .card-sub {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .level-badge {
+      font-size: 12px;
+      font-weight: 800;
+      color: #50e3c2;
+    }
+    .cards-count {
+      font-size: 11px;
+      color: #8fa0b5;
+    }
+
+    /* CORES DE TIPOS */
+    .type-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+    .dot-burst { background: #ff5722; box-shadow: 0 0 5px rgba(255, 87, 34, 0.6); }
+    .dot-affliction { background: #38a1f3; box-shadow: 0 0 5px rgba(56, 161, 243, 0.6); }
+    .dot-support { background: #4cd964; box-shadow: 0 0 5px rgba(76, 217, 100, 0.6); }
+
+    .empty-state {
+      text-align: center;
+      color: #8fa0b5;
+      font-size: 13px;
+      padding: 30px;
+      grid-column: 1 / -1;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back-btn">&larr; Voltar ao Menu</a>
+
+  <div class="container">
+    <div class="title">Importar <span>Cartas & Níveis</span></div>
+    <div class="subtitle">Cole o JSON exportado do jogo para ler os níveis exatos de cada carta</div>
+
+    <!-- PAINEL DE ENTRADA -->
+    <div class="import-card">
+      <div class="import-actions">
+        <button class="btn-paste" onclick="colarDoClipboard()">📋 Paste (Colar)</button>
+        <button class="btn-secondary" onclick="processarTextoManual()">Processar Texto</button>
+        <span style="font-size: 12px; color: #8fa0b5;">ou cole o código diretamente abaixo:</span>
+      </div>
+      <textarea id="jsonInput" placeholder='Cole seu JSON exportado aqui (ex: {"playerStats":..., "raidCards":...})'></textarea>
+    </div>
+
+    <!-- SUMÁRIO DO PERFIL -->
+    <div class="player-summary" id="playerSummary">
+      <div class="summary-item">
+        <span>Max Stage</span>
+        <strong id="sumStage">-</strong>
+      </div>
+      <div class="summary-item">
+        <span>Raid Level</span>
+        <strong id="sumRaidLvl">-</strong>
+      </div>
+      <div class="summary-item">
+        <span>Cartas Desbloqueadas</span>
+        <strong id="sumTotalCards">-</strong>
+      </div>
+      <div class="summary-item">
+        <span>Soma dos Níveis</span>
+        <strong id="sumLvlSum">-</strong>
+      </div>
+      <div class="summary-item">
+        <span>Wildcards</span>
+        <strong id="sumWildcards">-</strong>
+      </div>
+    </div>
+
+    <!-- CONTROLES -->
+    <div class="controls-row" id="controlsRow" style="display: none;">
+      <div class="filter-group">
+        <button class="filter-btn active" onclick="filtrar('todos')">Todas</button>
+        <button class="filter-btn" onclick="filtrar('Burst')">Explosão</button>
+        <button class="filter-btn" onclick="filtrar('Affliction')">Aflição</button>
+        <button class="filter-btn" onclick="filtrar('Support')">Suporte</button>
+      </div>
+      <input type="text" id="searchInput" class="search-input" placeholder="Buscar carta..." oninput="filtrarCards()">
+    </div>
+
+    <!-- GRADE DE CARTAS -->
+    <div class="cards-grid" id="cardsGrid">
+      <div class="empty-state">
+        Nenhum perfil carregado. Clique em <strong>Paste</strong> ou cole o JSON acima para visualizar as cartas.
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // DICIONÁRIO DE METADADOS: MAPEA API -> NOME BONITO, TIPO E IMAGEM
+    const CARD_METADATA = {
+      "MoonBeam": { name: "Moon Beam", type: "Burst", img: "Cards/bm.jpg" },
+      "Fragmentize": { name: "Fragmentize", type: "Burst", img: "Cards/fr.png" },
+      "SkullBash": { name: "Skull Bash", type: "Burst", img: "Cards/sb.png" },
+      "RazorWind": { name: "Razor Wind", type: "Burst", img: "Cards/rw.png" },
+      "WhipOfLightning": { name: "Whip of Lightning", type: "Burst", img: "Cards/wol.png" },
+      "BurstCount": { name: "Clanship Barrage", type: "Burst", img: "Cards/csb.png" },
+      "Purify": { name: "Purifying Blast", type: "Burst", img: "Cards/pb.png" },
+      "LimbBurst": { name: "Psychic Shackles", type: "Burst", img: "Cards/wc.png" },
+      "FlakShot": { name: "Flak Shot", type: "Burst", img: "Cards/fb.png" },
+      "Haymaker": { name: "Cosmic Haymaker", type: "Burst", img: "Cards/wc.png" },
+      "ChainLightning": { name: "Chain Lightning", type: "Burst", img: "Cards/ch.png" },
+      "MirrorForce": { name: "Mirror Force", type: "Burst", img: "Cards/mf.png" },
+      "CelestialStatic": { name: "Celestial Static", type: "Burst", img: "Cards/ci.png" },
+
+      "BurningAttack": { name: "Blazing Inferno", type: "Affliction", img: "Cards/wc.png" },
+      "PoisonAttack": { name: "Acid Drench", type: "Affliction", img: "Cards/ad.png" },
+      "DecayingAttack": { name: "Decaying Strike", type: "Affliction", img: "Cards/ds.png" },
+      "Fuse": { name: "Fusion Bomb", type: "Affliction", img: "Cards/wc.png" },
+      "Shadow": { name: "Grim Shadow", type: "Affliction", img: "Cards/fs.png" },
+      "PlagueAttack": { name: "Thriving Plague", type: "Affliction", img: "Cards/tp.png" },
+      "Disease": { name: "Radioactivity", type: "Affliction", img: "Cards/ra.png" },
+      "Swarm": { name: "Ravenous Swarm", type: "Affliction", img: "Cards/rs.png" },
+      "RuinousRust": { name: "Ruinous Rain", type: "Affliction", img: "Cards/wc.png" },
+      "PowerBubble": { name: "Corrosive Bubbles", type: "Affliction", img: "Cards/bb.png" },
+      "RuneAttack": { name: "Maelstrom", type: "Affliction", img: "Cards/ma.png" },
+
+      "Weaken": { name: "Guard Break", type: "Support", img: "Cards/gb.png" },
+      "BarbedMorningstar": { name: "Barbed Morningstar", type: "Support", img: "Cards/wc.png" },
+      "MagicPotion": { name: "Amplify", type: "Support", img: "Cards/wc.png" },
+      "SandsOfTime": { name: "Sands of Time", type: "Support", img: "Cards/wc.png" },
+      "CosmicBarb": { name: "Cosmic Barb", type: "Support", img: "Cards/wc.png" },
+      "ExecutionersAxe": { name: "Crushing Instinct", type: "Support", img: "Cards/wc.png" },
+      "CrushingVoid": { name: "Insanity Void", type: "Support", img: "Cards/iv.png" },
+      "MentalFocus": { name: "Rancid Gas", type: "Support", img: "Cards/wc.png" },
+      "ImpactAttack": { name: "Inspiring Force", type: "Support", img: "Cards/if.png" },
+      "InnerTruth": { name: "Soul Fire", type: "Support", img: "Cards/wc.png" },
+      "FinisherAttack": { name: "Victory March", type: "Support", img: "Cards/vm.png" },
+      "SuperheatMetal": { name: "Prismatic Rift", type: "Support", img: "Cards/wc.png" },
+      "BurstBoost": { name: "Ancestral Favor", type: "Support", img: "Cards/af.png" },
+      "LimbSupport": { name: "Grasping Vines", type: "Support", img: "Cards/wc.png" },
+      "TotemFairySkill": { name: "Totem of Power", type: "Support", img: "Cards/tot.png" },
+      "TeamTactics": { name: "Team Tactics", type: "Support", img: "Cards/tt.png" },
+      "SpinalTap": { name: "Skeletal Smash", type: "Support", img: "Cards/ss.png" },
+      "AstralEcho": { name: "Astral Echo", type: "Support", img: "Cards/ae.png" },
+      "TriangleSupport": { name: "Radiant Kaleidoscope", type: "Support", img: "Cards/rk.png" },
+      "BattleDrums": { name: "Battle Drums", type: "Support", img: "Cards/bd.jpg" }
+    };
+
+    let importedCards = [];
+    let currentFilter = "todos";
+
+    // BOTÃO PASTE USANDO A CLIPBOARD API DO NAVEGADOR
+    async function colarDoClipboard() {
+      try {
+        const text = await navigator.clipboard.readText();
+        document.getElementById("jsonInput").value = text;
+        processarJSON(text);
+      } catch (err) {
+        alert("Não foi possível acessar a área de transferência automaticamente. Por favor, dê Ctrl+V dentro da caixa de texto e clique em 'Processar Texto'.");
+      }
+    }
+
+    function processarTextoManual() {
+      const text = document.getElementById("jsonInput").value.trim();
+      if (!text) {
+        alert("A caixa de texto está vazia.");
+        return;
+      }
+      processarJSON(text);
+    }
+
+    function processarJSON(rawText) {
+      try {
+        const data = JSON.parse(rawText);
+
+        if (!data.raidCards) {
+          alert("JSON inválido ou sem o campo 'raidCards'. Certifique-se de copiar a exportação completa do jogo.");
+          return;
+        }
+
+        // Sumário do Jogador
+        if (data.playerStats || data.raidStats) {
+          document.getElementById("playerSummary").style.display = "grid";
+          document.getElementById("sumStage").textContent = data.playerStats?.["Max Prestige Stage"] || "-";
+          document.getElementById("sumRaidLvl").textContent = data.raidStats?.["Raid Level"] || "-";
+          document.getElementById("sumTotalCards").textContent = data.raidStats?.["Raid Cards Owned"] || Object.keys(data.raidCards).length;
+          document.getElementById("sumLvlSum").textContent = data.raidStats?.["Total Raid Card Levels"] || "-";
+          document.getElementById("sumWildcards").textContent = data.raidStats?.["Wildcards"] || "0";
+        }
+
+        // Processa as cartas
+        importedCards = [];
+        for (const [key, val] of Object.entries(data.raidCards)) {
+          const meta = CARD_METADATA[key] || { name: key, type: "Support", img: "Cards/wc.png" };
+          importedCards.push({
+            id: key,
+            name: meta.name,
+            type: meta.type,
+            img: meta.img,
+            level: val.lv || 0,
+            num: val.num || 0
+          });
+        }
+
+        // Ordena do maior nível para o menor
+        importedCards.sort((a, b) => b.level - a.level);
+
+        document.getElementById("controlsRow").style.display = "flex";
+        filtrarCards();
+      } catch (err) {
+        console.error(err);
+        alert("Erro ao ler o JSON. Verifique se o conteúdo colado está completo.");
+      }
+    }
+
+    function filtrar(tipo) {
+      currentFilter = tipo;
+      document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+      event.target.classList.add("active");
+      filtrarCards();
+    }
+
+    function filtrarCards() {
+      const termo = document.getElementById("searchInput").value.toLowerCase();
+      const grid = document.getElementById("cardsGrid");
+      grid.innerHTML = "";
+
+      const filtradas = importedCards.filter(c => {
+        const bateTipo = (currentFilter === "todos" || c.type === currentFilter);
+        const bateNome = c.name.toLowerCase().includes(termo);
+        return bateTipo && bateNome;
+      });
+
+      if (filtradas.length === 0) {
+        grid.innerHTML = '<div class="empty-state">Nenhuma carta encontrada com esses filtros.</div>';
+        return;
+      }
+
+      filtradas.forEach(card => {
+        let dotClass = "dot-burst";
+        if (card.type === "Affliction") dotClass = "dot-affliction";
+        if (card.type === "Support") dotClass = "dot-support";
+
+        const div = document.createElement("div");
+        div.className = "card-box";
+        div.innerHTML = `
+          <img src="${card.img}" class="card-thumb" alt="${card.name}" onerror="this.src='Cards/wc.png'">
+          <div class="card-info">
+            <div class="card-name" title="${card.name}">${card.name}</div>
+            <div class="card-sub">
+              <span class="type-dot ${dotClass}" title="${card.type}"></span>
+              <span class="level-badge">Nv. ${card.level}</span>
+              <span class="cards-count">(${card.num} cartas)</span>
+            </div>
+          </div>
+        `;
+        grid.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>
