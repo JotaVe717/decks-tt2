@@ -70,7 +70,6 @@
       margin-bottom: 24px;
     }
 
-    /* CARD ISOLADO: PRÓXIMO CICLO */
     .countdown-banner {
       background: linear-gradient(135deg, #131d28 0%, #172433 100%);
       border: 1.5px solid #2d4156;
@@ -104,7 +103,6 @@
       font-variant-numeric: tabular-nums;
     }
 
-    /* GRUPOS MODULARES */
     .groups-wrapper {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -245,7 +243,6 @@
       opacity: 0.6;
     }
 
-    /* BARRA TOTAL DO TITÃ */
     .hp-overall-box {
       display: flex;
       flex-direction: column;
@@ -275,7 +272,7 @@
       transition: width 0.4s ease;
     }
 
-    /* GRID ANATÓMICO DESKTOP: 6 COLUNAS (3 | 3 | 2)[cite: 1] */
+    /* GRID ANATÔMICO DESKTOP */
     .anatomy-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -298,7 +295,6 @@
     .area-legR      { grid-column: 2 / span 2; }
     .area-legL      { grid-column: 4 / span 2; }
 
-    /* CARD DE CADA PARTE */
     .anatomy-card {
       background: #161f2a;
       border: 1px solid #28394d;
@@ -326,7 +322,6 @@
       text-decoration: line-through;
     }
 
-    /* DESTAQUE DE DECAYING STRIKE (ROXO) */
     .anatomy-card.decay-target {
       border-color: #b388ff !important;
       box-shadow: 0 0 14px rgba(179, 136, 255, 0.35) !important;
@@ -377,7 +372,6 @@
       border-radius: 3px;
     }
 
-    /* BARRAS DE VIDA */
     .bar-group {
       display: flex;
       flex-direction: column;
@@ -421,7 +415,7 @@
       background: linear-gradient(90deg, #b388ff, #7c4dff) !important;
     }
 
-    /* FILTROS DO RANKING */
+    /* FILTROS */
     .filters-bar {
       display: flex;
       flex-wrap: wrap;
@@ -477,9 +471,6 @@
       background: #27364b;
       border-color: #50e3c2;
     }
-    .sort-direction-btn:active {
-      transform: scale(0.97);
-    }
 
     /* TABELA DE JOGADORES */
     .table-container {
@@ -488,6 +479,7 @@
       border: 1px solid #2b394a;
       border-radius: 10px;
       background: #121922;
+      margin-bottom: 24px;
     }
     table {
       width: 100%;
@@ -528,7 +520,6 @@
 
     .td-dmg { font-weight: 700; color: #50e3c2; }
 
-    /* CABEÇALHOS DAS CARTAS */
     .th-card-only {
       text-align: center;
       width: 52px;
@@ -574,6 +565,26 @@
       color: #ff5252;
     }
 
+    /* ---------------- NOVO FEED DE ATAQUES EM TEMPO REAL ---------------- */
+    .deck-display {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .card-mini-img {
+      width: 26px;
+      height: 26px;
+      border-radius: 4px;
+      object-fit: cover;
+      background: #0d131a;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .deck-names {
+      font-size: 11px;
+      color: #8fa0b5;
+      font-weight: 600;
+    }
+
     .loading-state {
       text-align: center;
       padding: 30px;
@@ -594,28 +605,18 @@
         font-size: 18px;
       }
 
-      /* LAYOUT DO TITÃ EM 5 NÍVEIS EXCLUSIVO NO MOBILE */
       .anatomy-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 8px;
         padding: 10px 6px;
       }
 
-      /* Nível 1: Cabeça */
       .area-head      { grid-column: 1 / span 2; order: 1; }
-
-      /* Nível 2: Ombros */
       .area-shoulderR { grid-column: 1; order: 2; }
       .area-shoulderL { grid-column: 2; order: 2; }
-
-      /* Nível 3: Mãos */
       .area-handR     { grid-column: 1; order: 3; }
       .area-handL     { grid-column: 2; order: 3; }
-
-      /* Nível 4: Torso */
       .area-chest     { grid-column: 1 / span 2; order: 4; }
-
-      /* Nível 5: Pernas */
       .area-legR      { grid-column: 1; order: 5; }
       .area-legL      { grid-column: 2; order: 5; }
 
@@ -631,7 +632,7 @@
     <div class="title">Raid <span>Ao Vivo</span></div>
     <div class="subtitle" id="lastUpdateText">Sincronizando com a sua planilha...</div>
 
-    <!-- BLOCO MODULAR SUPERIOR REORGANIZADO -->
+    <!-- BLOCO MODULAR SUPERIOR -->
     <div class="dashboard-summary" id="metricsSummary" style="display: none;">
       
       <!-- 1. BLOCO ISOLADO: PRÓXIMO CICLO -->
@@ -725,7 +726,7 @@
           </div>
         </div>
 
-        <!-- LAYOUT ANATÓMICO (3|3|2 NO PC[cite: 1], 5 NÍVEIS NO MOBILE) -->
+        <!-- LAYOUT ANATÔMICO (3|3|2 NO PC, 5 NÍVEIS NO MOBILE) -->
         <div class="anatomy-grid">
           <div class="anatomy-card area-shoulderR" id="card_ArmUpperRight"></div>
           <div class="anatomy-card area-head" id="card_Head"></div>
@@ -741,7 +742,7 @@
       </div>
     </div>
 
-    <!-- RANKING DE JOGADORES COM BOTÃO DE SOM E FILTROS -->
+    <!-- RANKING DE JOGADORES -->
     <div class="section-block">
       <div class="section-header">
         <span class="section-title">🏆 Ranking de Ataques</span>
@@ -769,12 +770,11 @@
           <option value="mf">Contagem de Mirror Force</option>
         </select>
 
-        <button id="sortDirectionBtn" class="sort-direction-btn" onclick="alternarDirecaoOrdenacao()" title="Clique para alternar entre maior para menor e menor para maior">
+        <button id="sortDirectionBtn" class="sort-direction-btn" onclick="alternarDirecaoOrdenacao()" title="Alternar direção">
           <span id="sortDirectionIcon">↓</span> <span id="sortDirectionText">Maior &rarr; Menor</span>
         </button>
 
-        <!-- BOTÃO PARA ATIVAR/DESATIVAR SONS DE ALERTA -->
-        <button id="btnSomAlerta" class="sort-direction-btn" onclick="alternarSomAlertas()" style="color: #ffd166;" title="Clique para alternar o som de alerta dos suportes">
+        <button id="btnSomAlerta" class="sort-direction-btn" onclick="alternarSomAlertas()" style="color: #ffd166;" title="Sons de alerta">
           🔔 <span id="txtSomAlerta">Som: Ligado</span>
         </button>
       </div>
@@ -803,12 +803,41 @@
       </div>
     </div>
 
+    <!-- SEÇÃO DE ATAQUES EM TEMPO REAL -->
+    <div class="section-block" id="secLiveAttacks">
+      <div class="section-header">
+        <span class="section-title">⚡ Ataques em Tempo Real</span>
+        <span style="font-size: 11px; color: #50e3c2;" id="liveAttacksCount">Carregando ataques...</span>
+      </div>
+
+      <div class="filters-bar">
+        <input type="text" id="searchAttackInput" class="filter-input" placeholder="🔍 Filtrar ataque por jogador ou carta..." oninput="filtrarAtaquesAoVivo()">
+      </div>
+
+      <div class="table-container">
+        <div id="loadingAttacks" class="loading-state">Aguardando registros de ataques em tempo real...</div>
+        <table id="liveAttacksTable" style="display: none;">
+          <thead>
+            <tr>
+              <th>Horário</th>
+              <th>Jogador</th>
+              <th>Ciclo</th>
+              <th>Titã</th>
+              <th>Partes Atacadas</th>
+              <th>Deck Usado</th>
+              <th style="text-align: right;">Dano</th>
+            </tr>
+          </thead>
+          <tbody id="liveAttacksBody"></tbody>
+        </table>
+      </div>
+    </div>
+
   </div>
 
   <script>
     const SPREADSHEET_ID = '1xo8zcjYt2Kiytq-D9vF9oO3wamCcBKbvH1fn7fqtsSM';
 
-    // NOMES SIMPLIFICADOS: Apenas Cabeça, Torso, Ombro, Mão e Perna
     const ANATOMY_PARTS = [
       { key: 'Head',          name: 'Cabeça' },
       { key: 'ChestUpper',    name: 'Torso' },
@@ -821,12 +850,12 @@
     ];
 
     let todosJogadores = [];
+    let todosAtaquesAoVivo = [];
     let totalCiclosDaRaid = 1;
     let limiteAtaquesAtual = 6;
     let temporizadorCiclo = null;
     let ordemDecrescente = true;
 
-    // CONFIGURAÇÃO DOS FICHEIROS DE ÁUDIO ESCOLHIDOS POR TI
     const sonsSuporte = {
       smash: new Audio('audio/smash.mp3'),
       void: new Audio('audio/void.mp3'),
@@ -864,7 +893,6 @@
       }
     }
 
-    // Tratamento de imagem com fallbacks encadeados
     function tratarErroImagemTT(img) {
       if (!img.dataset.step) {
         img.dataset.step = '1';
@@ -947,7 +975,6 @@
           carregarAbaJSONP('TT_Ciclos')
         ]);
 
-        // 1. Processa a Raid Atual (incluindo o Buff)
         const linhasRaids = tabelaRaids.rows;
         let nomeRaidAtual = '';
         let raidStatus = 'Em andamento';
@@ -974,10 +1001,8 @@
           document.getElementById('lastUpdateText').textContent = 'Métricas sincronizadas com a sua planilha';
         }
 
-        // 2. Cronômetro Regressivo
         calcularProximoCiclo(tabelaCiclos.rows, nomeRaidAtual, raidStatus);
 
-        // 3. Localiza o Titã Atual
         const linhasTitans = tabelaTitans.rows;
         let titasDaRaid = [];
 
@@ -1017,7 +1042,6 @@
           document.getElementById('secCurrentTitan').style.display = 'block';
         }
 
-        // 4. Processa Jogadores
         const linhasJog = tabelaJogadores.rows;
         todosJogadores = [];
 
@@ -1052,10 +1076,106 @@
         document.getElementById('loading').style.display = 'none';
         document.getElementById('playersTable').style.display = 'table';
 
+        // CARREGA ATAQUES EM TEMPO REAL DA ABA TT_Ataques
+        carregarAtaquesAoVivo(nomeRaidAtual);
+
       } catch (err) {
         console.error(err);
         document.getElementById('loading').textContent = 'Erro ao sincronizar os dados. Verifique a planilha.';
       }
+    }
+
+    async function carregarAtaquesAoVivo(raidNome) {
+      try {
+        const tabelaAtaques = await carregarAbaJSONP('TT_Ataques');
+        const linhas = tabelaAtaques.rows || [];
+        todosAtaquesAoVivo = [];
+
+        linhas.forEach(row => {
+          const r = row.c;
+          if (!r) return;
+          const rNome = String(r[0]?.v || '').trim();
+          
+          if (!raidNome || rNome === raidNome) {
+            const dtObj = parseDataPlanilha(r[1]?.v);
+            const horaFormatada = dtObj ? `${String(dtObj.getHours()).padStart(2, '0')}:${String(dtObj.getMinutes()).padStart(2, '0')}` : (r[1]?.f || '-');
+
+            todosAtaquesAoVivo.push({
+              quando: horaFormatada,
+              jogador: r[2]?.v || 'Desconhecido',
+              ciclo: r[3]?.v || 1,
+              titan: r[5]?.v ? `#${r[4]?.v || ''} ${r[5].v}` : (r[4]?.v ? `#${r[4].v}` : '-'),
+              partes: r[6]?.v || '-',
+              dano: Number(r[7]?.v || 0),
+              danoFormatado: r[7]?.f || (r[7]?.v ? Math.round(r[7].v) + 'M' : '-'),
+              c1: r[8]?.v || '',
+              c2: r[9]?.v || '',
+              c3: r[10]?.v || '',
+              url1: r[14]?.v || '',
+              url2: r[15]?.v || '',
+              url3: r[16]?.v || ''
+            });
+          }
+        });
+
+        todosAtaquesAoVivo.reverse();
+        filtrarAtaquesAoVivo();
+
+        document.getElementById('loadingAttacks').style.display = 'none';
+        document.getElementById('liveAttacksTable').style.display = 'table';
+
+      } catch (e) {
+        console.log('Sem ataques para carregar em TT_Ataques:', e);
+        document.getElementById('loadingAttacks').textContent = 'Nenhum ataque registrado nesta raid ainda.';
+      }
+    }
+
+    function filtrarAtaquesAoVivo() {
+      const busca = (document.getElementById('searchAttackInput')?.value || '').trim().toLowerCase();
+      const raidAtual = document.getElementById('mRaidName').textContent;
+
+      const filtrados = todosAtaquesAoVivo.filter(a => {
+        if (!busca) return true;
+        const texto = `${a.jogador} ${a.c1} ${a.c2} ${a.c3} ${a.partes}`.toLowerCase();
+        return texto.includes(busca);
+      });
+
+      document.getElementById('liveAttacksCount').textContent = `${filtrados.length} ataques registrados`;
+
+      const tbody = document.getElementById('liveAttacksBody');
+      tbody.innerHTML = '';
+
+      if (filtrados.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #8fa0b5; padding: 20px;">Nenhum ataque correspondente encontrado.</td></tr>`;
+        return;
+      }
+
+      filtrados.slice(0, 50).forEach(a => {
+        const tr = document.createElement('tr');
+        
+        let deckHtml = '<div class="deck-display">';
+        if (a.url1) deckHtml += `<img src="${a.url1}" class="card-mini-img" title="${a.c1}" alt="${a.c1}">`;
+        if (a.url2) deckHtml += `<img src="${a.url2}" class="card-mini-img" title="${a.c2}" alt="${a.c2}">`;
+        if (a.url3) deckHtml += `<img src="${a.url3}" class="card-mini-img" title="${a.c3}" alt="${a.c3}">`;
+        
+        const cartasTexto = [a.c1, a.c2, a.c3].filter(Boolean).join(' + ');
+        deckHtml += `<span class="deck-names">${cartasTexto || '-'}</span></div>`;
+
+        tr.innerHTML = `
+          <td style="color: #8fa0b5;">${a.quando}</td>
+          <td>
+            <a href="jogador.html?nome=${encodeURIComponent(a.jogador)}&raid=${encodeURIComponent(raidAtual)}" class="player-link">
+              ${a.jogador}
+            </a>
+          </td>
+          <td><span class="tag-status" style="background:#1b2838; color:#ffd166;">C${a.ciclo}</span></td>
+          <td style="color: #f5a623; font-weight:700;">${a.titan}</td>
+          <td>${a.partes}</td>
+          <td>${deckHtml}</td>
+          <td style="text-align: right;" class="td-dmg">${a.danoFormatado}</td>
+        `;
+        tbody.appendChild(tr);
+      });
     }
 
     function calcularProximoCiclo(linhasCiclos, nomeRaid, statusRaid) {
@@ -1298,7 +1418,6 @@
             </div>
           </div>
 
-          <!-- BARRA 1: ARMADURA -->
           <div class="bar-group">
             <div class="bar-meta">
               <span class="label-armor">🛡️ Armadura</span>
@@ -1309,7 +1428,6 @@
             </div>
           </div>
 
-          <!-- BARRA 2: CORPO -->
           <div class="bar-group">
             <div class="bar-meta">
               <span class="label-body">❤️ Corpo</span>
@@ -1330,7 +1448,6 @@
       atualizarBadgeSuporte('bVoid', isVoidActive);
       atualizarBadgeSuporte('bVM', isVmActive);
 
-      // DISPARO DE SOM QUANDO UM SUPORTE PASSAR DE INATIVO PARA ATIVO
       if (isSmashActive && !suporteAnterior.smash) {
         tocarSomSuporte('smash');
       }
