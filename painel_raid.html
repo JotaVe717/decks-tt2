@@ -62,34 +62,106 @@
       margin-bottom: 20px;
     }
 
-    /* CARDS DE RESUMO SUPERIOR */
-    .metrics-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 10px;
-      margin-bottom: 24px;
-    }
-    .metric-card {
-      background: #121922;
-      border: 1px solid #283545;
-      border-radius: 10px;
-      padding: 12px 10px;
-      text-align: center;
+    /* ---------------- NOVO AGRUPAMENTO INTELIGENTE DE CARDS ---------------- */
+    .dashboard-summary {
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 14px;
+      margin-bottom: 24px;
     }
-    .metric-card span {
-      font-size: 10px;
-      font-weight: 700;
+
+    /* CARD ISOLADO: PRÓXIMO CICLO */
+    .countdown-banner {
+      background: linear-gradient(135deg, #131d28 0%, #172433 100%);
+      border: 1.5px solid #2d4156;
+      border-radius: 12px;
+      padding: 12px 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    }
+    .countdown-banner-label {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .countdown-banner-label span {
+      font-size: 10.5px;
+      font-weight: 800;
       color: #8fa0b5;
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
-    .metric-card strong { font-size: 17px; color: #50e3c2; }
-    .metric-card strong.orange { color: #f5a623; }
-    .metric-card strong.green { color: #4cd964; }
-    .metric-card strong.yellow { color: #ffd166; }
+    .countdown-banner-label small {
+      font-size: 11px;
+      color: #ffd166;
+    }
+    .countdown-banner-timer {
+      font-size: 22px;
+      font-weight: 900;
+      letter-spacing: 1px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    /* GRUPOS MODULARES */
+    .groups-wrapper {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .summary-group {
+      background: #121922;
+      border: 1px solid #253342;
+      border-radius: 12px;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .group-header-label {
+      font-size: 10.5px;
+      font-weight: 800;
+      color: #f5a623;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding-bottom: 4px;
+      border-bottom: 1px solid rgba(40, 53, 69, 0.6);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .group-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+    .metric-item {
+      background: #18222e;
+      border: 1px solid #283748;
+      border-radius: 8px;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .metric-item span {
+      font-size: 9.5px;
+      font-weight: 700;
+      color: #8fa0b5;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+    }
+    .metric-item strong {
+      font-size: 14.5px;
+      color: #50e3c2;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .metric-item strong.orange { color: #f5a623; }
+    .metric-item strong.green { color: #4cd964; }
+    .metric-item strong.yellow { color: #ffd166; }
 
     /* SEÇÃO DO TITÃ ATUAL */
     .section-block { margin-bottom: 26px; }
@@ -215,7 +287,6 @@
       border: 1px dashed #283748;
     }
 
-    /* POSIÇÕES NO DESKTOP */
     .area-shoulderR { grid-column: span 2; }
     .area-head      { grid-column: span 2; }
     .area-shoulderL { grid-column: span 2; }
@@ -457,19 +528,23 @@
 
     .td-dmg { font-weight: 700; color: #50e3c2; }
 
+    /* CABEÇALHOS DAS CARTAS */
     .th-card-only {
       text-align: center;
-      width: 50px;
+      width: 52px;
       padding: 6px 8px;
     }
     .card-th-icon {
       width: 28px;
       height: 28px;
+      min-width: 28px;
+      min-height: 28px;
       border-radius: 6px;
-      object-fit: cover;
+      object-fit: contain;
       display: block;
       margin: 0 auto;
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: #0d131a;
+      border: 1px solid rgba(255, 255, 255, 0.25);
       box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
       transition: transform 0.15s ease;
       cursor: pointer;
@@ -506,8 +581,20 @@
       font-size: 14px;
     }
 
-    /* ---------------- NOVO LAYOUT DO TITÃ EXCLUSIVO PARA MOBILE (5 NÍVEIS) ---------------- */
+    /* ---------------- RESPONSIVIDADE MOBILE ---------------- */
     @media (max-width: 760px) {
+      .groups-wrapper {
+        grid-template-columns: 1fr;
+        gap: 10px;
+      }
+      .countdown-banner {
+        padding: 10px 14px;
+      }
+      .countdown-banner-timer {
+        font-size: 18px;
+      }
+
+      /* LAYOUT DO TITÃ EM 5 NÍVEIS EXCLUSIVO NO MOBILE */
       .anatomy-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 8px;
@@ -533,7 +620,6 @@
       .area-legL      { grid-column: 2; order: 5; }
 
       .anatomy-card   { padding: 8px 10px; }
-      .metrics-grid   { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -545,43 +631,67 @@
     <div class="title">Raid <span>Ao Vivo</span></div>
     <div class="subtitle" id="lastUpdateText">Sincronizando com a sua planilha...</div>
 
-    <!-- CARDS DE RESUMO DA RAID COM O BUFF -->
-    <div class="metrics-grid" id="metricsGrid" style="display: none;">
-      <div class="metric-card">
-        <span>Raid Ativa</span>
-        <strong id="mRaidName" class="orange">-</strong>
+    <!-- ---------------- BLOCO MODULAR SUPERIOR REORGANIZADO ---------------- -->
+    <div class="dashboard-summary" id="metricsSummary" style="display: none;">
+      
+      <!-- 1. BLOCO ISOLADO: PRÓXIMO CICLO -->
+      <div class="countdown-banner">
+        <div class="countdown-banner-label">
+          <span>⏳ Tempo Restante para o Próximo Ciclo</span>
+          <small id="cViradaInfo">Sincronizando horário...</small>
+        </div>
+        <div class="countdown-banner-timer" id="mNextCiclo" style="color: #50e3c2;">--:--:--</div>
       </div>
-      <div class="metric-card">
-        <span>Buff da Raid</span>
-        <strong id="mBuffRaid" class="yellow" style="font-size: 13.5px; line-height: 1.2;">-</strong>
-      </div>
-      <div class="metric-card">
-        <span>Ciclo Atual</span>
-        <strong id="mCicloAtual" class="yellow">-</strong>
-      </div>
-      <div class="metric-card">
-        <span>Próximo Ciclo</span>
-        <strong id="mNextCiclo" style="font-size: 17px;">-</strong>
-      </div>
-      <div class="metric-card">
-        <span>Titã Atual</span>
-        <strong id="mCurrentTitanHeader" class="orange">-</strong>
-      </div>
-      <div class="metric-card">
-        <span>Dano Total Feito</span>
-        <strong id="mDanoTotal" class="green">-</strong>
-      </div>
-      <div class="metric-card">
-        <span>Presença Média</span>
-        <strong id="mPresenca">-</strong>
-      </div>
-      <div class="metric-card">
-        <span>Ainda Falta</span>
-        <strong id="mFalta">-</strong>
-      </div>
-      <div class="metric-card">
-        <span>Média / Ataque</span>
-        <strong id="mMediaAtk">-</strong>
+
+      <!-- 2. DOIS GRUPOS LADO A LADO (OU EMPILHADOS NO MOBILE) -->
+      <div class="groups-wrapper">
+        
+        <!-- GRUPO 1: INFORMAÇÕES DE CAMPO -->
+        <div class="summary-group">
+          <div class="group-header-label">🎯 Informações de Campo</div>
+          <div class="group-grid">
+            <div class="metric-item">
+              <span>Raid Ativa</span>
+              <strong id="mRaidName" class="orange">-</strong>
+            </div>
+            <div class="metric-item">
+              <span>Ciclo Atual</span>
+              <strong id="mCicloAtual" class="yellow">-</strong>
+            </div>
+            <div class="metric-item">
+              <span>Titã Atual</span>
+              <strong id="mCurrentTitanHeader" class="orange">-</strong>
+            </div>
+            <div class="metric-item">
+              <span>Buff da Raid</span>
+              <strong id="mBuffRaid" class="yellow" style="font-size: 12px; font-weight: 800;">-</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- GRUPO 2: DESEMPENHO DO CLÃ -->
+        <div class="summary-group">
+          <div class="group-header-label">⚔️ Desempenho do Clã</div>
+          <div class="group-grid">
+            <div class="metric-item">
+              <span>Dano Total Feito</span>
+              <strong id="mDanoTotal" class="green">-</strong>
+            </div>
+            <div class="metric-item">
+              <span>Ainda Falta</span>
+              <strong id="mFalta">-</strong>
+            </div>
+            <div class="metric-item">
+              <span>Presença Média</span>
+              <strong id="mPresenca">-</strong>
+            </div>
+            <div class="metric-item">
+              <span>Média / Ataque</span>
+              <strong id="mMediaAtk">-</strong>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -675,12 +785,12 @@
               <th>Média / Atk</th>
               <th>% Raid</th>
               <th style="text-align: center;">Ataques</th>
-              <!-- IMAGENS cards/tt.png e cards/mf.png -->
+              <!-- IMAGENS COM CAMINHOS SEGUROS E FALLBACKS -->
               <th class="th-card-only">
-                <img src="cards/tt.png" alt="Team Tactics" title="Team Tactics" class="card-th-icon" onerror="this.onerror=null; this.src='cards/tt.png';">
+                <img src="cards/tt.png" alt="TT" title="Team Tactics" class="card-th-icon" loading="lazy" onerror="tratarErroImagemTT(this)">
               </th>
               <th class="th-card-only">
-                <img src="cards/mf.png" alt="Mirror Force" title="Mirror Force" class="card-th-icon" onerror="this.onerror=null; this.src='cards/mf.png';">
+                <img src="cards/mf.png" alt="MF" title="Mirror Force" class="card-th-icon" loading="lazy" onerror="tratarErroImagemMF(this)">
               </th>
             </tr>
           </thead>
@@ -711,6 +821,33 @@
     let limiteAtaquesAtual = 6;
     let temporizadorCiclo = null;
     let ordemDecrescente = true;
+
+    // Tratamento resiliente de imagem no mobile
+    function tratarErroImagemTT(img) {
+      if (!img.dataset.step) {
+        img.dataset.step = '1';
+        img.src = 'cards/TT.png';
+      } else if (img.dataset.step === '1') {
+        img.dataset.step = '2';
+        img.src = 'tt.png';
+      } else if (img.dataset.step === '2') {
+        img.dataset.step = '3';
+        img.src = 'https://titantech.silical.dev/assets/TeamTactics-BRkBFy9l.webp';
+      }
+    }
+
+    function tratarErroImagemMF(img) {
+      if (!img.dataset.step) {
+        img.dataset.step = '1';
+        img.src = 'cards/MF.png';
+      } else if (img.dataset.step === '1') {
+        img.dataset.step = '2';
+        img.src = 'mf.png';
+      } else if (img.dataset.step === '2') {
+        img.dataset.step = '3';
+        img.src = 'https://titantech.silical.dev/assets/MirrorForce-C9v-mpIC.webp';
+      }
+    }
 
     function formatarHp(valorEmBilhoes) {
       const v = Number(valorEmBilhoes) || 0;
@@ -778,7 +915,7 @@
           const ultimaRaid = linhasRaids[linhasRaids.length - 1].c;
           nomeRaidAtual = ultimaRaid[0]?.v || '';
           raidStatus = ultimaRaid[6]?.v || 'Em andamento';
-          const buffRaid = ultimaRaid[7]?.v || 'Nenhum'; // Coluna Buff
+          const buffRaid = ultimaRaid[7]?.v || 'Nenhum';
           totalCiclosDaRaid = Number(ultimaRaid[9]?.v || 1);
           limiteAtaquesAtual = totalCiclosDaRaid * 6;
           totalTitansDaRaid = Number(ultimaRaid[14]?.v || 0);
@@ -791,7 +928,7 @@
           document.getElementById('mMediaAtk').textContent = ultimaRaid[13]?.f || (ultimaRaid[13]?.v ? Math.round(ultimaRaid[13].v) + 'M' : '-');
           document.getElementById('mFalta').textContent = (ultimaRaid[19]?.f || (ultimaRaid[19]?.v ? ultimaRaid[19].v + 'B' : '-'));
 
-          document.getElementById('metricsGrid').style.display = 'grid';
+          document.getElementById('metricsSummary').style.display = 'flex';
           document.getElementById('lastUpdateText').textContent = 'Métricas sincronizadas com a sua planilha';
         }
 
@@ -881,11 +1018,13 @@
 
     function calcularProximoCiclo(linhasCiclos, nomeRaid, statusRaid) {
       const el = document.getElementById('mNextCiclo');
+      const infoEl = document.getElementById('cViradaInfo');
       if (temporizadorCiclo) clearInterval(temporizadorCiclo);
 
       if (statusRaid === 'Encerrada') {
         el.textContent = 'Encerrada';
-        el.className = 'green';
+        el.style.color = '#4cd964';
+        infoEl.textContent = 'Raid finalizada com sucesso!';
         return;
       }
 
@@ -902,6 +1041,7 @@
 
       if (ciclosDaRaid.length === 0) {
         el.textContent = 'Em andamento';
+        infoEl.textContent = 'Aguardando registro de ciclos';
         return;
       }
 
@@ -909,13 +1049,18 @@
       const inicioUltimoCiclo = ciclosDaRaid[ciclosDaRaid.length - 1];
       const viradaCiclo = new Date(inicioUltimoCiclo.getTime() + (12 * 60 * 60 * 1000));
 
+      const horaVirada = String(viradaCiclo.getHours()).padStart(2, '0');
+      const minVirada = String(viradaCiclo.getMinutes()).padStart(2, '0');
+      infoEl.textContent = `Vira às ${horaVirada}:${minVirada}`;
+
       function atualizarCronometro() {
         const agora = new Date();
         const diffMs = viradaCiclo.getTime() - agora.getTime();
 
         if (diffMs <= 0) {
           el.textContent = 'Virando ciclo...';
-          el.className = 'orange';
+          el.style.color = '#ff5252';
+          infoEl.textContent = 'Ciclo virado! Atualize a planilha';
           return;
         }
 
@@ -924,7 +1069,7 @@
         const segundos = Math.floor((diffMs % (1000 * 60)) / 1000);
 
         const tempoFormatado = `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
-        el.className = horas === 0 ? 'orange' : 'green';
+        el.style.color = horas === 0 ? '#ffb74d' : '#50e3c2';
         el.textContent = tempoFormatado;
       }
 
