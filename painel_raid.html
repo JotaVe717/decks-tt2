@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Painel de Raids ao Vivo - Tap Titans 2</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: #0f141c;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 8px 60px 8px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .back-btn {
+      align-self: flex-start;
+      max-width: 920px;
+      margin: 0 auto 12px auto;
+      width: 100%;
+      text-decoration: none;
+      color: #8fa0b5;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .back-btn:hover { color: #f5a623; }
+    .container {
+      width: 100%;
+      max-width: 920px;
+      background: #18202a;
+      border: 1px solid #283545;
+      border-radius: 16px;
+      padding: 20px 14px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .title {
+      text-align: center;
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .title span { color: #f5a623; }
+    .subtitle {
+      text-align: center;
+      font-size: 12px;
+      color: #8fa0b5;
+      margin-bottom: 20px;
+    }
+
+    /* CARDS DE RESUMO SUPERIOR */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .metric-card {
+      background: #121922;
+      border: 1px solid #283545;
+      border-radius: 10px;
+      padding: 12px 10px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .metric-card span {
+      font-size: 10px;
+      font-weight: 700;
+      color: #8fa0b5;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .metric-card strong { font-size: 17px; color: #50e3c2; }
+    .metric-card strong.orange { color: #f5a623; }
+    .metric-card strong.green { color: #4cd964; }
+    .metric-card strong.yellow { color: #ffd166; }
+
+    /* SEÇÃO DO TITÃ ATUAL */
+    .section-block { margin-bottom: 26px; }
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid #283545;
+    }
+    .section-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #f5a623;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .current-titan-card {
+      background: #121922;
+      border: 1.5px solid #3a4b60;
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    }
+    .titan-main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .titan-name-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .titan-seq {
+      background: #f5a623;
+      color: #0f141c;
+      font-weight: 900;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 6px;
+    }
+    .titan-name-text {
+      font-size: 18px;
+      font-weight: 800;
+      color: #ffffff;
+    }
+    .titan-support-badges {
+      display: flex;
+      gap: 6px;
+    }
+    .badge-sup {
+      font-size: 10.5px;
+      font-weight: 900;
+      padding: 3px 8px;
+      border-radius: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.25s ease;
+    }
+    .badge-sup.active {
+      background: rgba(80, 227, 194, 0.25);
+      border: 1.5px solid #50e3c2;
+      color: #50e3c2;
+      box-shadow: 0 0 10px rgba(80, 227, 194, 0.4);
+    }
+    .badge-sup.off {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #4b5868;
+      opacity: 0.6;
+    }
+
+    /* BARRA TOTAL DO TITÃ */
+    .hp-overall-box {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      background: #18222e;
+      padding: 10px 12px;
+      border-radius: 8px;
+    }
+    .hp-overall-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .hp-bar-outer {
+      width: 100%;
+      height: 14px;
+      background: #0f141c;
+      border-radius: 7px;
+      overflow: hidden;
+      border: 1px solid #2b394a;
+    }
+    .hp-bar-fill-overall {
+      height: 100%;
+      background: linear-gradient(90deg, #ff5722, #4cd964);
+      border-radius: 7px;
+      transition: width 0.4s ease;
+    }
+
+    /* GRID ANATÔMICO EM 6 COLUNAS (3 LINHAS: 3 | 3 | 2) */
+    .anatomy-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 12px;
+      align-items: stretch;
+      background: #0d131a;
+      padding: 18px 12px;
+      border-radius: 12px;
+      border: 1px dashed #283748;
+    }
+
+    /* LINHA 1 (3 itens) */
+    .area-shoulderR { grid-column: span 2; }
+    .area-head      { grid-column: span 2; }
+    .area-shoulderL { grid-column: span 2; }
+
+    /* LINHA 2 (3 itens) */
+    .area-handR     { grid-column: span 2; }
+    .area-chest     { grid-column: span 2; }
+    .area-handL     { grid-column: span 2; }
+
+    /* LINHA 3 (2 itens centralizados) */
+    .area-legR      { grid-column: 2 / span 2; }
+    .area-legL      { grid-column: 4 / span 2; }
+
+    /* CARD DE CADA PARTE */
+    .anatomy-card {
+      background: #161f2a;
+      border: 1px solid #28394d;
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+      transition: all 0.25s ease;
+      position: relative;
+    }
+    .anatomy-card.has-skip {
+      border-color: rgba(255, 82, 82, 0.4);
+      background: rgba(255, 82, 82, 0.03);
+    }
+    .anatomy-card.part-dead {
+      background: #10151c !important;
+      border: 1px solid #1e2632 !important;
+      opacity: 0.45;
+      box-shadow: none;
+    }
+    .anatomy-card.part-dead .part-title {
+      color: #6c7d93 !important;
+      text-decoration: line-through;
+    }
+
+    /* DESTAQUE DE DECAYING STRIKE (ROXO) */
+    .anatomy-card.decay-target {
+      border-color: #b388ff !important;
+      box-shadow: 0 0 14px rgba(179, 136, 255, 0.35) !important;
+      background: rgba(179, 136, 255, 0.06);
+    }
+    .badge-decay {
+      font-size: 9px;
+      font-weight: 900;
+      color: #ffffff;
+      background: #7c4dff;
+      border: 1px solid #b388ff;
+      padding: 1px 6px;
+      border-radius: 3px;
+      letter-spacing: 0.5px;
+      box-shadow: 0 0 8px rgba(179, 136, 255, 0.5);
+    }
+
+    .badge-destroyed {
+      font-size: 9px;
+      font-weight: 900;
+      color: #8fa0b5;
+      background: rgba(143, 160, 181, 0.15);
+      border: 1px solid rgba(143, 160, 181, 0.3);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+    .card-head-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #243142;
+      padding-bottom: 4px;
+    }
+    .part-title {
+      font-size: 12px;
+      font-weight: 800;
+      color: #ffffff;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+    .badge-skip {
+      font-size: 9px;
+      font-weight: 900;
+      color: #ff5252;
+      background: rgba(255, 82, 82, 0.18);
+      border: 1px solid rgba(255, 82, 82, 0.4);
+      padding: 1px 5px;
+      border-radius: 3px;
+    }
+
+    /* BARRAS DE VIDA */
+    .bar-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
+    .bar-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10.5px;
+      font-weight: 600;
+    }
+    .label-armor { color: #4facfe; }
+    .label-body  { color: #ff5e62; }
+    .bar-val     { color: #cfd9e5; }
+    .bar-track {
+      width: 100%;
+      height: 7px;
+      background: #0a0e14;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid #1f2a38;
+    }
+    .bar-fill-armor {
+      height: 100%;
+      background: linear-gradient(90deg, #00f2fe, #4facfe);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    .bar-fill-body {
+      height: 100%;
+      background: linear-gradient(90deg, #ff9966, #ff5e62);
+      border-radius: 4px;
+      transition: width 0.3s ease;
+    }
+    .bar-fill-body.target-ok {
+      background: linear-gradient(90deg, #38ef7d, #11998e);
+    }
+    
+    .bar-fill-armor.decay-bar,
+    .bar-fill-body.decay-bar {
+      background: linear-gradient(90deg, #b388ff, #7c4dff) !important;
+    }
+
+    /* FILTROS DO RANKING */
+    .filters-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      background: #141c26;
+      border: 1px solid #283748;
+      border-radius: 10px;
+      padding: 10px 14px;
+      margin-bottom: 12px;
+    }
+    .filter-input {
+      flex: 1;
+      min-width: 160px;
+      background: #0d131a;
+      border: 1px solid #2d3e52;
+      border-radius: 6px;
+      color: #ffffff;
+      padding: 7px 10px;
+      font-size: 12px;
+      outline: none;
+    }
+    .filter-input:focus { border-color: #f5a623; }
+    .filter-select {
+      background: #0d131a;
+      border: 1px solid #2d3e52;
+      border-radius: 6px;
+      color: #ffffff;
+      padding: 7px 10px;
+      font-size: 12px;
+      outline: none;
+      cursor: pointer;
+    }
+    .filter-select:focus { border-color: #f5a623; }
+
+    .sort-direction-btn {
+      background: #1e2a3a;
+      border: 1px solid #3d4f66;
+      border-radius: 6px;
+      color: #50e3c2;
+      padding: 6px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: all 0.2s ease;
+      user-select: none;
+      height: 33px;
+    }
+    .sort-direction-btn:hover {
+      background: #27364b;
+      border-color: #50e3c2;
+    }
+    .sort-direction-btn:active {
+      transform: scale(0.97);
+    }
+
+    /* TABELA DE JOGADORES */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      border: 1px solid #2b394a;
+      border-radius: 10px;
+      background: #121922;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 13px;
+      min-width: 600px;
+    }
+    thead { background: #1e2836; border-bottom: 1px solid #2b394a; }
+    th {
+      padding: 10px 12px;
+      font-size: 11px;
+      font-weight: 800;
+      color: #8fa0b5;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid rgba(43, 57, 74, 0.4);
+      color: #d1dbe5;
+      white-space: nowrap;
+    }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: rgba(30, 40, 54, 0.6); }
+    .td-rank { font-weight: 800; color: #f5a623; width: 40px; text-align: center; }
+    
+    /* LINK DO NOME: BRANCO, NEGRITO LEVE, APENAS SUBLINHADO NO HOVER */
+    .player-link {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .player-link:hover {
+      text-decoration: underline;
+    }
+
+    .td-dmg { font-weight: 700; color: #50e3c2; }
+
+    .th-card-only {
+      text-align: center;
+      width: 50px;
+      padding: 6px 8px;
+    }
+    .card-th-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 6px;
+      object-fit: cover;
+      display: block;
+      margin: 0 auto;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+      transition: transform 0.15s ease;
+      cursor: pointer;
+    }
+    .card-th-icon:hover {
+      transform: scale(1.15);
+      border-color: #f5a623;
+    }
+
+    .tag-status {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+      text-align: center;
+    }
+    .tag-status.ok {
+      background: rgba(76, 217, 100, 0.18);
+      border: 1px solid rgba(76, 217, 100, 0.55);
+      color: #4cd964;
+    }
+    .tag-status.fail {
+      background: rgba(255, 82, 82, 0.18);
+      border: 1px solid rgba(255, 82, 82, 0.55);
+      color: #ff5252;
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 30px;
+      color: #8fa0b5;
+      font-size: 14px;
+    }
+
+    /* RESPONSIVIDADE MOBILE: 2 COLUNAS */
+    @media (max-width: 760px) {
+      .anatomy-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px;
+        padding: 12px 6px;
+      }
+      .area-head      { grid-column: 1 / span 2; }
+      .area-chest     { grid-column: 1 / span 2; }
+      .area-shoulderR { grid-column: 1; }
+      .area-shoulderL { grid-column: 2; }
+      .area-handR     { grid-column: 1; }
+      .area-handL     { grid-column: 2; }
+      .area-legR      { grid-column: 1; }
+      .area-legL      { grid-column: 2; }
+      .anatomy-card   { padding: 8px 10px; }
+      .metrics-grid   { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+  <a href="index.html" class="back-btn">&larr; Voltar ao Menu</a>
+
+  <div class="container">
+    <div class="title">Raid <span>Ao Vivo</span></div>
+    <div class="subtitle" id="lastUpdateText">Sincronizando com a sua planilha...</div>
+
+    <!-- CARDS DE RESUMO DA RAID -->
+    <div class="metrics-grid" id="metricsGrid" style="display: none;">
+      <div class="metric-card">
+        <span>Raid Ativa</span>
+        <strong id="mRaidName" class="orange">-</strong>
+      </div>
+      <div class="metric-card">
+        <span>Ciclo Atual</span>
+        <strong id="mCicloAtual" class="yellow">-</strong>
+      </div>
+      <div class="metric-card">
+        <span>Próximo Ciclo</span>
+        <strong id="mNextCiclo" style="font-size: 17px;">-</strong>
+      </div>
+      <div class="metric-card">
+        <span>Titã Atual</span>
+        <strong id="mCurrentTitanHeader" class="orange">-</strong>
+      </div>
+      <div class="metric-card">
+        <span>Dano Total Feito</span>
+        <strong id="mDanoTotal" class="green">-</strong>
+      </div>
+      <div class="metric-card">
+        <span>Presença Média</span>
+        <strong id="mPresenca">-</strong>
+      </div>
+      <div class="metric-card">
+        <span>Ainda Falta</span>
+        <strong id="mFalta">-</strong>
+      </div>
+      <div class="metric-card">
+        <span>Média / Ataque</span>
+        <strong id="mMediaAtk">-</strong>
+      </div>
+    </div>
+
+    <!-- MONITORAMENTO DO TITÃ ATUAL -->
+    <div class="section-block" id="secCurrentTitan" style="display: none;">
+      <div class="section-header">
+        <span class="section-title">🎯 Titã Atual no Campo</span>
+        <span style="font-size: 11px; color: #50e3c2;" id="titanStatusHeader">Em Batalha</span>
+      </div>
+
+      <div class="current-titan-card">
+        <div class="titan-main-header">
+          <div class="titan-name-box">
+            <span class="titan-seq" id="cTitanSeq">#1</span>
+            <span class="titan-name-text" id="cTitanName">Nome do Titã</span>
+          </div>
+          <div class="titan-support-badges">
+            <span class="badge-sup off" id="bSmash" title="Alvo c/ armadura + pelo menos 1 parte do titã totalmente zerada">Smash</span>
+            <span class="badge-sup off" id="bVoid" title="Pelo menos 5 partes sem armadura e com vida no corpo">Void</span>
+            <span class="badge-sup off" id="bVM" title="Pelo menos 5 partes totalmente destruídas (sem armadura e sem corpo)">VM</span>
+          </div>
+        </div>
+
+        <div class="hp-overall-box">
+          <div class="hp-overall-labels">
+            <span>Vida Total do Titã</span>
+            <span id="cTitanHpTxt">0 / 0 (0%)</span>
+          </div>
+          <div class="hp-bar-outer">
+            <div class="hp-bar-fill-overall" id="cTitanHpFill" style="width: 100%;"></div>
+          </div>
+        </div>
+
+        <!-- LAYOUT ANATÔMICO EM 3 LINHAS (3 | 3 | 2)[cite: 1] -->
+        <div class="anatomy-grid">
+          <div class="anatomy-card area-shoulderR" id="card_ArmUpperRight"></div>
+          <div class="anatomy-card area-head" id="card_Head"></div>
+          <div class="anatomy-card area-shoulderL" id="card_ArmUpperLeft"></div>
+
+          <div class="anatomy-card area-handR" id="card_HandRight"></div>
+          <div class="anatomy-card area-chest" id="card_ChestUpper"></div>
+          <div class="anatomy-card area-handL" id="card_HandLeft"></div>
+
+          <div class="anatomy-card area-legR" id="card_LegUpperRight"></div>
+          <div class="anatomy-card area-legL" id="card_LegUpperLeft"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RANKING DE JOGADORES -->
+    <div class="section-block">
+      <div class="section-header">
+        <span class="section-title">🏆 Ranking de Ataques</span>
+        <span style="font-size: 11px; color: #8fa0b5;" id="playersCount">50 jogadores</span>
+      </div>
+
+      <div class="filters-bar">
+        <input type="text" id="searchInput" class="filter-input" placeholder="🔍 Buscar jogador..." oninput="filtrarTabela()">
+        
+        <select id="filterTTMF" class="filter-select" onchange="filtrarTabela()">
+          <option value="todos">Status: Todos</option>
+          <option value="atk_ok">✔️ Fez todos os Ataques</option>
+          <option value="atk_fail">❌ Faltou Ataques</option>
+          <option value="tt_ok">✔️ Usou TT em todos</option>
+          <option value="tt_fail">❌ Faltou TT</option>
+          <option value="mf_ok">✔️ Usou MF em todos</option>
+          <option value="mf_fail">❌ Faltou MF</option>
+        </select>
+
+        <select id="sortFieldSelect" class="filter-select" onchange="filtrarTabela()">
+          <option value="dano">Dano Total</option>
+          <option value="media">Média / Ataque</option>
+          <option value="ataques">Quantidade de Ataques</option>
+          <option value="tt">Contagem de Team Tactics</option>
+          <option value="mf">Contagem de Mirror Force</option>
+        </select>
+
+        <button id="sortDirectionBtn" class="sort-direction-btn" onclick="alternarDirecaoOrdenacao()" title="Clique para alternar entre maior para menor e menor para maior">
+          <span id="sortDirectionIcon">↓</span> <span id="sortDirectionText">Maior &rarr; Menor</span>
+        </button>
+      </div>
+
+      <div class="table-container">
+        <div id="loading" class="loading-state">Conectando e carregando dados do TitanTech...</div>
+        <table id="playersTable" style="display: none;">
+          <thead>
+            <tr>
+              <th class="td-rank">#</th>
+              <th>Jogador</th>
+              <th>Dano Total</th>
+              <th>Média / Atk</th>
+              <th>% Raid</th>
+              <th style="text-align: center;">Ataques</th>
+              <th class="th-card-only">
+                <img src="cards/tt.png" alt="Team Tactics" title="Team Tactics" class="card-th-icon" onerror="this.onerror=null; this.src='TeamTactics.png';">
+              </th>
+              <th class="th-card-only">
+                <img src="cards/mf.png" alt="Mirror Force" title="Mirror Force" class="card-th-icon" onerror="this.onerror=null; this.src='MirrorForce.png';">
+              </th>
+            </tr>
+          </thead>
+          <tbody id="playersBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const SPREADSHEET_ID = '1xo8zcjYt2Kiytq-D9vF9oO3wamCcBKbvH1fn7fqtsSM';
+
+    const ANATOMY_PARTS = [
+      { key: 'Head',          name: 'Cabeça' },
+      { key: 'ChestUpper',    name: 'Peito / Torso' },
+      { key: 'ArmUpperLeft',  name: 'Ombro Esq.' },
+      { key: 'ArmUpperRight', name: 'Ombro Dir.' },
+      { key: 'HandLeft',      name: 'Mão Esq.' },
+      { key: 'HandRight',     name: 'Mão Dir.' },
+      { key: 'LegUpperLeft',  name: 'Perna Esq.' },
+      { key: 'LegUpperRight', name: 'Perna Dir.' }
+    ];
+
+    let todosJogadores = [];
+    let totalCiclosDaRaid = 1;
+    let limiteAtaquesAtual = 6;
+    let temporizadorCiclo = null;
+    let ordemDecrescente = true;
+
+    function formatarHp(valorEmBilhoes) {
+      const v = Number(valorEmBilhoes) || 0;
+      if (v <= 0) return '0';
+      if (v >= 1.0) {
+        return v.toFixed(2) + 'B';
+      } else if (v >= 0.001) {
+        const m = v * 1000;
+        return (m >= 10 ? Math.round(m) : m.toFixed(1)) + 'M';
+      } else {
+        return Math.round(v * 1000000) + 'K';
+      }
+    }
+
+    function carregarAbaJSONP(nomeAba) {
+      return new Promise((resolve, reject) => {
+        const callbackName = 'googleQueryCallback_' + Math.floor(Math.random() * 100000);
+        window[callbackName] = function(data) {
+          delete window[callbackName];
+          document.body.removeChild(script);
+          if (data && data.table) resolve(data.table);
+          else reject(new Error('Formato inválido'));
+        };
+
+        const script = document.createElement('script');
+        script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=responseHandler:${callbackName}&sheet=${encodeURIComponent(nomeAba)}`;
+        script.onerror = () => {
+          delete window[callbackName];
+          document.body.removeChild(script);
+          reject(new Error('Erro de conexão'));
+        };
+        document.body.appendChild(script);
+      });
+    }
+
+    function parseDataPlanilha(strData) {
+      if (!strData) return null;
+      if (typeof strData === 'string' && strData.includes('Date(')) {
+        const p = strData.match(/\d+/g);
+        if (p) return new Date(p[0], p[1], p[2], p[3] || 0, p[4] || 0, p[5] || 0);
+      }
+      const partes = String(strData).trim().split(/[\sT]+/);
+      if (partes.length < 2) return new Date(strData);
+      const [ano, mes, dia] = partes[0].split('-').map(Number);
+      const [hora, min, seg] = partes[1].split(':').map(Number);
+      return new Date(ano, mes - 1, dia, hora, min, seg || 0);
+    }
+
+    async function carregarPainel() {
+      try {
+        const [tabelaRaids, tabelaJogadores, tabelaTitans, tabelaCiclos] = await Promise.all([
+          carregarAbaJSONP('TT_Raids'),
+          carregarAbaJSONP('TT_Jogadores'),
+          carregarAbaJSONP('TT_Titans'),
+          carregarAbaJSONP('TT_Ciclos')
+        ]);
+
+        // 1. Processa a Raid Atual
+        const linhasRaids = tabelaRaids.rows;
+        let nomeRaidAtual = '';
+        let raidStatus = 'Em andamento';
+        let totalTitansDaRaid = 0;
+
+        if (linhasRaids.length > 0) {
+          const ultimaRaid = linhasRaids[linhasRaids.length - 1].c;
+          nomeRaidAtual = ultimaRaid[0]?.v || '';
+          raidStatus = ultimaRaid[6]?.v || 'Em andamento';
+          totalCiclosDaRaid = Number(ultimaRaid[9]?.v || 1);
+          limiteAtaquesAtual = totalCiclosDaRaid * 6;
+          totalTitansDaRaid = Number(ultimaRaid[14]?.v || 0);
+
+          document.getElementById('mRaidName').textContent = nomeRaidAtual || '-';
+          document.getElementById('mCicloAtual').textContent = `Ciclo ${totalCiclosDaRaid}`;
+          document.getElementById('mDanoTotal').textContent = (ultimaRaid[8]?.f || (ultimaRaid[8]?.v ? ultimaRaid[8].v + 'B' : '-'));
+          document.getElementById('mPresenca').textContent = ultimaRaid[12]?.f || (Math.round((ultimaRaid[12]?.v || 0) * 100) + '%');
+          document.getElementById('mMediaAtk').textContent = ultimaRaid[13]?.f || (ultimaRaid[13]?.v ? Math.round(ultimaRaid[13].v) + 'M' : '-');
+          document.getElementById('mFalta').textContent = (ultimaRaid[19]?.f || (ultimaRaid[19]?.v ? ultimaRaid[19].v + 'B' : '-'));
+
+          document.getElementById('metricsGrid').style.display = 'grid';
+          document.getElementById('lastUpdateText').textContent = 'Métricas sincronizadas com a sua planilha';
+        }
+
+        // 2. Cronômetro Regressivo
+        calcularProximoCiclo(tabelaCiclos.rows, nomeRaidAtual, raidStatus);
+
+        // 3. Localiza o Titã Atual
+        const linhasTitans = tabelaTitans.rows;
+        let titasDaRaid = [];
+
+        linhasTitans.forEach(row => {
+          const r = row.c;
+          if (r && r[0] && r[0].v === nomeRaidAtual) {
+            titasDaRaid.push({
+              seq: r[1]?.v || 1,
+              nome: r[2]?.v || 'Titã',
+              hpTotal: Number(r[3]?.v || 0),
+              hpRestante: Number(r[4]?.v || 0),
+              partesNaoAtacar: String(r[7]?.v || '-'),
+              status: r[11]?.v || 'Vivo'
+            });
+          }
+        });
+
+        if (totalTitansDaRaid === 0) totalTitansDaRaid = titasDaRaid.length;
+        let titaAtual = titasDaRaid.find(t => t.status !== 'Morto' && t.hpRestante > 0) || titasDaRaid[titasDaRaid.length - 1];
+
+        if (titaAtual) {
+          document.getElementById('mCurrentTitanHeader').textContent = `${titaAtual.seq}/${totalTitansDaRaid}`;
+          document.getElementById('cTitanSeq').textContent = `#${titaAtual.seq}`;
+          document.getElementById('cTitanName').textContent = titaAtual.nome;
+          
+          const percHp = titaAtual.hpTotal > 0 ? (titaAtual.hpRestante / titaAtual.hpTotal) * 100 : 0;
+          document.getElementById('cTitanHpTxt').textContent = `${formatarHp(titaAtual.hpRestante)} / ${formatarHp(titaAtual.hpTotal)} (${percHp.toFixed(1)}%)`;
+          document.getElementById('cTitanHpFill').style.width = `${Math.max(0, Math.min(100, percHp))}%`;
+
+          try {
+            const tabelaPartes = await carregarAbaJSONP('TT_Partes');
+            renderizarAnatomiaDupla(tabelaPartes, nomeRaidAtual, titaAtual.seq, titaAtual);
+          } catch (e) {
+            renderizarAnatomiaFallback(titaAtual);
+          }
+
+          document.getElementById('secCurrentTitan').style.display = 'block';
+        }
+
+        // 4. Processa Jogadores
+        const linhasJog = tabelaJogadores.rows;
+        todosJogadores = [];
+
+        linhasJog.forEach(row => {
+          const r = row.c;
+          if (r && r[0] && r[0].v === nomeRaidAtual) {
+            const ttVal = Number(r[11]?.v || 0);
+            const mfVal = Number(r[12]?.v || 0);
+            const totalVal = Number(r[4]?.v || 0);
+            const mediaVal = Number(r[6]?.v || 0);
+            const ataquesVal = Number(r[9]?.v || 0);
+
+            todosJogadores.push({
+              nome: r[3]?.v || '-',
+              total: totalVal,
+              totalFormatado: r[4]?.f || (totalVal ? totalVal + 'B' : '-'),
+              percRaid: r[5]?.f || (r[5]?.v ? (r[5].v * 100).toFixed(1) + '%' : '-'),
+              mediaAtk: mediaVal,
+              mediaFormatada: r[6]?.f || (mediaVal ? Math.round(mediaVal) + 'M' : '-'),
+              ataques: ataquesVal,
+              tt: ttVal,
+              mf: mfVal,
+              atkOk: ataquesVal >= limiteAtaquesAtual,
+              ttOk: ttVal >= totalCiclosDaRaid,
+              mfOk: mfVal >= totalCiclosDaRaid
+            });
+          }
+        });
+
+        filtrarTabela();
+
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('playersTable').style.display = 'table';
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById('loading').textContent = 'Erro ao sincronizar os dados. Verifique a planilha.';
+      }
+    }
+
+    function calcularProximoCiclo(linhasCiclos, nomeRaid, statusRaid) {
+      const el = document.getElementById('mNextCiclo');
+      if (temporizadorCiclo) clearInterval(temporizadorCiclo);
+
+      if (statusRaid === 'Encerrada') {
+        el.textContent = 'Encerrada';
+        el.className = 'green';
+        return;
+      }
+
+      const ciclosDaRaid = [];
+      linhasCiclos.forEach(row => {
+        const r = row.c;
+        if (r && r[0] && r[0].v === nomeRaid && r[11]?.v) {
+          const dt = parseDataPlanilha(r[11].v);
+          if (dt && !isNaN(dt.getTime())) {
+            ciclosDaRaid.push(dt);
+          }
+        }
+      });
+
+      if (ciclosDaRaid.length === 0) {
+        el.textContent = 'Em andamento';
+        return;
+      }
+
+      ciclosDaRaid.sort((a, b) => a.getTime() - b.getTime());
+      const inicioUltimoCiclo = ciclosDaRaid[ciclosDaRaid.length - 1];
+      const viradaCiclo = new Date(inicioUltimoCiclo.getTime() + (12 * 60 * 60 * 1000));
+
+      function atualizarCronometro() {
+        const agora = new Date();
+        const diffMs = viradaCiclo.getTime() - agora.getTime();
+
+        if (diffMs <= 0) {
+          el.textContent = 'Virando ciclo...';
+          el.className = 'orange';
+          return;
+        }
+
+        const horas = Math.floor(diffMs / (1000 * 60 * 60));
+        const minutos = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+        const segundos = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+        const tempoFormatado = `${String(horas).padStart(2, '0')}:${String(minutos).padStart(2, '0')}:${String(segundos).padStart(2, '0')}`;
+        el.className = horas === 0 ? 'orange' : 'green';
+        el.textContent = tempoFormatado;
+      }
+
+      atualizarCronometro();
+      temporizadorCiclo = setInterval(atualizarCronometro, 1000);
+    }
+
+    function alternarDirecaoOrdenacao() {
+      ordemDecrescente = !ordemDecrescente;
+      const icon = document.getElementById('sortDirectionIcon');
+      const text = document.getElementById('sortDirectionText');
+      const btn = document.getElementById('sortDirectionBtn');
+
+      if (ordemDecrescente) {
+        icon.textContent = '↓';
+        text.innerHTML = 'Maior &rarr; Menor';
+        btn.style.color = '#50e3c2';
+        btn.style.borderColor = '#3d4f66';
+      } else {
+        icon.textContent = '↑';
+        text.innerHTML = 'Menor &rarr; Maior';
+        btn.style.color = '#f5a623';
+        btn.style.borderColor = '#f5a623';
+      }
+
+      filtrarTabela();
+    }
+
+    function filtrarTabela() {
+      const busca = document.getElementById('searchInput').value.trim().toLowerCase();
+      const filtroTTMF = document.getElementById('filterTTMF').value;
+      const campoSort = document.getElementById('sortFieldSelect').value;
+      const raidAtual = document.getElementById('mRaidName').textContent;
+
+      let lista = todosJogadores.filter(j => {
+        const bateNome = j.nome.toLowerCase().includes(busca);
+        if (!bateNome) return false;
+
+        if (filtroTTMF === 'atk_ok') return j.atkOk;
+        if (filtroTTMF === 'atk_fail') return !j.atkOk;
+        if (filtroTTMF === 'tt_ok') return j.ttOk;
+        if (filtroTTMF === 'tt_fail') return !j.ttOk;
+        if (filtroTTMF === 'mf_ok') return j.mfOk;
+        if (filtroTTMF === 'mf_fail') return !j.mfOk;
+        return true;
+      });
+
+      lista.sort((a, b) => {
+        let diff = 0;
+        if (campoSort === 'dano') diff = a.total - b.total;
+        else if (campoSort === 'media') diff = a.mediaAtk - b.mediaAtk;
+        else if (campoSort === 'ataques') diff = a.ataques - b.ataques;
+        else if (campoSort === 'tt') diff = (a.tt - b.tt) || (a.total - b.total);
+        else if (campoSort === 'mf') diff = (a.mf - b.mf) || (a.total - b.total);
+
+        return ordemDecrescente ? -diff : diff;
+      });
+
+      document.getElementById('playersCount').textContent = `${lista.length} de ${todosJogadores.length} jogadores`;
+
+      const tbody = document.getElementById('playersBody');
+      tbody.innerHTML = '';
+
+      lista.forEach((j, idx) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td class="td-rank">${idx + 1}</td>
+          <td class="td-name">
+            <a href="jogador.html?nome=${encodeURIComponent(j.nome)}&raid=${encodeURIComponent(raidAtual)}" class="player-link">
+              ${j.nome} &rarr;
+            </a>
+          </td>
+          <td class="td-dmg">${j.totalFormatado}</td>
+          <td>${j.mediaFormatada}</td>
+          <td>${j.percRaid}</td>
+          <td style="text-align: center;">
+            <span class="tag-status ${j.atkOk ? 'ok' : 'fail'}" title="${j.atkOk ? 'Realizou todos os ataques deste ciclo!' : 'Faltou realizar ataques neste ciclo'}">
+              ${j.ataques}/${limiteAtaquesAtual}
+            </span>
+          </td>
+          <td style="text-align: center;">
+            <span class="tag-status ${j.ttOk ? 'ok' : 'fail'}" title="${j.ttOk ? 'Usou Team Tactics em todos os ciclos!' : 'Faltou usar Team Tactics'}">
+              ${j.tt}/${totalCiclosDaRaid}
+            </span>
+          </td>
+          <td style="text-align: center;">
+            <span class="tag-status ${j.mfOk ? 'ok' : 'fail'}" title="${j.mfOk ? 'Usou Mirror Force em todos os ciclos!' : 'Faltou usar Mirror Force'}">
+              ${j.mf}/${totalCiclosDaRaid}
+            </span>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function renderizarAnatomiaDupla(tabelaPartes, raidNome, seqTita, titaAtual) {
+      const linhas = tabelaPartes.rows;
+      const partesMap = {};
+
+      linhas.forEach(row => {
+        const r = row.c;
+        if (r && r[0] && r[0].v === raidNome && Number(r[1]?.v) === Number(seqTita)) {
+          const rawName = String(r[3]?.v || '');
+          const isArmor = rawName.startsWith('Armor');
+          const cleanKey = rawName.replace(/^(Armor|Body|Skeleton)/, '');
+          const hpTot = Number(r[4]?.v || 0);
+          const hpCur = Number(r[5]?.v || 0);
+          const isTarget = r[6]?.v === 'Sim';
+
+          if (!partesMap[cleanKey]) {
+            partesMap[cleanKey] = {
+              armorTot: 0, armorCur: 0, armorTarget: true,
+              bodyTot: 0, bodyCur: 0, bodyTarget: true
+            };
+          }
+
+          if (isArmor) {
+            partesMap[cleanKey].armorTot = hpTot;
+            partesMap[cleanKey].armorCur = Math.max(0, hpCur);
+            partesMap[cleanKey].armorTarget = isTarget;
+          } else {
+            partesMap[cleanKey].bodyTot = hpTot;
+            partesMap[cleanKey].bodyCur = Math.max(0, hpCur);
+            partesMap[cleanKey].bodyTarget = isTarget;
+          }
+        }
+      });
+
+      if (Object.keys(partesMap).length === 0) {
+        renderizarAnatomiaFallback(titaAtual);
+        return;
+      }
+
+      let hasTargetWithArmor = false;
+      let hasZeroHpPart = false;
+      let countArmorZeroBodyAlive = 0;
+      let countPartTotallyDestroyed = 0;
+
+      ANATOMY_PARTS.forEach(part => {
+        const el = document.getElementById(`card_${part.key}`);
+        if (!el) return;
+
+        const data = partesMap[part.key] || {
+          armorTot: 1, armorCur: 0, armorTarget: true,
+          bodyTot: 1, bodyCur: 0, bodyTarget: true
+        };
+
+        const isPartDead = data.armorCur <= 0 && data.bodyCur <= 0;
+        const isSkip = (!data.bodyTarget && data.bodyTot > 0) || (!data.armorTarget && data.armorTot > 0);
+
+        if (isPartDead) {
+          hasZeroHpPart = true;
+          countPartTotallyDestroyed++;
+        }
+        if (data.armorCur <= 0 && data.bodyCur > 0) {
+          countArmorZeroBodyAlive++;
+        }
+        if (!isSkip && data.armorCur > 0) {
+          hasTargetWithArmor = true;
+        }
+
+        const percArmor = data.armorTot > 0 ? Math.max(0, Math.min(100, (data.armorCur / data.armorTot) * 100)) : 0;
+        const percBody  = data.bodyTot > 0 ? Math.max(0, Math.min(100, (data.bodyCur / data.bodyTot) * 100)) : 0;
+
+        const isArmorDecay = !isPartDead && !isSkip && data.armorTarget && percArmor > 0 && percArmor <= 30;
+        const isBodyDecay  = !isPartDead && !isSkip && data.bodyTarget && data.armorCur <= 0 && percBody > 0 && percBody <= 30;
+        const isDecayActive = isArmorDecay || isBodyDecay;
+
+        let extraClass = '';
+        if (isPartDead) extraClass = 'part-dead';
+        else if (isSkip) extraClass = 'has-skip';
+        else if (isDecayActive) extraClass = 'decay-target';
+
+        el.className = `anatomy-card area-${getAreaClass(part.key)} ${extraClass}`;
+
+        el.innerHTML = `
+          <div class="card-head-row">
+            <span class="part-title">${part.name}</span>
+            <div style="display: flex; gap: 4px; align-items: center;">
+              ${isDecayActive ? '<span class="badge-decay" title="HP Crítico (≤30%): Excelente para Decaying Strike!">DECAY</span>' : ''}
+              ${isPartDead 
+                ? '<span class="badge-destroyed">DESTRUÍDA</span>' 
+                : (isSkip ? '<span class="badge-skip">NÃO BATER (X)</span>' : '')}
+            </div>
+          </div>
+
+          <!-- BARRA 1: ARMADURA -->
+          <div class="bar-group">
+            <div class="bar-meta">
+              <span class="label-armor">🛡️ Armadura</span>
+              <span class="bar-val">${formatarHp(data.armorCur)} (${percArmor.toFixed(0)}%)</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill-armor ${isArmorDecay ? 'decay-bar' : ''}" style="width: ${percArmor}%;"></div>
+            </div>
+          </div>
+
+          <!-- BARRA 2: CORPO -->
+          <div class="bar-group">
+            <div class="bar-meta">
+              <span class="label-body">❤️ Corpo</span>
+              <span class="bar-val">${formatarHp(data.bodyCur)} (${percBody.toFixed(0)}%)</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill-body ${isBodyDecay ? 'decay-bar' : ((!isSkip && !isPartDead) ? 'target-ok' : '')}" style="width: ${percBody}%;"></div>
+            </div>
+          </div>
+        `;
+      });
+
+      const isSmashActive = hasTargetWithArmor && hasZeroHpPart;
+      const isVoidActive  = countArmorZeroBodyAlive >= 5;
+      const isVmActive    = countPartTotallyDestroyed >= 5;
+
+      atualizarBadgeSuporte('bSmash', isSmashActive);
+      atualizarBadgeSuporte('bVoid', isVoidActive);
+      atualizarBadgeSuporte('bVM', isVmActive);
+    }
+
+    function atualizarBadgeSuporte(id, ativo) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.className = ativo ? 'badge-sup active' : 'badge-sup off';
+    }
+
+    function renderizarAnatomiaFallback(tita) {
+      const skips = (tita?.partesNaoAtacar || '').split(',').map(s => s.trim().toLowerCase());
+
+      ANATOMY_PARTS.forEach(part => {
+        const el = document.getElementById(`card_${part.key}`);
+        if (!el) return;
+
+        const isSkip = skips.some(s => s && part.name.toLowerCase().includes(s));
+
+        el.className = `anatomy-card area-${getAreaClass(part.key)} ${isSkip ? 'has-skip' : ''}`;
+        el.innerHTML = `
+          <div class="card-head-row">
+            <span class="part-title">${part.name}</span>
+            ${isSkip ? '<span class="badge-skip">NÃO BATER (X)</span>' : '<span style="font-size:9.5px; color:#50e3c2; font-weight:800;">ALVO ATIVO</span>'}
+          </div>
+
+          <div class="bar-group">
+            <div class="bar-meta">
+              <span class="label-armor">🛡️ Armadura</span>
+              <span class="bar-val">${isSkip ? 'Protegida' : 'Disponível'}</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill-armor" style="width: ${isSkip ? 0 : 100}%;"></div>
+            </div>
+          </div>
+
+          <div class="bar-group">
+            <div class="bar-meta">
+              <span class="label-body">❤️ Corpo</span>
+              <span class="bar-val">${isSkip ? 'Ignorar' : 'Disponível'}</span>
+            </div>
+            <div class="bar-track">
+              <div class="bar-fill-body ${!isSkip ? 'target-ok' : ''}" style="width: ${isSkip ? 0 : 100}%;"></div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    function getAreaClass(key) {
+      switch(key) {
+        case 'Head': return 'head';
+        case 'ChestUpper': return 'chest';
+        case 'ArmUpperRight': return 'shoulderR';
+        case 'ArmUpperLeft': return 'shoulderL';
+        case 'HandRight': return 'handR';
+        case 'HandLeft': return 'handL';
+        case 'LegUpperRight': return 'legR';
+        case 'LegUpperLeft': return 'legL';
+        default: return '';
+      }
+    }
+
+    window.addEventListener('load', carregarPainel);
+  </script>
+</body>
+</html>

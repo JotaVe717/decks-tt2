@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Perfil do Jogador - Tap Titans 2</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: #0f141c;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 8px 60px 8px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .back-btn {
+      align-self: flex-start;
+      max-width: 820px;
+      margin: 0 auto 12px auto;
+      width: 100%;
+      text-decoration: none;
+      color: #8fa0b5;
+      font-size: 14px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+    .back-btn:hover { color: #f5a623; }
+    .container {
+      width: 100%;
+      max-width: 820px;
+      background: #18202a;
+      border: 1px solid #283545;
+      border-radius: 16px;
+      padding: 24px 16px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    .player-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      border-bottom: 1px solid #283545;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+    .player-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .player-title span { color: #f5a623; }
+    .raid-tag {
+      background: rgba(245, 166, 35, 0.15);
+      border: 1px solid rgba(245, 166, 35, 0.4);
+      color: #f5a623;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    /* CARDS DE RESUMO DO JOGADOR */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .metric-card {
+      background: #121922;
+      border: 1px solid #283545;
+      border-radius: 10px;
+      padding: 12px 10px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .metric-card span {
+      font-size: 10px;
+      font-weight: 700;
+      color: #8fa0b5;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .metric-card strong { font-size: 17px; color: #50e3c2; }
+    .metric-card strong.orange { color: #f5a623; }
+    .metric-card strong.green { color: #4cd964; }
+
+    /* TABELA DE CICLOS */
+    .section-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: #f5a623;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .cycles-container {
+      background: #121922;
+      border: 1px solid #2b394a;
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .cycle-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: #18222e;
+      padding: 10px 14px;
+      border-radius: 8px;
+      border: 1px solid #233140;
+    }
+    .cycle-badge {
+      font-size: 12px;
+      font-weight: 800;
+      color: #f5a623;
+      min-width: 60px;
+    }
+    .cycle-bar-box {
+      flex: 1;
+      height: 10px;
+      background: #0d131a;
+      border-radius: 5px;
+      overflow: hidden;
+      border: 1px solid #223040;
+    }
+    .cycle-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #ff9966, #50e3c2);
+      border-radius: 5px;
+      transition: width 0.4s ease;
+    }
+    .cycle-val {
+      font-size: 13px;
+      font-weight: 800;
+      color: #ffffff;
+      min-width: 75px;
+      text-align: right;
+    }
+    .cycle-zero {
+      color: #6c7d93;
+    }
+
+    .loading-state {
+      text-align: center;
+      padding: 30px;
+      color: #8fa0b5;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="painel_raid.html" class="back-btn">&larr; Voltar ao Painel da Raid</a>
+
+  <div class="container">
+    <div id="loading" class="loading-state">Carregando dados do jogador...</div>
+
+    <div id="content" style="display: none;">
+      <!-- CABEÇALHO DO JOGADOR -->
+      <div class="player-header">
+        <div class="player-title">
+          👤 <span id="pNome">Nome do Jogador</span>
+        </div>
+        <div class="raid-tag" id="pRaid">Raid Atual</div>
+      </div>
+
+      <!-- CARDS DE MÉTRICAS -->
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <span>Dano Total</span>
+          <strong id="pTotal" class="green">-</strong>
+        </div>
+        <div class="metric-card">
+          <span>Média / Ataque</span>
+          <strong id="pMedia">-</strong>
+        </div>
+        <div class="metric-card">
+          <span>Maior Ataque</span>
+          <strong id="pMaior" class="orange">-</strong>
+        </div>
+        <div class="metric-card">
+          <span>Menor Ataque</span>
+          <strong id="pMenor">-</strong>
+        </div>
+        <div class="metric-card">
+          <span>Ataques Feitos</span>
+          <strong id="pAtaques">-</strong>
+        </div>
+        <div class="metric-card">
+          <span>Team Tactics</span>
+          <strong id="pTT">-</strong>
+        </div>
+        <div class="metric-card">
+          <span>Mirror Force</span>
+          <strong id="pMF">-</strong>
+        </div>
+      </div>
+
+      <!-- DETALHAMENTO DE DANO POR CICLO -->
+      <div class="section-title">📊 Dano Realizado por Ciclo</div>
+      <div class="cycles-container" id="cyclesBox"></div>
+
+      <!-- HISTÓRICO EM OUTRAS RAIDS -->
+      <div class="section-title" id="histTitle" style="display: none;">📜 Histórico em Outras Raids</div>
+      <div id="histBox" style="display: none;"></div>
+    </div>
+  </div>
+
+  <script>
+    const SPREADSHEET_ID = '1xo8zcjYt2Kiytq-D9vF9oO3wamCcBKbvH1fn7fqtsSM';
+
+    function getParametrosURL() {
+      const p = new URLSearchParams(window.location.search);
+      return {
+        nome: p.get('nome') || '',
+        raid: p.get('raid') || ''
+      };
+    }
+
+    function formatarHp(valorEmBilhoes) {
+      const v = Number(valorEmBilhoes) || 0;
+      if (v <= 0) return '0';
+      if (v >= 1.0) {
+        return v.toFixed(2) + 'B';
+      } else if (v >= 0.001) {
+        const m = v * 1000;
+        return (m >= 10 ? Math.round(m) : m.toFixed(1)) + 'M';
+      } else {
+        return Math.round(v * 1000000) + 'K';
+      }
+    }
+
+    function carregarAbaJSONP(nomeAba) {
+      return new Promise((resolve, reject) => {
+        const callbackName = 'googleQueryCallback_' + Math.floor(Math.random() * 100000);
+        window[callbackName] = function(data) {
+          delete window[callbackName];
+          document.body.removeChild(script);
+          if (data && data.table) resolve(data.table);
+          else reject(new Error('Formato inválido'));
+        };
+
+        const script = document.createElement('script');
+        script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=responseHandler:${callbackName}&sheet=${encodeURIComponent(nomeAba)}`;
+        script.onerror = () => {
+          delete window[callbackName];
+          document.body.removeChild(script);
+          reject(new Error('Erro de conexão'));
+        };
+        document.body.appendChild(script);
+      });
+    }
+
+    async function carregarPerfil() {
+      const { nome, raid } = getParametrosURL();
+
+      if (!nome) {
+        document.getElementById('loading').textContent = 'Nenhum jogador informado na URL.';
+        return;
+      }
+
+      try {
+        const tabelaJogadores = await carregarAbaJSONP('TT_Jogadores');
+        const linhas = tabelaJogadores.rows;
+
+        let dadosJogadorAtual = null;
+        let historicoRaids = [];
+
+        linhas.forEach(row => {
+          const r = row.c;
+          if (!r) return;
+
+          const nomeLinha = String(r[3]?.v || '').trim();
+          const raidLinha = String(r[0]?.v || '').trim();
+
+          if (nomeLinha.toLowerCase() === nome.toLowerCase()) {
+            const registro = {
+              raid: raidLinha,
+              total: Number(r[4]?.v || 0),
+              totalFormatado: r[4]?.f || (r[4]?.v ? r[4].v + 'B' : '0B'),
+              mediaAtk: Number(r[6]?.v || 0),
+              mediaFormatada: r[6]?.f || (r[6]?.v ? Math.round(r[6].v) + 'M' : '0M'),
+              maiorAtk: Number(r[7]?.v || 0),
+              menorAtk: Number(r[8]?.v || 0),
+              ataques: Number(r[9]?.v || 0),
+              ataquesMax: Number(r[10]?.v || 0),
+              tt: Number(r[11]?.v || 0),
+              mf: Number(r[12]?.v || 0),
+              // Colunas de Ciclos: C1 a C7 (índices 13 a 19)
+              c1: Number(r[13]?.v || 0),
+              c2: Number(r[14]?.v || 0),
+              c3: Number(r[15]?.v || 0),
+              c4: Number(r[16]?.v || 0),
+              c5: Number(r[17]?.v || 0),
+              c6: Number(r[18]?.v || 0),
+              c7: Number(r[19]?.v || 0)
+            };
+
+            if (!dadosJogadorAtual && (!raid || raidLinha === raid)) {
+              dadosJogadorAtual = registro;
+            } else {
+              historicoRaids.push(registro);
+            }
+          }
+        });
+
+        // Se não achou na raid especificada, pega o último registro dele
+        if (!dadosJogadorAtual && historicoRaids.length > 0) {
+          dadosJogadorAtual = historicoRaids.pop();
+        }
+
+        if (!dadosJogadorAtual) {
+          document.getElementById('loading').textContent = `Jogador "${nome}" não encontrado na planilha.`;
+          return;
+        }
+
+        // Preenche Cabeçalho e Cards
+        document.getElementById('pNome').textContent = nome;
+        document.getElementById('pRaid').textContent = dadosJogadorAtual.raid || 'Raid Ativa';
+        document.getElementById('pTotal').textContent = dadosJogadorAtual.totalFormatado;
+        document.getElementById('pMedia').textContent = dadosJogadorAtual.mediaFormatada;
+        document.getElementById('pMaior').textContent = dadosJogadorAtual.maiorAtk ? Math.round(dadosJogadorAtual.maiorAtk) + 'M' : '-';
+        document.getElementById('pMenor').textContent = dadosJogadorAtual.menorAtk ? Math.round(dadosJogadorAtual.menorAtk) + 'M' : '-';
+        document.getElementById('pAtaques').textContent = `${dadosJogadorAtual.ataques}/${dadosJogadorAtual.ataquesMax || '-'}`;
+        document.getElementById('pTT').textContent = dadosJogadorAtual.tt;
+        document.getElementById('pMF').textContent = dadosJogadorAtual.mf;
+
+        // Renderiza Linhas de Ciclos (C1 a C7)
+        const ciclos = [
+          { nome: 'Ciclo 1', val: dadosJogadorAtual.c1 },
+          { nome: 'Ciclo 2', val: dadosJogadorAtual.c2 },
+          { nome: 'Ciclo 3', val: dadosJogadorAtual.c3 },
+          { nome: 'Ciclo 4', val: dadosJogadorAtual.c4 },
+          { nome: 'Ciclo 5', val: dadosJogadorAtual.c5 },
+          { nome: 'Ciclo 6', val: dadosJogadorAtual.c6 },
+          { nome: 'Ciclo 7', val: dadosJogadorAtual.c7 }
+        ];
+
+        // Acha o maior ciclo para criar a proporção da barra
+        const maiorDanoCiclo = Math.max(...ciclos.map(c => c.val), 0.001);
+        const cyclesBox = document.getElementById('cyclesBox');
+        cyclesBox.innerHTML = '';
+
+        ciclos.forEach(c => {
+          const percBarra = maiorDanoCiclo > 0 ? (c.val / maiorDanoCiclo) * 100 : 0;
+          const temDano = c.val > 0;
+
+          const row = document.createElement('div');
+          row.className = 'cycle-row';
+          row.innerHTML = `
+            <div class="cycle-badge">${c.nome}</div>
+            <div class="cycle-bar-box">
+              <div class="cycle-bar-fill" style="width: ${percBarra}%;"></div>
+            </div>
+            <div class="cycle-val ${temDano ? '' : 'cycle-zero'}">
+              ${temDano ? formatarHp(c.val) : 'Sem dano'}
+            </div>
+          `;
+          cyclesBox.appendChild(row);
+        });
+
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('content').style.display = 'block';
+
+      } catch (err) {
+        console.error(err);
+        document.getElementById('loading').textContent = 'Erro ao carregar os dados do jogador.';
+      }
+    }
+
+    window.addEventListener('load', carregarPerfil);
+  </script>
+</body>
+</html>
