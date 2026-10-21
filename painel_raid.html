@@ -203,7 +203,7 @@
       transition: width 0.4s ease;
     }
 
-    /* GRID ANATÔMICO EM 6 COLUNAS (3 LINHAS: 3 | 3 | 2) */
+    /* GRID ANATÔMICO DESKTOP: 6 COLUNAS (3 | 3 | 2) */
     .anatomy-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -215,17 +215,15 @@
       border: 1px dashed #283748;
     }
 
-    /* LINHA 1 (3 itens) */
+    /* POSIÇÕES NO DESKTOP */
     .area-shoulderR { grid-column: span 2; }
     .area-head      { grid-column: span 2; }
     .area-shoulderL { grid-column: span 2; }
 
-    /* LINHA 2 (3 itens) */
     .area-handR     { grid-column: span 2; }
     .area-chest     { grid-column: span 2; }
     .area-handL     { grid-column: span 2; }
 
-    /* LINHA 3 (2 itens centralizados) */
     .area-legR      { grid-column: 2 / span 2; }
     .area-legL      { grid-column: 4 / span 2; }
 
@@ -448,7 +446,6 @@
     tr:hover td { background: rgba(30, 40, 54, 0.6); }
     .td-rank { font-weight: 800; color: #f5a623; width: 40px; text-align: center; }
     
-    /* LINK DO NOME: BRANCO, NEGRITO LEVE, APENAS SUBLINHADO NO HOVER */
     .player-link {
       color: #ffffff;
       text-decoration: none;
@@ -509,21 +506,32 @@
       font-size: 14px;
     }
 
-    /* RESPONSIVIDADE MOBILE: 2 COLUNAS */
+    /* ---------------- NOVO LAYOUT DO TITÃ EXCLUSIVO PARA MOBILE (5 NÍVEIS) ---------------- */
     @media (max-width: 760px) {
       .anatomy-grid {
         grid-template-columns: repeat(2, 1fr);
         gap: 8px;
-        padding: 12px 6px;
+        padding: 10px 6px;
       }
-      .area-head      { grid-column: 1 / span 2; }
-      .area-chest     { grid-column: 1 / span 2; }
-      .area-shoulderR { grid-column: 1; }
-      .area-shoulderL { grid-column: 2; }
-      .area-handR     { grid-column: 1; }
-      .area-handL     { grid-column: 2; }
-      .area-legR      { grid-column: 1; }
-      .area-legL      { grid-column: 2; }
+
+      /* Nível 1: Cabeça */
+      .area-head      { grid-column: 1 / span 2; order: 1; }
+
+      /* Nível 2: Ombros */
+      .area-shoulderR { grid-column: 1; order: 2; }
+      .area-shoulderL { grid-column: 2; order: 2; }
+
+      /* Nível 3: Mãos */
+      .area-handR     { grid-column: 1; order: 3; }
+      .area-handL     { grid-column: 2; order: 3; }
+
+      /* Nível 4: Torso */
+      .area-chest     { grid-column: 1 / span 2; order: 4; }
+
+      /* Nível 5: Pernas */
+      .area-legR      { grid-column: 1; order: 5; }
+      .area-legL      { grid-column: 2; order: 5; }
+
       .anatomy-card   { padding: 8px 10px; }
       .metrics-grid   { grid-template-columns: repeat(2, 1fr); }
     }
@@ -537,11 +545,15 @@
     <div class="title">Raid <span>Ao Vivo</span></div>
     <div class="subtitle" id="lastUpdateText">Sincronizando com a sua planilha...</div>
 
-    <!-- CARDS DE RESUMO DA RAID -->
+    <!-- CARDS DE RESUMO DA RAID COM O BUFF -->
     <div class="metrics-grid" id="metricsGrid" style="display: none;">
       <div class="metric-card">
         <span>Raid Ativa</span>
         <strong id="mRaidName" class="orange">-</strong>
+      </div>
+      <div class="metric-card">
+        <span>Buff da Raid</span>
+        <strong id="mBuffRaid" class="yellow" style="font-size: 13.5px; line-height: 1.2;">-</strong>
       </div>
       <div class="metric-card">
         <span>Ciclo Atual</span>
@@ -603,7 +615,7 @@
           </div>
         </div>
 
-        <!-- LAYOUT ANATÔMICO EM 3 LINHAS (3 | 3 | 2)[cite: 1] -->
+        <!-- LAYOUT ANATÔMICO (3|3|2 NO PC, 5 NÍVEIS NO MOBILE) -->
         <div class="anatomy-grid">
           <div class="anatomy-card area-shoulderR" id="card_ArmUpperRight"></div>
           <div class="anatomy-card area-head" id="card_Head"></div>
@@ -663,11 +675,12 @@
               <th>Média / Atk</th>
               <th>% Raid</th>
               <th style="text-align: center;">Ataques</th>
+              <!-- IMAGENS cards/tt.png e cards/mf.png -->
               <th class="th-card-only">
-                <img src="cards/tt.png" alt="Team Tactics" title="Team Tactics" class="card-th-icon" onerror="this.onerror=null; this.src='TeamTactics.png';">
+                <img src="cards/tt.png" alt="Team Tactics" title="Team Tactics" class="card-th-icon" onerror="this.onerror=null; this.src='cards/tt.png';">
               </th>
               <th class="th-card-only">
-                <img src="cards/mf.png" alt="Mirror Force" title="Mirror Force" class="card-th-icon" onerror="this.onerror=null; this.src='MirrorForce.png';">
+                <img src="cards/mf.png" alt="Mirror Force" title="Mirror Force" class="card-th-icon" onerror="this.onerror=null; this.src='cards/mf.png';">
               </th>
             </tr>
           </thead>
@@ -681,15 +694,16 @@
   <script>
     const SPREADSHEET_ID = '1xo8zcjYt2Kiytq-D9vF9oO3wamCcBKbvH1fn7fqtsSM';
 
+    // NOMES SIMPLIFICADOS: Apenas Cabeça, Torso, Ombro, Mão e Perna
     const ANATOMY_PARTS = [
       { key: 'Head',          name: 'Cabeça' },
-      { key: 'ChestUpper',    name: 'Peito / Torso' },
-      { key: 'ArmUpperLeft',  name: 'Ombro Esq.' },
-      { key: 'ArmUpperRight', name: 'Ombro Dir.' },
-      { key: 'HandLeft',      name: 'Mão Esq.' },
-      { key: 'HandRight',     name: 'Mão Dir.' },
-      { key: 'LegUpperLeft',  name: 'Perna Esq.' },
-      { key: 'LegUpperRight', name: 'Perna Dir.' }
+      { key: 'ChestUpper',    name: 'Torso' },
+      { key: 'ArmUpperLeft',  name: 'Ombro' },
+      { key: 'ArmUpperRight', name: 'Ombro' },
+      { key: 'HandLeft',      name: 'Mão' },
+      { key: 'HandRight',     name: 'Mão' },
+      { key: 'LegUpperLeft',  name: 'Perna' },
+      { key: 'LegUpperRight', name: 'Perna' }
     ];
 
     let todosJogadores = [];
@@ -754,7 +768,7 @@
           carregarAbaJSONP('TT_Ciclos')
         ]);
 
-        // 1. Processa a Raid Atual
+        // 1. Processa a Raid Atual (incluindo o Buff)
         const linhasRaids = tabelaRaids.rows;
         let nomeRaidAtual = '';
         let raidStatus = 'Em andamento';
@@ -764,11 +778,13 @@
           const ultimaRaid = linhasRaids[linhasRaids.length - 1].c;
           nomeRaidAtual = ultimaRaid[0]?.v || '';
           raidStatus = ultimaRaid[6]?.v || 'Em andamento';
+          const buffRaid = ultimaRaid[7]?.v || 'Nenhum'; // Coluna Buff
           totalCiclosDaRaid = Number(ultimaRaid[9]?.v || 1);
           limiteAtaquesAtual = totalCiclosDaRaid * 6;
           totalTitansDaRaid = Number(ultimaRaid[14]?.v || 0);
 
           document.getElementById('mRaidName').textContent = nomeRaidAtual || '-';
+          document.getElementById('mBuffRaid').textContent = buffRaid;
           document.getElementById('mCicloAtual').textContent = `Ciclo ${totalCiclosDaRaid}`;
           document.getElementById('mDanoTotal').textContent = (ultimaRaid[8]?.f || (ultimaRaid[8]?.v ? ultimaRaid[8].v + 'B' : '-'));
           document.getElementById('mPresenca').textContent = ultimaRaid[12]?.f || (Math.round((ultimaRaid[12]?.v || 0) * 100) + '%');
