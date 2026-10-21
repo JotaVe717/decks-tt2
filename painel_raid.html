@@ -62,7 +62,7 @@
       margin-bottom: 20px;
     }
 
-    /* ---------------- NOVO AGRUPAMENTO INTELIGENTE DE CARDS ---------------- */
+    /* BLOCO MODULAR SUPERIOR */
     .dashboard-summary {
       display: flex;
       flex-direction: column;
@@ -275,7 +275,7 @@
       transition: width 0.4s ease;
     }
 
-    /* GRID ANATÔMICO DESKTOP: 6 COLUNAS (3 | 3 | 2) */
+    /* GRID ANATÓMICO DESKTOP: 6 COLUNAS (3 | 3 | 2)[cite: 1] */
     .anatomy-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -581,7 +581,7 @@
       font-size: 14px;
     }
 
-    /* ---------------- RESPONSIVIDADE MOBILE ---------------- */
+    /* RESPONSIVIDADE MOBILE */
     @media (max-width: 760px) {
       .groups-wrapper {
         grid-template-columns: 1fr;
@@ -631,7 +631,7 @@
     <div class="title">Raid <span>Ao Vivo</span></div>
     <div class="subtitle" id="lastUpdateText">Sincronizando com a sua planilha...</div>
 
-    <!-- ---------------- BLOCO MODULAR SUPERIOR REORGANIZADO ---------------- -->
+    <!-- BLOCO MODULAR SUPERIOR REORGANIZADO -->
     <div class="dashboard-summary" id="metricsSummary" style="display: none;">
       
       <!-- 1. BLOCO ISOLADO: PRÓXIMO CICLO -->
@@ -643,7 +643,7 @@
         <div class="countdown-banner-timer" id="mNextCiclo" style="color: #50e3c2;">--:--:--</div>
       </div>
 
-      <!-- 2. DOIS GRUPOS LADO A LADO (OU EMPILHADOS NO MOBILE) -->
+      <!-- 2. DOIS GRUPOS LADO A LADO -->
       <div class="groups-wrapper">
         
         <!-- GRUPO 1: INFORMAÇÕES DE CAMPO -->
@@ -725,7 +725,7 @@
           </div>
         </div>
 
-        <!-- LAYOUT ANATÔMICO (3|3|2 NO PC, 5 NÍVEIS NO MOBILE) -->
+        <!-- LAYOUT ANATÓMICO (3|3|2 NO PC[cite: 1], 5 NÍVEIS NO MOBILE) -->
         <div class="anatomy-grid">
           <div class="anatomy-card area-shoulderR" id="card_ArmUpperRight"></div>
           <div class="anatomy-card area-head" id="card_Head"></div>
@@ -741,7 +741,7 @@
       </div>
     </div>
 
-    <!-- RANKING DE JOGADORES -->
+    <!-- RANKING DE JOGADORES COM BOTÃO DE SOM E FILTROS -->
     <div class="section-block">
       <div class="section-header">
         <span class="section-title">🏆 Ranking de Ataques</span>
@@ -772,6 +772,11 @@
         <button id="sortDirectionBtn" class="sort-direction-btn" onclick="alternarDirecaoOrdenacao()" title="Clique para alternar entre maior para menor e menor para maior">
           <span id="sortDirectionIcon">↓</span> <span id="sortDirectionText">Maior &rarr; Menor</span>
         </button>
+
+        <!-- BOTÃO PARA ATIVAR/DESATIVAR SONS DE ALERTA -->
+        <button id="btnSomAlerta" class="sort-direction-btn" onclick="alternarSomAlertas()" style="color: #ffd166;" title="Clique para alternar o som de alerta dos suportes">
+          🔔 <span id="txtSomAlerta">Som: Ligado</span>
+        </button>
       </div>
 
       <div class="table-container">
@@ -785,7 +790,6 @@
               <th>Média / Atk</th>
               <th>% Raid</th>
               <th style="text-align: center;">Ataques</th>
-              <!-- IMAGENS COM CAMINHOS SEGUROS E FALLBACKS -->
               <th class="th-card-only">
                 <img src="cards/tt.png" alt="TT" title="Team Tactics" class="card-th-icon" loading="lazy" onerror="tratarErroImagemTT(this)">
               </th>
@@ -822,7 +826,45 @@
     let temporizadorCiclo = null;
     let ordemDecrescente = true;
 
-    // Tratamento resiliente de imagem no mobile
+    // CONFIGURAÇÃO DOS FICHEIROS DE ÁUDIO ESCOLHIDOS POR TI
+    const sonsSuporte = {
+      smash: new Audio('audio/smash.mp3'),
+      void: new Audio('audio/void.mp3'),
+      vm: new Audio('audio/vm.mp3')
+    };
+
+    sonsSuporte.smash.volume = 0.7;
+    sonsSuporte.void.volume = 0.7;
+    sonsSuporte.vm.volume = 0.8;
+
+    let somAtivado = true;
+    let suporteAnterior = { smash: false, void: false, vm: false };
+
+    function alternarSomAlertas() {
+      somAtivado = !somAtivado;
+      const txt = document.getElementById('txtSomAlerta');
+      const btn = document.getElementById('btnSomAlerta');
+      
+      if (somAtivado) {
+        txt.textContent = 'Som: Ligado';
+        btn.style.color = '#ffd166';
+        sonsSuporte.smash.play().catch(() => {});
+      } else {
+        txt.textContent = 'Som: Mudo';
+        btn.style.color = '#8fa0b5';
+      }
+    }
+
+    function tocarSomSuporte(tipo) {
+      if (!somAtivado) return;
+      const audio = sonsSuporte[tipo];
+      if (audio) {
+        audio.currentTime = 0;
+        audio.play().catch(e => console.log('Bloqueio de reprodução de áudio:', e));
+      }
+    }
+
+    // Tratamento de imagem com fallbacks encadeados
     function tratarErroImagemTT(img) {
       if (!img.dataset.step) {
         img.dataset.step = '1';
@@ -1287,6 +1329,19 @@
       atualizarBadgeSuporte('bSmash', isSmashActive);
       atualizarBadgeSuporte('bVoid', isVoidActive);
       atualizarBadgeSuporte('bVM', isVmActive);
+
+      // DISPARO DE SOM QUANDO UM SUPORTE PASSAR DE INATIVO PARA ATIVO
+      if (isSmashActive && !suporteAnterior.smash) {
+        tocarSomSuporte('smash');
+      }
+      if (isVoidActive && !suporteAnterior.void) {
+        tocarSomSuporte('void');
+      }
+      if (isVmActive && !suporteAnterior.vm) {
+        tocarSomSuporte('vm');
+      }
+
+      suporteAnterior = { smash: isSmashActive, void: isVoidActive, vm: isVmActive };
     }
 
     function atualizarBadgeSuporte(id, ativo) {
