@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Perfil do Jogador - Tap Titans 2</title>
   <style>
     * {
@@ -11,6 +11,7 @@
       padding: 0;
       font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     body {
       background-color: #0f141c;
@@ -18,32 +19,39 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 16px 8px 60px 8px;
+      padding: 12px 8px calc(40px + env(safe-area-inset-bottom, 0px)) 8px;
       min-height: 100vh;
       overflow-x: hidden;
     }
     .back-btn {
       align-self: flex-start;
       max-width: 1080px;
-      margin: 0 auto 12px auto;
+      margin: 0 auto 10px auto;
       width: 100%;
       text-decoration: none;
       color: #8fa0b5;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 600;
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      transition: color 0.2s;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: #141c26;
+      border: 1px solid #233142;
+      transition: color 0.2s, background 0.2s;
     }
-    .back-btn:hover { color: #f5a623; }
+    .back-btn:hover, .back-btn:active {
+      color: #f5a623;
+      background: #192330;
+    }
     .container {
       width: 100%;
       max-width: 1080px;
       background: #18202a;
       border: 1px solid #283545;
       border-radius: 16px;
-      padding: 24px 18px;
+      padding: 20px 16px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
     .player-header {
@@ -51,27 +59,27 @@
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 10px;
       border-bottom: 1px solid #283545;
-      padding-bottom: 16px;
-      margin-bottom: 20px;
+      padding-bottom: 14px;
+      margin-bottom: 16px;
     }
     .player-title {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: 800;
       color: #ffffff;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
     }
     .player-title span { color: #f5a623; }
     .raid-tag {
       background: rgba(245, 166, 35, 0.15);
       border: 1px solid rgba(245, 166, 35, 0.4);
       color: #f5a623;
-      padding: 4px 12px;
+      padding: 3px 10px;
       border-radius: 6px;
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 800;
     }
 
@@ -79,7 +87,7 @@
     .profile-main-grid {
       display: grid;
       grid-template-columns: 350px 1fr;
-      gap: 18px;
+      gap: 16px;
       align-items: start;
     }
 
@@ -87,13 +95,13 @@
     .left-col {
       display: flex;
       flex-direction: column;
-      gap: 14px;
+      gap: 12px;
     }
 
     .metrics-col {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
     .metric-pair-block {
       display: grid;
@@ -102,26 +110,26 @@
       background: #121922;
       border: 1px solid #283545;
       border-radius: 10px;
-      padding: 10px;
+      padding: 8px;
     }
     .metric-subcard {
       background: #18222e;
       border: 1px solid #253342;
       border-radius: 8px;
-      padding: 10px 12px;
+      padding: 8px 10px;
       display: flex;
       flex-direction: column;
-      gap: 4px;
+      gap: 3px;
     }
     .metric-subcard span {
       font-size: 10px;
       font-weight: 700;
       color: #8fa0b5;
       text-transform: uppercase;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.3px;
     }
     .metric-subcard strong {
-      font-size: 15.5px;
+      font-size: 15px;
       color: #50e3c2;
       white-space: nowrap;
       overflow: hidden;
@@ -130,7 +138,7 @@
     .metric-subcard strong.green { color: #4cd964; }
     .metric-subcard strong.orange { color: #f5a623; }
 
-    /* TABELA DE RESUMO DE CICLOS (CONTAINER RELATIVO PRO OVERLAY) */
+    /* TABELA DE RESUMO DE CICLOS */
     .cycles-col {
       background: #121922;
       border: 1px solid #2b394a;
@@ -144,24 +152,24 @@
       min-height: 290px;
     }
     .section-title {
-      font-size: 13px;
+      font-size: 12.5px;
       font-weight: 800;
       color: #f5a623;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
       display: flex;
       align-items: center;
       gap: 6px;
-      margin-bottom: 4px;
+      margin-bottom: 2px;
     }
 
     .cycles-header-row {
       display: grid;
-      grid-template-columns: 46px 60px 1fr 34px 34px;
-      gap: 6px;
-      padding: 4px 8px 6px 8px;
+      grid-template-columns: 46px 58px 1fr 32px 32px;
+      gap: 4px;
+      padding: 4px 6px 6px 6px;
       border-bottom: 1px solid #253342;
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 800;
       color: #8fa0b5;
       text-transform: uppercase;
@@ -171,17 +179,17 @@
 
     .cycle-row {
       display: grid;
-      grid-template-columns: 46px 60px 1fr 34px 34px;
-      gap: 6px;
+      grid-template-columns: 46px 58px 1fr 32px 32px;
+      gap: 4px;
       background: #18222e;
-      padding: 8px 10px;
+      padding: 7px 8px;
       border-radius: 8px;
       border: 1px solid #233140;
       align-items: center;
       cursor: pointer;
-      transition: background 0.2s, border-color 0.2s;
+      transition: background 0.15s, border-color 0.15s;
     }
-    .cycle-row:hover, .cycle-row.active {
+    .cycle-row:hover, .cycle-row:active, .cycle-row.active {
       background: #1f2c3b;
       border-color: #f5a623;
     }
@@ -202,12 +210,11 @@
 
     .atk-badge {
       display: inline-block;
-      padding: 2px 5px;
+      padding: 2px 4px;
       border-radius: 4px;
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 800;
       text-align: center;
-      letter-spacing: 0.2px;
     }
     .atk-badge.ok {
       background: rgba(76, 217, 100, 0.18);
@@ -232,8 +239,8 @@
       text-align: center;
     }
     .cycle-card-icon {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       border-radius: 4px;
       object-fit: contain;
       background: #0d131a;
@@ -244,10 +251,10 @@
       display: inline-flex;
       justify-content: center;
       align-items: center;
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       border-radius: 5px;
-      font-size: 11px;
+      font-size: 10.5px;
       font-weight: 900;
     }
     .status-badge.ok {
@@ -266,7 +273,7 @@
       color: #4b5868;
     }
 
-    /* ---------------- OVERLAY FLUTUANTE DO TITÃ (COBRE A ÁREA DE CICLOS) ---------------- */
+    /* ---------------- OVERLAY FLUTUANTE DO TITÃ ---------------- */
     .titan-damage-overlay {
       position: absolute;
       top: 0;
@@ -303,15 +310,29 @@
       font-weight: 800;
       color: #f5a623;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
     }
     .overlay-titan-tag {
-      font-size: 10px;
+      font-size: 10.5px;
       font-weight: 800;
       color: #50e3c2;
     }
+    .overlay-close-mobile-btn {
+      display: none;
+      background: #1c2633;
+      border: 1px solid #3d4f66;
+      color: #8fa0b5;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      font-size: 14px;
+      font-weight: bold;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
 
-    /* GRID ANATÔMICO EM 6 COLUNAS (3 | 3 | 2) */
+    /* GRID ANATÔMICO EM 6 COLUNAS */
     .overlay-anatomy-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
@@ -328,13 +349,13 @@
       background: #141c26;
       border: 1px solid #253342;
       border-radius: 6px;
-      padding: 4px;
+      padding: 4px 2px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       gap: 2px;
-      min-height: 48px;
+      min-height: 44px;
       transition: all 0.2s;
     }
     .part-cell.area-shoulderR { grid-column: span 2; }
@@ -348,21 +369,20 @@
     .part-cell.area-legR      { grid-column: 2 / span 2; }
     .part-cell.area-legL      { grid-column: 4 / span 2; }
 
-    /* ESTILOS DE DANO NAS BORDAS E VALORES */
     .part-cell.hit-armor {
       border-color: #4facfe;
       background: rgba(79, 172, 254, 0.08);
-      box-shadow: 0 0 8px rgba(79, 172, 254, 0.25);
+      box-shadow: 0 0 6px rgba(79, 172, 254, 0.25);
     }
     .part-cell.hit-body {
       border-color: #50e3c2;
       background: rgba(80, 227, 194, 0.08);
-      box-shadow: 0 0 8px rgba(80, 227, 194, 0.25);
+      box-shadow: 0 0 6px rgba(80, 227, 194, 0.25);
     }
     .part-cell.hit-both {
       border-color: #ffd166;
       background: rgba(255, 209, 102, 0.08);
-      box-shadow: 0 0 10px rgba(255, 209, 102, 0.3);
+      box-shadow: 0 0 8px rgba(255, 209, 102, 0.3);
     }
     .part-cell.no-hit {
       opacity: 0.35;
@@ -373,25 +393,25 @@
     .dmg-row {
       display: inline-flex;
       align-items: center;
-      gap: 3px;
-      font-size: 10.5px;
+      gap: 2px;
+      font-size: 10px;
       font-weight: 900;
       line-height: 1.1;
       white-space: nowrap;
     }
     .dmg-row.armor { color: #4facfe; }
     .dmg-row.body  { color: #ff5e62; }
-    .dmg-empty { font-size: 11px; color: #4b5868; font-weight: 700; }
+    .dmg-empty { font-size: 10px; color: #4b5868; font-weight: 700; }
 
     /* COLUNA DIREITA: TABELA DE ATAQUES */
     .attacks-panel {
       background: #121922;
       border: 1px solid #2b394a;
       border-radius: 12px;
-      padding: 16px;
+      padding: 14px 12px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
     .attacks-panel-header {
       display: flex;
@@ -400,15 +420,15 @@
       flex-wrap: wrap;
       gap: 8px;
       border-bottom: 1px solid #283748;
-      padding-bottom: 10px;
+      padding-bottom: 8px;
     }
     .cycle-filter-select {
       background: #0d131a;
       border: 1px solid #2d3e52;
       border-radius: 6px;
       color: #ffffff;
-      padding: 6px 10px;
-      font-size: 12px;
+      padding: 5px 8px;
+      font-size: 11.5px;
       font-weight: 700;
       outline: none;
       cursor: pointer;
@@ -418,91 +438,139 @@
     .attacks-table-wrap {
       width: 100%;
       overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
     }
     table.attacks-table {
       width: 100%;
       border-collapse: collapse;
       text-align: left;
-      font-size: 12.5px;
-      min-width: 480px;
+      font-size: 12px;
     }
     table.attacks-table thead {
       background: #18222e;
       border-bottom: 1px solid #2b394a;
     }
     table.attacks-table th {
-      padding: 9px 10px;
-      font-size: 10.5px;
+      padding: 8px 6px;
+      font-size: 10px;
       font-weight: 800;
       color: #8fa0b5;
       text-transform: uppercase;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.3px;
       vertical-align: middle;
+      white-space: nowrap;
     }
     table.attacks-table td {
-      padding: 9px 10px;
+      padding: 8px 6px;
       border-bottom: 1px solid rgba(43, 57, 74, 0.4);
       color: #d1dbe5;
       vertical-align: middle;
     }
-    table.attacks-table tr:hover td { background: rgba(30, 40, 54, 0.6); }
+    table.attacks-table tr:hover td,
+    table.attacks-table tr:active td { 
+      background: rgba(30, 40, 54, 0.6); 
+    }
 
-    /* HOVER INTERATIVO NA CÉLULA DE DANO */
     .td-hover-dmg {
-      cursor: help;
+      cursor: pointer;
       position: relative;
       font-weight: 800;
       color: #50e3c2;
-      transition: color 0.15s, text-shadow 0.15s;
+      transition: color 0.15s;
+      white-space: nowrap;
     }
-    .td-hover-dmg:hover {
+    .td-hover-dmg:hover, .td-hover-dmg:active {
       color: #ffd166 !important;
-      text-shadow: 0 0 8px rgba(255, 209, 102, 0.6);
     }
 
     .tag-cycle-pill {
       background: rgba(245, 166, 35, 0.18);
       border: 1px solid rgba(245, 166, 35, 0.45);
       color: #f5a623;
-      padding: 2px 6px;
+      padding: 2px 5px;
       border-radius: 4px;
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 800;
     }
 
     .deck-display-clean {
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 3px;
       vertical-align: middle;
     }
     .card-mini-img {
-      width: 26px;
-      height: 26px;
+      width: 24px;
+      height: 24px;
       border-radius: 4px;
       object-fit: cover;
       background: #0d131a;
       border: 1px solid rgba(255, 255, 255, 0.2);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-      transition: transform 0.15s ease;
-      cursor: pointer;
-    }
-    .card-mini-img:hover {
-      transform: scale(1.2);
-      border-color: #f5a623;
-      z-index: 2;
     }
 
     .loading-state {
       text-align: center;
       padding: 30px;
       color: #8fa0b5;
-      font-size: 14px;
+      font-size: 13.5px;
     }
 
+    /* BACKDROP ESCURECIDO PARA MODAL MOBILE */
+    .mobile-modal-backdrop {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      z-index: 9998;
+    }
+    .mobile-modal-backdrop.active {
+      display: block;
+    }
+
+    /* ---------------- ADAPTAÇÃO RESPONSIVA MOBILE ---------------- */
     @media (max-width: 860px) {
+      .container {
+        padding: 14px 10px;
+        border-radius: 12px;
+      }
       .profile-main-grid {
         grid-template-columns: 1fr;
+        gap: 14px;
+      }
+      .attacks-panel {
+        padding: 12px 8px;
+      }
+
+      /* TRANSFORMAÇÃO DO OVERLAY EM BOTTOM-SHEET MODAL NO MOBILE */
+      .titan-damage-overlay {
+        position: fixed;
+        top: auto;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+        height: auto;
+        min-height: 280px;
+        border-radius: 18px 18px 0 0;
+        border: 1px solid #374a5e;
+        border-top: 2px solid #f5a623;
+        box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.9);
+        z-index: 9999;
+        padding: 12px 14px calc(14px + env(safe-area-inset-bottom, 0px)) 14px;
+        transform: translateY(110%);
+      }
+      .titan-damage-overlay.show {
+        transform: translateY(0);
+      }
+      .overlay-close-mobile-btn {
+        display: inline-flex;
       }
     }
   </style>
@@ -556,7 +624,7 @@
             </div>
           </div>
 
-          <!-- TABELA DE RESUMO DE CICLOS (COM JANELA FLUTUANTE POR CIMA) -->
+          <!-- TABELA DE RESUMO DE CICLOS -->
           <div class="cycles-col" id="cyclesColWrapper">
             
             <div class="section-title">📊 Desempenho por Ciclo</div>
@@ -575,11 +643,14 @@
 
             <div id="cyclesBox" style="display: flex; flex-direction: column; gap: 6px;"></div>
 
-            <!-- JANELA FLUTUANTE: ANATOMIA DE DANO DO ATAQUE -->
+            <!-- JANELA ANATÔMICA (COBRE NO DESKTOP / VIRA MODAL NO MOBILE) -->
             <div class="titan-damage-overlay" id="titanDamageOverlay">
               <div class="overlay-header">
-                <span class="overlay-title">🎯 Dano Distribuído no Deck</span>
-                <span class="overlay-titan-tag" id="overlayTitanInfo">Titã</span>
+                <div>
+                  <span class="overlay-title">🎯 Dano por Parte</span>
+                  <span class="overlay-titan-tag" id="overlayTitanInfo" style="margin-left: 6px;">Titã</span>
+                </div>
+                <button class="overlay-close-mobile-btn" onclick="esconderJanelaDanoAtaque()">&times;</button>
               </div>
               <div class="overlay-anatomy-grid">
                 <div class="part-cell area-shoulderR" id="pCell_ArmUpperRight"></div>
@@ -602,7 +673,7 @@
         <!-- ================= COLUNA DIREITA: ATAQUES DETALHADOS ================= -->
         <div class="attacks-panel">
           <div class="attacks-panel-header">
-            <div class="section-title" style="margin: 0;">⚔️ Histórico de Ataques na Raid</div>
+            <div class="section-title" style="margin: 0;">⚔️ Histórico de Ataques</div>
             <select id="cycleFilter" class="cycle-filter-select" onchange="filtrarAtaquesPorCiclo()">
               <option value="todos">Todos os Ciclos</option>
               <option value="1">Ciclo 1</option>
@@ -619,15 +690,15 @@
             <table class="attacks-table">
               <thead>
                 <tr>
-                  <th style="width: 50px;">Ciclo</th>
-                  <th style="width: 75px;">Horário</th>
-                  <th style="text-align: right; width: 95px;">Dano</th>
-                  <th style="width: 105px; text-align: center;">Cartas Usadas</th>
+                  <th style="width: 44px;">Ciclo</th>
+                  <th style="width: 50px;">Hora</th>
+                  <th style="text-align: right; width: 65px;">Dano</th>
+                  <th style="width: 85px; text-align: center;">Cartas</th>
                   <th>Titã</th>
                 </tr>
               </thead>
               <tbody id="attacksTableBody">
-                <!-- Preenchido via JS com evento de hover no dano -->
+                <!-- Preenchido via JS -->
               </tbody>
             </table>
           </div>
@@ -636,6 +707,9 @@
       </div>
     </div>
   </div>
+
+  <!-- BACKDROP PARA MODAL NO MOBILE -->
+  <div class="mobile-modal-backdrop" id="modalBackdrop" onclick="esconderJanelaDanoAtaque()"></div>
 
   <script>
     const SPREADSHEET_ID_PRINCIPAL = '1xo8zcjYt2Kiytq-D9vF9oO3wamCcBKbvH1fn7fqtsSM';
@@ -692,7 +766,16 @@
       }
     }
 
-    function formatarHp(valorEmBilhoes) {
+    function formatarHp(valorEmMilhoes) {
+      const v = Number(valorEmMilhoes) || 0;
+      if (v <= 0) return '0';
+      if (v >= 1000) {
+        return (v / 1000).toFixed(2) + 'B';
+      }
+      return v >= 10 ? Math.round(v) + 'M' : v.toFixed(1) + 'M';
+    }
+
+    function formatarHpBilhoes(valorEmBilhoes) {
       const v = Number(valorEmBilhoes) || 0;
       if (v <= 0) return '0';
       if (v >= 1.0) {
@@ -800,7 +883,7 @@
         }
 
         if (!dadosJogadorAtual) {
-          document.getElementById('loading').textContent = `Jogador "${nome}" não encontrado na folha de cálculo.`;
+          document.getElementById('loading').textContent = `Jogador "${nome}" não encontrado na planilha.`;
           return;
         }
 
@@ -851,8 +934,8 @@
 
           if (temDano) {
             atkBadgeHtml = atksCiclo >= 6 
-              ? `<span class="atk-badge ok" title="6 de 6 ataques feitos">${atksCiclo}/6</span>` 
-              : `<span class="atk-badge fail" title="Ataques incompletos">${atksCiclo}/6</span>`;
+              ? `<span class="atk-badge ok" title="6/6">${atksCiclo}/6</span>` 
+              : `<span class="atk-badge fail" title="Incompleto">${atksCiclo}/6</span>`;
 
             const faltouTt = faltasPorCiclo.tt[c.num] === true;
             const faltouMf = faltasPorCiclo.mf[c.num] === true;
@@ -861,12 +944,12 @@
             const mfUsado = !faltouMf && (dadosJogadorAtual.mf >= c.num || dadosJogadorAtual.mf > 0);
 
             statusTtHtml = ttUsado 
-              ? '<span class="status-badge ok" title="Usou Team Tactics neste ciclo">✔️</span>' 
-              : '<span class="status-badge fail" title="Não usou Team Tactics neste ciclo">✖️</span>';
+              ? '<span class="status-badge ok" title="TT Usado">✔️</span>' 
+              : '<span class="status-badge fail" title="Faltou TT">✖️</span>';
 
             statusMfHtml = mfUsado 
-              ? '<span class="status-badge ok" title="Usou Mirror Force neste ciclo">✔️</span>' 
-              : '<span class="status-badge fail" title="Não usou Mirror Force neste ciclo">✖️</span>';
+              ? '<span class="status-badge ok" title="MF Usado">✔️</span>' 
+              : '<span class="status-badge fail" title="Faltou MF">✖️</span>';
           }
 
           const row = document.createElement('div');
@@ -876,7 +959,7 @@
             <div class="cycle-badge">${c.nome}</div>
             <div style="text-align: center;">${atkBadgeHtml}</div>
             <div class="cycle-val ${temDano ? '' : 'cycle-zero'}">
-              ${temDano ? formatarHp(c.val) : '0'}
+              ${temDano ? formatarHpBilhoes(c.val) : '0'}
             </div>
             <div class="cycle-card-col">
               ${statusTtHtml}
@@ -917,7 +1000,6 @@
             const danoNum = Number(r[7]?.v || 0);
             const partesTexto = String(r[6]?.v || '');
 
-            // Processa o detalhamento de partes atacadas
             const partesDanoMap = extrairDanoPartes(partesTexto, danoNum);
 
             listaAtaquesJogador.push({
@@ -945,12 +1027,10 @@
       filtrarAtaquesPorCiclo();
     }
 
-    // Extrai e distribui o dano por parte, detectando transição de armadura e corpo
     function extrairDanoPartes(partesTexto, totalDano) {
       const mapa = {};
       const texto = partesTexto.toLowerCase();
 
-      // Mapeamento de termos comuns da planilha para as chaves anatômicas
       const alias = [
         { key: 'Head', termos: ['head', 'cabeca'] },
         { key: 'ChestUpper', termos: ['chest', 'torso', 'peito'] },
@@ -968,7 +1048,6 @@
         const parcelaDano = totalDano / partesEncontradas.length;
 
         partesEncontradas.forEach(p => {
-          // Detecta transição de armadura e corpo (se mencionar ambos ou termos como 'trans' / 'break')
           const quebrouArmadura = texto.includes('armor') && texto.includes('body');
           if (quebrouArmadura) {
             mapa[p.key] = {
@@ -982,7 +1061,6 @@
           }
         });
       } else {
-        // Fallback natural se as partes não estiverem discriminadas no texto: foca nas partes principais ativas
         mapa['ChestUpper'] = { armor: totalDano * 0.35, body: totalDano * 0.35 };
         mapa['Head'] = { armor: 0, body: totalDano * 0.30 };
       }
@@ -1011,7 +1089,7 @@
         return;
       }
 
-      listaFiltrada.forEach((a, i) => {
+      listaFiltrada.forEach(a => {
         const tr = document.createElement('tr');
 
         let deckHtml = '<div class="deck-display-clean">';
@@ -1025,8 +1103,9 @@
           <td style="color: #8fa0b5; font-weight: 700; font-variant-numeric: tabular-nums;">${a.quando}</td>
           <td style="text-align: right;" 
               class="td-hover-dmg" 
+              onclick="dispararDanoTouch(${a.id})"
               onmouseenter="mostrarJanelaDanoAtaque(${a.id})" 
-              onmouseleave="esconderJanelaDanoAtaque()">
+              onmouseleave="esconderJanelaDanoDesktop()">
             ${a.danoFormatado}
           </td>
           <td style="text-align: center;">${deckHtml}</td>
@@ -1036,7 +1115,14 @@
       });
     }
 
-    // Exibe a janela flutuante preenchendo as 8 partes com os dados do ataque focado
+    // Gerencia o clique no dano especificamente para celulares
+    function dispararDanoTouch(atkId) {
+      if (window.innerWidth <= 860) {
+        mostrarJanelaDanoAtaque(atkId);
+        document.getElementById('modalBackdrop').classList.add('active');
+      }
+    }
+
     function mostrarJanelaDanoAtaque(atkId) {
       const atk = listaAtaquesJogador.find(item => item.id === atkId);
       if (!atk) return;
@@ -1074,8 +1160,15 @@
       document.getElementById('titanDamageOverlay').classList.add('show');
     }
 
+    function esconderJanelaDanoDesktop() {
+      if (window.innerWidth > 860) {
+        esconderJanelaDanoAtaque();
+      }
+    }
+
     function esconderJanelaDanoAtaque() {
       document.getElementById('titanDamageOverlay').classList.remove('show');
+      document.getElementById('modalBackdrop').classList.remove('active');
     }
 
     function getAreaClass(key) {
