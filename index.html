@@ -93,6 +93,13 @@
     .deck-card.gold-highlight:hover {
       border-color: #f5a623;
     }
+    .deck-card.live-highlight {
+      border-color: rgba(255, 82, 82, 0.5);
+    }
+    .deck-card.live-highlight:hover {
+      border-color: #ff5252;
+      box-shadow: 0 8px 22px rgba(255, 82, 82, 0.35);
+    }
     .deck-thumb {
       width: 60px;
       height: 60px;
@@ -137,6 +144,7 @@
     .deck-badge.green { color: #4cd964; }
     .deck-badge.cyan { color: #50e3c2; }
     .deck-badge.gold { color: #f5a623; }
+    .deck-badge.live { color: #ff5252; font-weight: 900; }
 
     /* SEÇÃO DE CRÉDITOS */
     .credits-section {
@@ -365,7 +373,17 @@
 
   <div class="deck-grid">
 
-    <!-- 1. IMPORTADOR DE PERFIL -->
+    <!-- 1. RAID EM TEMPO REAL (DESTAQUE PRINCIPAL) -->
+    <a href="painel_raid.html" class="deck-card live-highlight">
+      <img src="Cards/tt.png" alt="Raid em Tempo Real" class="deck-thumb" onerror="this.src='Cards/wc.png'">
+      <div class="deck-info">
+        <span class="deck-badge live">🔴 Ao Vivo</span>
+        <h2>Raid em Tempo Real</h2>
+        <p>Acompanhe ataques ao vivo, ciclos abertos, status de titãs e métricas dos membros.</p>
+      </div>
+    </a>
+
+    <!-- 2. IMPORTADOR DE PERFIL -->
     <a href="importar_cartas.html" class="deck-card gold-highlight">
       <div class="deck-icon-thumb">📥</div>
       <div class="deck-info">
@@ -375,19 +393,19 @@
       </div>
     </a>
 
-    <!-- 2. FLUXOGRAMAS DE DECKS -->
-    <a href="decks.html" class="deck-card">
+    <!-- 3. FLUXOGRAMAS DE DECKS -->
+    <a href="fluxogramas.html" class="deck-card">
       <img src="Cards/tp.png" alt="Fluxogramas de Decks" class="deck-thumb" onerror="this.src='Cards/wc.png'">
       <div class="deck-info">
         <span class="deck-badge green">Montagem Tática</span>
         <h2>Fluxogramas de Decks</h2>
-        <p>Diagramas visuais de montagem para Plague, Foguetes e Purify com conexões em SVG.</p>
+        <p>Diagramas visuais de montagem para Plague, Foguetes, Purify, TT e outros com conexões em SVG.</p>
       </div>
     </a>
 
-    <!-- 3. TABELA DE AFLIÇÕES -->
+    <!-- 4. TABELA DE AFLIÇÕES -->
     <a href="tabela_aflicoes.html" class="deck-card highlight">
-      <img src="Cards/a.png" alt="Tabela de Aflições" class="deck-thumb">
+      <img src="Cards/a.png" alt="Tabela de Aflições" class="deck-thumb" onerror="this.src='Cards/wc.png'">
       <div class="deck-info">
         <span class="deck-badge cyan">Guia de Ataque</span>
         <h2>Tabela de Aflições</h2>
@@ -395,23 +413,13 @@
       </div>
     </a>
 
-    <!-- 4. GUIA DE NIVELAMENTO -->
+    <!-- 5. GUIA DE NIVELAMENTO -->
     <a href="nivelamento_decks.html" class="deck-card">
       <img src="Cards/wc.png" alt="Nivelamento" class="deck-thumb">
       <div class="deck-info">
         <span class="deck-badge cyan">Guia Tático</span>
         <h2>Nivelamento de Decks</h2>
         <p>Regras de níveis por tipo de carta (Dano, Buff, Efeito Fixo) e lista completa.</p>
-      </div>
-    </a>
-
-    <!-- 5. CONSULTA DE MEMBROS -->
-    <a href="painel_raid.html" class="deck-card">
-      <img src="Cards/tt.png" alt="Membros do Clã" class="deck-thumb">
-      <div class="deck-info">
-        <span class="deck-badge" style="color: #a29bfe;">Gestão do Clã</span>
-        <h2>Membros & Cartas</h2>
-        <p>Inspecione o nível das cartas de cada integrante do clã.</p>
       </div>
     </a>
 
