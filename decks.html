@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Fluxogramas de Decks de Raid - Tap Titans 2</title>
   <style>
     * {
@@ -11,6 +11,7 @@
       padding: 0;
       font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     body {
       background-color: #0f141c;
@@ -18,72 +19,171 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 16px 8px 70px 8px;
+      padding: 12px 8px calc(75px + env(safe-area-inset-bottom, 0px)) 8px;
       min-height: 100vh;
       overflow-x: hidden;
     }
-    .back-btn {
-      align-self: flex-start;
+
+    /* BARRA SUPERIOR */
+    .top-nav-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       max-width: 820px;
-      margin: 0 auto 14px auto;
       width: 100%;
+      margin: 0 auto 12px auto;
+      gap: 8px;
+    }
+    .back-btn {
       text-decoration: none;
       color: #8fa0b5;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 600;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
-      transition: color 0.2s;
+      gap: 5px;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: #141c26;
+      border: 1px solid #233142;
+      transition: color 0.2s, background 0.2s;
     }
-    .back-btn:hover {
+    .back-btn:hover, .back-btn:active {
       color: #f5a623;
+      background: #192330;
     }
+
+    /* CONTROLES RÁPIDOS (EXPANDIR/RECOLHER TODOS) */
+    .global-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .action-pill-btn {
+      background: #141c26;
+      border: 1px solid #283749;
+      color: #8fa0b5;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .action-pill-btn:hover, .action-pill-btn:active {
+      background: #1f2b3a;
+      color: #ffffff;
+      border-color: #f5a623;
+    }
+
     .container {
       width: 100%;
       max-width: 820px;
       display: flex;
       flex-direction: column;
-      gap: 24px;
+      gap: 16px;
     }
     .deck-section {
       background: #18202a;
       border: 1px solid #283545;
       border-radius: 14px;
-      padding: 18px 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      padding: 12px 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      transition: border-color 0.2s ease;
+    }
+    .deck-section:hover {
+      border-color: #3d4f66;
+    }
+
+    /* BARRA DE CABEÇALHO COM TOGGLE */
+    .deck-header-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+      padding: 4px 4px;
+      gap: 10px;
+    }
+    .title-group {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      text-align: left;
+      flex: 1;
+      min-width: 0;
     }
     .title {
-      text-align: center;
-      font-size: 19px;
+      font-size: 16.5px;
       font-weight: 800;
-      letter-spacing: 1px;
+      letter-spacing: 0.6px;
       text-transform: uppercase;
-      margin-bottom: 3px;
+      margin: 0;
+      line-height: 1.25;
+      word-break: break-word;
     }
     .title span.green { color: #4cd964; }
     .title span.orange { color: #ff5722; }
     .title span.cyan { color: #50e3c2; }
+    .title span.purple { color: #b388ff; }
+    .title span.yellow { color: #ffd166; }
+    .title span.pink { color: #ff79c6; }
+    .title span.blue { color: #38a1f3; }
+    .title span.teal { color: #00e5ff; }
+
     .subtitle {
-      text-align: center;
-      font-size: 12px;
+      font-size: 11px;
       color: #8fa0b5;
-      margin-bottom: 18px;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    /* BOTÃO RETRÁTIL (+ / −) */
+    .toggle-btn {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      background: #121922;
+      border: 1.5px solid #2d3e52;
+      border-radius: 8px;
+      color: #f5a623;
+      font-size: 18px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+    }
+    .deck-header-toggle:hover .toggle-btn,
+    .deck-header-toggle:active .toggle-btn {
+      background: #1d2836;
+      border-color: #f5a623;
+      transform: scale(1.05);
+    }
+
+    /* CORPO RECOLHÍVEL */
+    .deck-collapsible-body {
+      margin-top: 12px;
+      display: block;
+      transition: opacity 0.25s ease;
+    }
+    .deck-collapsible-body.collapsed {
+      display: none;
     }
 
     /* CONTAINER DO FLUXOGRAMA */
     .flowchart-wrapper {
       position: relative;
       width: 100%;
-      min-height: 380px;
+      min-height: 360px;
       background: #121922;
-      border: 1px solid #2b394a;
+      border: 1px solid #263445;
       border-radius: 12px;
-      padding: 22px 14px;
+      padding: 16px 8px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 12px;
+      gap: 6px;
+      overflow: hidden;
     }
 
     /* SVG DAS SETAS */
@@ -103,25 +203,27 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 14px;
+      gap: 12px;
       z-index: 2;
     }
-    .col-start { width: 70px; }
-    .col-mid { width: 70px; }
-    .col-end { width: 70px; }
+    .col-start { width: 56px; }
+    .col-mid { width: 56px; }
+    .col-end { width: 56px; }
 
-    .gap-2-items { gap: 60px; }
-    .gap-4-items { gap: 14px; }
+    .gap-2-items { gap: 54px; }
+    .gap-3-items { gap: 28px; }
+    .gap-4-items { gap: 12px; }
+    .gap-5-items { gap: 8px; }
 
     /* CARD COMPACTO PADRÃO */
     .card-tile {
       position: relative;
-      width: 62px;
-      height: 62px;
+      width: 52px;
+      height: 52px;
       border-radius: 8px;
       background: #0f141c;
       border: 2px solid #2b394a;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.45);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -149,12 +251,24 @@
     .border-main-plague { border-color: #4cd964; box-shadow: 0 0 10px rgba(76, 217, 100, 0.3); }
     .border-main-rockets { border-color: #ff5722; box-shadow: 0 0 10px rgba(255, 87, 34, 0.3); }
     .border-main-purify { border-color: #50e3c2; box-shadow: 0 0 10px rgba(80, 227, 194, 0.3); }
-    .border-burst { border-color: rgba(255, 87, 34, 0.65); }
-    .border-affliction { border-color: rgba(56, 161, 243, 0.65); }
-    .border-support { border-color: rgba(245, 166, 35, 0.65); }
+    .border-main-sot { border-color: #b388ff; box-shadow: 0 0 10px rgba(179, 136, 255, 0.35); }
+    .border-main-affliction { border-color: #38a1f3; box-shadow: 0 0 10px rgba(56, 161, 243, 0.35); }
+    .border-main-radiant { border-color: #ff79c6; box-shadow: 0 0 10px rgba(255, 121, 198, 0.35); }
+    .border-main-tt { border-color: #38a1f3; box-shadow: 0 0 10px rgba(56, 161, 243, 0.45); }
+    .border-main-echo { border-color: #00e5ff; box-shadow: 0 0 10px rgba(0, 229, 255, 0.4); }
+    .border-burst { border-color: rgba(255, 87, 34, 0.7); }
+    .border-affliction { border-color: rgba(56, 161, 243, 0.7); }
+    .border-support { border-color: rgba(245, 166, 35, 0.7); }
 
-    /* ---------------- TOOLTIP PADRÃO DESKTOP ---------------- */
+    /* TOOLTIP PADRÃO DESKTOP */
     @media (min-width: 601px) {
+      .card-tile {
+        width: 62px;
+        height: 62px;
+      }
+      .col-start, .col-mid, .col-end {
+        width: 70px;
+      }
       .card-tooltip {
         visibility: hidden;
         opacity: 0;
@@ -232,20 +346,25 @@
 
     /* REGRAS TÁTICAS */
     .rules-card {
-      background: #1a2432;
+      background: #141d27;
       border-left: 4px solid #4cd964;
       border-radius: 8px;
-      padding: 12px 14px;
-      margin-top: 16px;
-      font-size: 12px;
+      padding: 10px 12px;
+      margin-top: 12px;
+      font-size: 11.5px;
       color: #b0c0d0;
-      line-height: 1.5;
+      line-height: 1.45;
     }
     .rules-card.orange-border { border-left-color: #ff5722; }
     .rules-card.cyan-border { border-left-color: #50e3c2; }
+    .rules-card.purple-border { border-left-color: #b388ff; }
+    .rules-card.yellow-border { border-left-color: #ffd166; }
+    .rules-card.pink-border { border-left-color: #ff79c6; }
+    .rules-card.blue-border { border-left-color: #38a1f3; }
+    .rules-card.teal-border { border-left-color: #00e5ff; }
     .rules-card h4 {
       color: #ffffff;
-      font-size: 13px;
+      font-size: 12.5px;
       margin-bottom: 3px;
     }
     .rules-card strong {
@@ -256,56 +375,81 @@
       font-weight: 700;
     }
 
-    /* ---------------- MODAL / DRAWER FIXO EXCLUSIVO MOBILE ---------------- */
+    /* ---------------- BOTTOM SHEET MODAL MOBILE NATIVO ---------------- */
     @media (max-width: 600px) {
       .container {
-        gap: 18px;
+        gap: 14px;
       }
       .deck-section {
-        padding: 14px 8px;
+        padding: 10px 8px;
+      }
+      .title {
+        font-size: 14.5px;
+      }
+      .subtitle {
+        font-size: 10.5px;
+      }
+      .toggle-btn {
+        width: 28px;
+        height: 28px;
+        min-width: 28px;
+        font-size: 16px;
       }
       .flowchart-wrapper {
         min-height: 330px;
-        padding: 16px 6px;
+        padding: 14px 4px;
       }
       .card-tile {
-        width: 46px;
-        height: 46px;
-        border-radius: 6px;
+        width: 48px;
+        height: 48px;
+        border-radius: 7px;
       }
       .col-start, .col-mid, .col-end {
-        width: 48px;
+        width: 50px;
       }
       .gap-2-items { gap: 42px; }
+      .gap-3-items { gap: 20px; }
       .gap-4-items { gap: 10px; }
+      .gap-5-items { gap: 7px; }
 
-      /* Oculta os balões relativos para não vazar a tela */
       .card-tooltip {
         display: none !important;
       }
 
-      /* Banner fixo desacoplado no rodapé */
+      /* DRAWER FLUTUANTE ULTRA OTIMIZADO */
       #mobileCardDrawer {
         position: fixed;
-        bottom: 12px;
-        left: 50%;
-        transform: translateX(-50%) translateY(120%);
-        width: calc(100vw - 20px);
-        max-width: 420px;
-        background: #141d27;
-        border: 1.5px solid #f5a623;
-        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.95);
-        border-radius: 12px;
-        padding: 12px 14px;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        transform: translateY(105%);
+        width: 100%;
+        max-width: 480px;
+        margin: 0 auto;
+        background: rgba(18, 25, 36, 0.94);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid #36485d;
+        border-top: 2px solid #f5a623;
+        border-radius: 18px 18px 0 0;
+        box-shadow: 0 -8px 30px rgba(0, 0, 0, 0.85);
+        padding: 8px 16px calc(14px + env(safe-area-inset-bottom, 0px)) 16px;
         z-index: 10000;
-        transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
+        transition: transform 0.26s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.2s ease;
         opacity: 0;
         pointer-events: none;
       }
       #mobileCardDrawer.active {
-        transform: translateX(-50%) translateY(0);
+        transform: translateY(0);
         opacity: 1;
         pointer-events: auto;
+      }
+      .drawer-drag-handle {
+        width: 38px;
+        height: 4px;
+        background: #3c4c60;
+        border-radius: 4px;
+        margin: 2px auto 8px auto;
       }
       .drawer-header {
         display: flex;
@@ -315,7 +459,7 @@
         margin-bottom: 4px;
       }
       .drawer-name {
-        font-size: 13.5px;
+        font-size: 14.5px;
         font-weight: 800;
         color: #f5a623;
         white-space: nowrap;
@@ -323,332 +467,931 @@
         text-overflow: ellipsis;
       }
       .drawer-close {
-        background: none;
-        border: none;
+        background: #141c26;
+        border: 1px solid #2d3f54;
         color: #8fa0b5;
         font-size: 18px;
         font-weight: 700;
+        border-radius: 50%;
+        width: 28px;
+        height: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         line-height: 1;
-        padding: 2px 6px;
         cursor: pointer;
+      }
+      .drawer-close:active {
+        color: #ffffff;
+        border-color: #f5a623;
       }
       .drawer-target {
         display: inline-block;
-        font-size: 10.5px;
-        font-weight: 700;
+        font-size: 10px;
+        font-weight: 800;
         color: #50e3c2;
-        background: rgba(80, 227, 194, 0.12);
-        border: 1px solid rgba(80, 227, 194, 0.35);
-        padding: 1px 6px;
+        background: rgba(80, 227, 194, 0.15);
+        border: 1px solid rgba(80, 227, 194, 0.4);
+        padding: 2px 7px;
         border-radius: 4px;
         margin-bottom: 6px;
+        letter-spacing: 0.3px;
       }
       .drawer-desc {
-        font-size: 11px;
+        font-size: 11.5px;
         color: #d1dbe5;
-        line-height: 1.4;
+        line-height: 1.45;
       }
     }
   </style>
 </head>
 <body>
 
-  <a href="index.html" class="back-btn">&larr; Voltar ao Menu</a>
+  <!-- BARRA DE NAVEGAÇÃO SUPERIOR + AÇÕES RÁPIDAS -->
+  <div class="top-nav-bar">
+    <a href="index.html" class="back-btn">&larr; Menu</a>
+    <div class="global-actions">
+      <button class="action-pill-btn" onclick="alternarTodosBlocos(true)">Expandir Tudo</button>
+      <button class="action-pill-btn" onclick="alternarTodosBlocos(false)">Recolher Tudo</button>
+    </div>
+  </div>
 
   <div class="container">
 
     <!-- 1. DECK DE PLAGUE -->
-    <div class="deck-section">
-      <div class="title">COMO MONTAR <span class="green">SEU DECK DE PLAGUE</span></div>
-      <div class="subtitle">Carta Principal (Aflição) + 1 Apoio + 1 Suporte</div>
-
-      <div class="flowchart-wrapper" id="flowPlague">
-        <svg class="flow-svg" id="svgPlague">
-          <defs>
-            <marker id="arrowGreen" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#718294" />
-            </marker>
-          </defs>
-          <g class="paths-layer"></g>
-        </svg>
-
-        <div class="flow-col col-start">
-          <div class="card-tile border-main-plague" id="p_tp">
-            <img src="Cards/tp.png" class="card-thumb" alt="Plague" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Thriving Plague</span>
-              <span class="tooltip-target">1 a 3 Partes</span>
-              <span class="tooltip-desc">Obrigatória. Espalha praga infecciosa contínua. Focar em poucos alvos.</span>
-            </div>
-          </div>
+    <div class="deck-section" id="sectionPlague">
+      <div class="deck-header-toggle" onclick="toggleDeckSection('sectionPlague')">
+        <div class="title-group">
+          <div class="title">COMO MONTAR <span class="green">SEU DECK DE PLAGUE</span></div>
+          <div class="subtitle">Carta Principal (Aflição) + 1 Apoio + 1 Suporte</div>
         </div>
-
-        <div class="flow-col col-mid">
-          <div class="card-tile border-affliction" id="p_sot">
-            <img src="Cards/sot.png" class="card-thumb" alt="Ampulheta" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Sands of Time</span>
-              <span class="tooltip-target">Padrão / Melhor Geral</span>
-              <span class="tooltip-desc">Acelera e prolonga a frequência e os ticks de dano da aflição.</span>
-            </div>
-          </div>
-
-          <div class="card-tile border-affliction" id="p_ra">
-            <img src="Cards/ra.png" class="card-thumb" alt="Radioactivity" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Radioactivity</span>
-              <span class="tooltip-target">Buff Duração / Chance</span>
-              <span class="tooltip-desc">Radiação contínua por segundo. Ideal quando há bônus de duração.</span>
-            </div>
-          </div>
-
-          <div class="card-tile border-affliction" id="p_bi">
-            <img src="Cards/bi.png" class="card-thumb" alt="Blazing Inferno" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Blazing Inferno</span>
-              <span class="tooltip-target">Buff de Dano</span>
-              <span class="tooltip-desc">Fogo contínuo. Usar com bônus de dano de aflição na raid.</span>
-            </div>
-          </div>
-
-          <div class="card-tile border-affliction" id="p_am">
-            <img src="Cards/am.jpg" class="card-thumb" alt="Amplify" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Amplify</span>
-              <span class="tooltip-target">Potencializa Aflição</span>
-              <span class="tooltip-desc">Amplifica diretamente a força das aflições ativas no alvo.</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="flow-col col-end gap-2-items">
-          <div class="card-tile border-support" id="p_iv">
-            <img src="Cards/iv.png" class="card-thumb" alt="Void" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Insanity Void</span>
-              <span class="tooltip-target">Contra Corpo</span>
-              <span class="tooltip-desc">Bônus massivo de aflição concentrado em partes sem armadura.</span>
-            </div>
-          </div>
-
-          <div class="card-tile border-support" id="p_ss">
-            <img src="Cards/ss.png" class="card-thumb" alt="Smash" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Skeletal Smash</span>
-              <span class="tooltip-target">Contra Armadura</span>
-              <span class="tooltip-desc">Suporte de ativação focada para perfurar armaduras resistentes.</span>
-            </div>
-          </div>
-        </div>
+        <div class="toggle-btn" id="btn_sectionPlague">−</div>
       </div>
 
-      <div class="rules-card">
-        <h4>Regras Táticas do Deck de Plague:</h4>
-        • <strong>Foco:</strong> Bater estritamente em <strong>1 a 3 partes</strong> para não espalhar o dano em excesso.<br>
-        • <strong>Suporte:</strong> Escolha <strong>Void</strong> para dano direto no corpo ou <strong>Smash</strong> contra armadura.<br>
-        • <strong>Apoio:</strong> <em>Sands of Time</em> é o padrão; troque por <em>Inferno</em> ou <em>Radio</em> conforme o buff do ciclo.
+      <div class="deck-collapsible-body" id="body_sectionPlague">
+        <div class="flowchart-wrapper" id="flowPlague">
+          <svg class="flow-svg" id="svgPlague">
+            <defs>
+              <marker id="arrowGreen" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#718294" />
+              </marker>
+            </defs>
+            <g class="paths-layer"></g>
+          </svg>
+
+          <div class="flow-col col-start">
+            <div class="card-tile border-main-plague" id="p_tp">
+              <img src="Cards/tp.png" class="card-thumb" alt="Plague" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Thriving Plague</span>
+                <span class="tooltip-target">1 a 3 Partes</span>
+                <span class="tooltip-desc">Obrigatória. Espalha praga infecciosa contínua. Focar em poucos alvos.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-col col-mid">
+            <div class="card-tile border-affliction" id="p_sot">
+              <img src="Cards/sot.png" class="card-thumb" alt="Ampulheta" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Sands of Time</span>
+                <span class="tooltip-target">Padrão / Melhor Geral</span>
+                <span class="tooltip-desc">Acelera e prolonga a frequência e os ticks de dano da aflição.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-affliction" id="p_rs">
+              <img src="Cards/rs.png" class="card-thumb" alt="Ravenous Swarm" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Ravenous Swarm</span>
+                <span class="tooltip-target">Excelente Uso Geral</span>
+                <span class="tooltip-desc">Enxame contínuo. Aplicação ágil e muito estável de aflição nas partes focadas.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-affliction" id="p_bi">
+              <img src="Cards/bi.png" class="card-thumb" alt="Blazing Inferno" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Blazing Inferno</span>
+                <span class="tooltip-target">Só Buff de Dano</span>
+                <span class="tooltip-desc">Substituto caso Swarm esteja em outro deck. Usar estritamente com buff de dano de aflição.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-affliction" id="p_am">
+              <img src="Cards/am.png" class="card-thumb" alt="Amplify" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Amplify</span>
+                <span class="tooltip-target">Potencializa Aflição</span>
+                <span class="tooltip-desc">Amplifica diretamente a força das aflições ativas no alvo.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-col col-end gap-3-items">
+            <div class="card-tile border-support" id="p_iv">
+              <img src="Cards/iv.png" class="card-thumb" alt="Void" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Insanity Void</span>
+                <span class="tooltip-target">Contra Corpo</span>
+                <span class="tooltip-desc">Bônus massivo de aflição concentrado em partes sem armadura.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="p_ss">
+              <img src="Cards/ss.png" class="card-thumb" alt="Smash" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Skeletal Smash</span>
+                <span class="tooltip-target">Contra Armadura</span>
+                <span class="tooltip-desc">Suporte de ativação focada para perfurar armaduras resistentes.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="p_bd">
+              <img src="Cards/bd.png" class="card-thumb" alt="Battle Drums" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Battle Drums</span>
+                <span class="tooltip-target">Neutro / Qualquer Parte</span>
+                <span class="tooltip-desc">Tambores de guerra que aumentam o ritmo de ataque e amplificam o dano geral.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-card">
+          <h4>Regras Táticas do Deck de Plague:</h4>
+          • <strong>Foco:</strong> Bater estritamente em <strong>1 a 3 partes</strong> para não espalhar o dano em excesso.<br>
+          • <strong>Apoio de Aflição:</strong> <em>Sands of Time</em> é o padrão de aceleração; <em>Ravenous Swarm</em> é a melhor escolha geral de consistência.<br>
+          • <strong>Quando usar Inferno:</strong> <em>Blazing Inferno</em> entra como substituta caso <em>Ravenous</em> seja usada em outro deck, mas <strong>estritamente com buff de dano de aflição</strong>.<br>
+          • <strong>Suporte:</strong> Escolha <strong>Void</strong> para foco no corpo, <strong>Smash</strong> contra armadura, ou <strong>Drums</strong> como suporte neutro universal.
+        </div>
       </div>
     </div>
 
     <!-- 2. DECK DE FOGUETES -->
-    <div class="deck-section">
-      <div class="title">COMO MONTAR <span class="orange">SEU DECK DE FOGUETES</span></div>
-      <div class="subtitle">Carta Principal (Explosão) + 1 Apoio + 1 Suporte</div>
-
-      <div class="flowchart-wrapper" id="flowRockets">
-        <svg class="flow-svg" id="svgRockets">
-          <defs>
-            <marker id="arrowOrange" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#718294" />
-            </marker>
-          </defs>
-          <g class="paths-layer"></g>
-        </svg>
-
-        <div class="flow-col col-start">
-          <div class="card-tile border-main-rockets" id="r_csb">
-            <img src="Cards/csb.png" class="card-thumb" alt="Barragem do Clã" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Clanship Barrage</span>
-              <span class="tooltip-target">Qualquer Parte</span>
-              <span class="tooltip-desc">Obrigatória. Dispara foguetes pesados do navio. Usar com Explosão e Suporte.</span>
-            </div>
-          </div>
+    <div class="deck-section" id="sectionRockets">
+      <div class="deck-header-toggle" onclick="toggleDeckSection('sectionRockets')">
+        <div class="title-group">
+          <div class="title">COMO MONTAR <span class="orange">SEU DECK DE FOGUETES</span></div>
+          <div class="subtitle">Carta Principal (Explosão) + 1 Apoio + 1 Suporte</div>
         </div>
-
-        <div class="flow-col col-mid">
-          <div class="card-tile border-burst" id="r_mf">
-            <img src="Cards/mf.png" class="card-thumb" alt="Mirror Force" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Mirror Force</span>
-              <span class="tooltip-target">Uso Geral / Qualquer Parte</span>
-              <span class="tooltip-desc">Ganha bônus de dano progressivo a cada ciclo de raid em que for usada.</span>
-            </div>
-          </div>
-
-          <div class="card-tile border-burst" id="r_bm">
-            <img src="Cards/bm.jpg" class="card-thumb" alt="Morningstar" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Barbed Morningstar</span>
-              <span class="tooltip-target">Corpo ou Armadura</span>
-              <span class="tooltip-desc">Bater no corpo com 5 armaduras ativas, ou na armadura com 5 partes vivas sem armadura.</span>
-            </div>
-          </div>
-
-          <div class="card-tile border-burst" id="r_fr">
-            <img src="Cards/fr.png" class="card-thumb" alt="Frag" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Fragmentize</span>
-              <span class="tooltip-target">Armadura Amaldiçoada</span>
-              <span class="tooltip-desc">Dano aumentado contra partes protegidas por armadura e maldições.</span>
-            </div>
-          </div>
-
-          <div class="card-tile border-burst" id="r_fs">
-            <img src="Cards/fs.png" class="card-thumb" alt="Flak" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Flak Shot</span>
-              <span class="tooltip-target">Armadura c/ Peças Expostas</span>
-              <span class="tooltip-desc">Disparos de estilhaços espalhados por múltiplos alvos protegidos por armadura.</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="flow-col col-end gap-2-items">
-          <div class="card-tile border-support" id="r_af">
-            <img src="Cards/af.png" class="card-thumb" alt="Ancestral" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Ancestral Favor</span>
-              <span class="tooltip-target">Todo o Titã</span>
-              <span class="tooltip-desc">Buff global que eleva a chance e o poder de ativação dos golpes de explosão.</span>
-            </div>
-          </div>
-
-          <div class="card-tile border-support" id="r_gb">
-            <img src="Cards/gb.png" class="card-thumb" alt="Guard Break" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Guard Break</span>
-              <span class="tooltip-target">Foco Direto</span>
-              <span class="tooltip-desc">Potencializa o dano direto na parte atacada quando há partes destruídas.</span>
-            </div>
-          </div>
-        </div>
+        <div class="toggle-btn" id="btn_sectionRockets">−</div>
       </div>
 
-      <div class="rules-card orange-border">
-        <h4>Regras Táticas do Deck de Foguetes:</h4>
-        • <strong>Sinergia:</strong> <em>Clanship Barrage</em> precisa ser combinado com 1 carta de Explosão e 1 Suporte.<br>
-        • <strong>Apoio de Explosão:</strong> <em>Mirror Force</em> é ideal para uso geral; use <em>Frag</em> ou <em>Flak</em> contra armaduras.<br>
-        • <span class="warning-note">RESTRIÇÃO CRÍTICA:</span> Não use <strong>Flak Shot</strong> acompanhado de <strong>Guard Break</strong>!
+      <div class="deck-collapsible-body" id="body_sectionRockets">
+        <div class="flowchart-wrapper" id="flowRockets">
+          <svg class="flow-svg" id="svgRockets">
+            <defs>
+              <marker id="arrowOrange" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#718294" />
+              </marker>
+            </defs>
+            <g class="paths-layer"></g>
+          </svg>
+
+          <div class="flow-col col-start">
+            <div class="card-tile border-main-rockets" id="r_csb">
+              <img src="Cards/csb.png" class="card-thumb" alt="Barragem do Clã" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Clanship Barrage</span>
+                <span class="tooltip-target">Qualquer Parte</span>
+                <span class="tooltip-desc">Obrigatória. Dispara foguetes pesados do navio. Usar com Explosão e Suporte.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-col col-mid gap-5-items">
+            <div class="card-tile border-burst" id="r_mf">
+              <img src="Cards/mf.png" class="card-thumb" alt="Mirror Force" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Mirror Force</span>
+                <span class="tooltip-target">Uso Geral / Qualquer Parte</span>
+                <span class="tooltip-desc">Ganha bônus de dano progressivo a cada ciclo de raid em que for usada.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-burst" id="r_bm">
+              <img src="Cards/bm.png" class="card-thumb" alt="Morningstar" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Barbed Morningstar</span>
+                <span class="tooltip-target">Corpo ou Armadura</span>
+                <span class="tooltip-desc">Bater no corpo com 5 armaduras ativas, ou na armadura com 5 partes vivas sem armadura.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-burst" id="r_fr">
+              <img src="Cards/fr.png" class="card-thumb" alt="Frag" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Fragmentize</span>
+                <span class="tooltip-target">Armadura Amaldiçoada</span>
+                <span class="tooltip-desc">Dano aumentado contra partes protegidas por armadura e maldições.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-burst" id="r_fs">
+              <img src="Cards/fs.png" class="card-thumb" alt="Flak" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Flak Shot</span>
+                <span class="tooltip-target">Armadura c/ Peças Expostas</span>
+                <span class="tooltip-desc">Disparos de estilhaços espalhados por múltiplos alvos protegidos por armadura.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="r_gb_mid">
+              <img src="Cards/gb.png" class="card-thumb" alt="Guard Break" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Guard Break</span>
+                <span class="tooltip-target">Foco Direto</span>
+                <span class="tooltip-desc">Potencializa o dano direto na parte atacada quando há partes destruídas.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-col col-end gap-2-items">
+            <div class="card-tile border-support" id="r_gb">
+              <img src="Cards/gb.png" class="card-thumb" alt="Guard Break" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Guard Break</span>
+                <span class="tooltip-target">Foco Direto</span>
+                <span class="tooltip-desc">Potencializa o dano direto na parte atacada quando há partes destruídas.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="r_af">
+              <img src="Cards/af.png" class="card-thumb" alt="Ancestral" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Ancestral Favor</span>
+                <span class="tooltip-target">Todo o Titã</span>
+                <span class="tooltip-desc">Buff global que eleva a chance e o poder de ativação dos golpes de explosão.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-card orange-border">
+          <h4>Regras Táticas do Deck de Foguetes:</h4>
+          • <strong>Sinergia:</strong> <em>Clanship Barrage</em> precisa ser combinado com 1 carta de Apoio e 1 Suporte.<br>
+          • <strong>Apoio:</strong> <em>Mirror Force</em> é ideal para uso geral; use <em>Frag</em> ou <em>Flak</em> contra armaduras.<br>
+          • <strong>Uso de Guard Break:</strong> Se usado como apoio na 2ª coluna, combine estritamente com <strong>Ancestral Favor</strong>.<br>
+          • <span class="warning-note">RESTRIÇÃO CRÍTICA:</span> Não use <strong>Flak Shot</strong> acompanhado de <strong>Guard Break</strong>!
+        </div>
       </div>
     </div>
 
     <!-- 3. DECK DE PURIFY -->
-    <div class="deck-section">
-      <div class="title">COMO MONTAR <span class="cyan">SEU DECK DE PURIFY</span></div>
-      <div class="subtitle">Carta Principal (Explosão) + 1 Apoio (Aflição) + 1 Suporte</div>
-
-      <div class="flowchart-wrapper" id="flowPurify">
-        <svg class="flow-svg" id="svgPurify">
-          <defs>
-            <marker id="arrowCyan" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#718294" />
-            </marker>
-          </defs>
-          <g class="paths-layer"></g>
-        </svg>
-
-        <div class="flow-col col-start">
-          <div class="card-tile border-main-purify" id="u_pb">
-            <img src="Cards/pb.png" class="card-thumb" alt="Purify" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Purifying Blast</span>
-              <span class="tooltip-target">2 ou 3 Partes</span>
-              <span class="tooltip-desc">Obrigatória. Detona os acúmulos de aflição ativos. Usar com Aflição e Suporte.</span>
-            </div>
-          </div>
+    <div class="deck-section" id="sectionPurify">
+      <div class="deck-header-toggle" onclick="toggleDeckSection('sectionPurify')">
+        <div class="title-group">
+          <div class="title">COMO MONTAR <span class="cyan">SEU DECK DE PURIFY</span></div>
+          <div class="subtitle">Carta Principal (Explosão) + 1 Apoio (Aflição) + 1 Suporte</div>
         </div>
-
-        <div class="flow-col col-mid">
-          <div class="card-tile border-affliction" id="u_rs">
-            <img src="Cards/rs.png" class="card-thumb" alt="Ravenous Swarm" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Ravenous Swarm</span>
-              <span class="tooltip-target">Raids de Explosão</span>
-              <span class="tooltip-desc">Enxame voraz. Aplica aflições rápidas para carregar a detonação de Purify.</span>
-            </div>
-          </div>
-
-          <div class="card-tile border-affliction" id="u_am">
-            <img src="Cards/am.jpg" class="card-thumb" alt="Amplify" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Amplify</span>
-              <span class="tooltip-target">Raids de Explosão</span>
-              <span class="tooltip-desc">Amplifica o dano e a frequência das aflições base.</span>
-            </div>
-          </div>
-
-          <div class="card-tile border-affliction" id="u_zz">
-            <img src="Cards/zz.jpg" class="card-thumb" alt="Zap" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Electro Zap</span>
-              <span class="tooltip-target">Raids de Aflição</span>
-              <span class="tooltip-desc">Excelente ativador de aflição rápida para acumular stacks de Purify.</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="flow-col col-end gap-4-items">
-          <div class="card-tile border-support" id="u_rk">
-            <img src="Cards/rk.png" class="card-thumb" alt="Radiant" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Radiant Kaleidoscope</span>
-              <span class="tooltip-target">Híbrido Geral</span>
-              <span class="tooltip-desc">Suporte excelente para potencializar decks de Explosão combinados com Aflição.</span>
-            </div>
-          </div>
-
-          <div class="card-tile border-support" id="u_bd">
-            <img src="Cards/bd.jpg" class="card-thumb" alt="Drums" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Battle Drums</span>
-              <span class="tooltip-target">Foco em Membros</span>
-              <span class="tooltip-desc">Tambores de combate que aceleram a cadência e dano nos membros do Titã.</span>
-            </div>
-          </div>
-
-          <div class="card-tile border-support" id="u_iv">
-            <img src="Cards/iv.png" class="card-thumb" alt="Void" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Insanity Void</span>
-              <span class="tooltip-target">Contra Corpo</span>
-              <span class="tooltip-desc">Bônus massivo para detonar acúmulos de aflição diretamente no corpo do Titã.</span>
-            </div>
-          </div>
-
-          <div class="card-tile border-support" id="u_ss">
-            <img src="Cards/ss.png" class="card-thumb" alt="Smash" onerror="this.src='Cards/wc.png'">
-            <div class="card-tooltip">
-              <span class="tooltip-name">Skeletal Smash</span>
-              <span class="tooltip-target">Contra Armadura</span>
-              <span class="tooltip-desc">Suporte focado em quebrar armadura para abrir caminho para os ataques de Purify.</span>
-            </div>
-          </div>
-        </div>
+        <div class="toggle-btn" id="btn_sectionPurify">−</div>
       </div>
 
-      <div class="rules-card cyan-border">
-        <h4>Regras Táticas do Deck de Purify:</h4>
-        • <strong>Mecânica:</strong> <em>Purifying Blast</em> requer cartas de <strong>Aflição</strong> ativas no alvo para causar dano real. Bater em <strong>2 ou 3 partes</strong>.<br>
-        • <strong>Apoio por Buff:</strong> Use <strong>Ravenous</strong> ou <strong>Amplify</strong> se a raid favorecer explosão; use <strong>Zap</strong> se favorecer aflição.<br>
-        • <strong>Suporte:</strong> Escolha <strong>Void</strong> para foco no corpo, <strong>Smash</strong> contra armadura, ou <strong>Radiant/Drums</strong> para amplificação contínua.
+      <div class="deck-collapsible-body" id="body_sectionPurify">
+        <div class="flowchart-wrapper" id="flowPurify">
+          <svg class="flow-svg" id="svgPurify">
+            <defs>
+              <marker id="arrowCyan" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#718294" />
+              </marker>
+            </defs>
+            <g class="paths-layer"></g>
+          </svg>
+
+          <div class="flow-col col-start">
+            <div class="card-tile border-main-purify" id="u_pb">
+              <img src="Cards/pb.png" class="card-thumb" alt="Purify" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Purifying Blast</span>
+                <span class="tooltip-target">2 ou 3 Partes</span>
+                <span class="tooltip-desc">Obrigatória. Detona os acúmulos de aflição ativos. Usar com Aflição e Suporte.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-col col-mid gap-2-items">
+            <div class="card-tile border-affliction" id="u_rs">
+              <img src="Cards/rs.png" class="card-thumb" alt="Ravenous Swarm" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Ravenous Swarm</span>
+                <span class="tooltip-target">Raids de Explosão</span>
+                <span class="tooltip-desc">Enxame voraz. Aplica aflições rápidas para carregar a detonação de Purify.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-affliction" id="u_am">
+              <img src="Cards/am.png" class="card-thumb" alt="Amplify" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Amplify</span>
+                <span class="tooltip-target">Raids de Explosão</span>
+                <span class="tooltip-desc">Amplifica o dano e a frequência das aflições base.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-col col-end gap-4-items">
+            <div class="card-tile border-support" id="u_rk">
+              <img src="Cards/rk.png" class="card-thumb" alt="Radiant" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Radiant Kaleidoscope</span>
+                <span class="tooltip-target">Híbrido Geral</span>
+                <span class="tooltip-desc">Suporte excelente para potencializar decks de Explosão combinados com Aflição.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="u_bd">
+              <img src="Cards/bd.png" class="card-thumb" alt="Drums" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Battle Drums</span>
+                <span class="tooltip-target">Neutro / Qualquer Parte</span>
+                <span class="tooltip-desc">Tambores de guerra que aumentam o ritmo de ataque e amplificam o dano geral.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="u_iv">
+              <img src="Cards/iv.png" class="card-thumb" alt="Void" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Insanity Void</span>
+                <span class="tooltip-target">Contra Corpo</span>
+                <span class="tooltip-desc">Bônus massivo para detonar acúmulos de aflição diretamente no corpo do Titã.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="u_ss">
+              <img src="Cards/ss.png" class="card-thumb" alt="Smash" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Skeletal Smash</span>
+                <span class="tooltip-target">Contra Armadura</span>
+                <span class="tooltip-desc">Suporte focado em quebrar armadura para abrir caminho para os ataques de Purify.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-card cyan-border">
+          <h4>Regras Táticas do Deck de Purify:</h4>
+          • <strong>Mecânica:</strong> <em>Purifying Blast</em> requer cartas de <strong>Aflição</strong> ativas no alvo para causar dano real. Bater em <strong>2 ou 3 partes</strong>.<br>
+          • <strong>Apoio:</strong> Use <strong>Ravenous Swarm</strong> ou <strong>Amplify</strong> para acelerar e maximizar os acúmulos de aflição.<br>
+          • <strong>Suporte:</strong> Escolha <strong>Void</strong> para foco no corpo, <strong>Smash</strong> contra armadura, ou <strong>Radiant/Drums</strong> para amplificação universal.
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. DECK DE SANDS OF TIME (AMPULHETA) -->
+    <div class="deck-section" id="sectionSot">
+      <div class="deck-header-toggle" onclick="toggleDeckSection('sectionSot')">
+        <div class="title-group">
+          <div class="title">COMO MONTAR <span class="purple">SEU DECK DE AMPULHETA</span></div>
+          <div class="subtitle">Carta Principal (Suporte/Tempo) + 1 Apoio (Aflição) + 1 Suporte</div>
+        </div>
+        <div class="toggle-btn" id="btn_sectionSot">−</div>
+      </div>
+
+      <div class="deck-collapsible-body" id="body_sectionSot">
+        <div class="flowchart-wrapper" id="flowSot">
+          <svg class="flow-svg" id="svgSot">
+            <defs>
+              <marker id="arrowPurple" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#718294" />
+              </marker>
+            </defs>
+            <g class="paths-layer"></g>
+          </svg>
+
+          <div class="flow-col col-start">
+            <div class="card-tile border-main-sot" id="s_sot">
+              <img src="Cards/sot.png" class="card-thumb" alt="Sands of Time" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Sands of Time</span>
+                <span class="tooltip-target">Aceleração de Tempo</span>
+                <span class="tooltip-desc">Obrigatória. Prolonga a duração e aumenta a cadência dos ticks de aflição no alvo.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-col col-mid gap-3-items">
+            <div class="card-tile border-affliction" id="s_tp">
+              <img src="Cards/tp.png" class="card-thumb" alt="Plague" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Thriving Plague</span>
+                <span class="tooltip-target">Praga Cumulativa</span>
+                <span class="tooltip-desc">Excelente combinação: acelera enormemente a multiplicação dos stacks de praga.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-affliction" id="s_zz">
+              <img src="Cards/zz.png" class="card-thumb" alt="Electro Zap" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Electro Zap</span>
+                <span class="tooltip-target">Aflição Contínua</span>
+                <span class="tooltip-desc">Disparos elétricos frequentes combinados com os ticks acelerados da ampulheta.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-affliction" id="s_ds">
+              <img src="Cards/ds.png" class="card-thumb" alt="Decaying Strike" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Decaying Strike</span>
+                <span class="tooltip-target">HP Baixo (<= 30%)</span>
+                <span class="tooltip-desc">Dano devastador em alvos enfraquecidos, potencializado pelo tempo estendido.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="flow-col col-end gap-3-items">
+            <div class="card-tile border-support" id="s_iv">
+              <img src="Cards/iv.png" class="card-thumb" alt="Insanity Void" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Insanity Void</span>
+                <span class="tooltip-target">Contra Corpo</span>
+                <span class="tooltip-desc">Amplificação brutal para aflições aplicadas em áreas desprovidas de armadura.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="s_ss">
+              <img src="Cards/ss.png" class="card-thumb" alt="Skeletal Smash" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Skeletal Smash</span>
+                <span class="tooltip-target">Contra Armadura</span>
+                <span class="tooltip-desc">Potencializa aflições para derreter armaduras resistentes mais rapidamente.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="s_bd">
+              <img src="Cards/bd.png" class="card-thumb" alt="Battle Drums" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Battle Drums</span>
+                <span class="tooltip-target">Neutro / Qualquer Parte</span>
+                <span class="tooltip-desc">Tambores de guerra que aumentam o ritmo de ataque e amplificam o dano geral.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-card purple-border">
+          <h4>Regras Táticas do Deck de Ampulheta (Sands of Time):</h4>
+          • <strong>Conceito Central:</strong> <em>Sands of Time</em> é usada como motor principal para elevar a frequência de dano por segundo das cartas de <strong>Aflição</strong>.<br>
+          • <strong>Escolha de Apoio:</strong> Opte por <strong>Plague</strong> para dano progressivo, <strong>Zap</strong> para estabilidade contínua, ou <strong>Decaying Strike</strong> em fases finais/partes com HP crítico.<br>
+          • <strong>Suporte Estratégico:</strong> Escolha <strong>Void</strong> para queimar corpo exposto, <strong>Smash</strong> contra armadura, ou <strong>Drums</strong> para suporte universal.
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. DECK DE DUPLA AFLIÇÃO -->
+    <div class="deck-section" id="sectionAffliction">
+      <div class="deck-header-toggle" onclick="toggleDeckSection('sectionAffliction')">
+        <div class="title-group">
+          <div class="title">COMO MONTAR <span class="yellow">SEU DECK DE DUPLA AFLIÇÃO</span></div>
+          <div class="subtitle">Carta 1 (Aflição) + Carta 2 (Aflição) + 1 Suporte</div>
+        </div>
+        <div class="toggle-btn" id="btn_sectionAffliction">−</div>
+      </div>
+
+      <div class="deck-collapsible-body" id="body_sectionAffliction">
+        <div class="flowchart-wrapper" id="flowAffliction" style="min-height: 420px;">
+          <svg class="flow-svg" id="svgAffliction">
+            <defs>
+              <marker id="arrowYellow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#718294" />
+              </marker>
+            </defs>
+            <g class="paths-layer"></g>
+          </svg>
+
+          <!-- COLUNA 1: 4 CARTAS DE AFLIÇÃO -->
+          <div class="flow-col col-start gap-4-items">
+            <div class="card-tile border-main-affliction" id="a_ad_1">
+              <img src="Cards/ad.png" class="card-thumb" alt="Acid Drench" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Acid Drench</span>
+                <span class="tooltip-target">Veneno em Área</span>
+                <span class="tooltip-desc">Veneno que renova e mantém todos os acúmulos nas partes atingidas.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-main-affliction" id="a_ds_1">
+              <img src="Cards/ds.png" class="card-thumb" alt="Decaying Strike" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Decaying Strike</span>
+                <span class="tooltip-target">HP Crítico (<= 30%)</span>
+                <span class="tooltip-desc">Causa dano colossal proporcional ao HP restante diminuído da parte.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-main-affliction" id="a_gs_1">
+              <img src="Cards/gs.png" class="card-thumb" alt="Grim Shadow" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Grim Shadow</span>
+                <span class="tooltip-target">Foco Individual</span>
+                <span class="tooltip-desc">Acumula sombras sombrias no alvo até atingir detonação com dano brutal.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-main-affliction" id="a_bb_1">
+              <img src="Cards/bb.png" class="card-thumb" alt="Corrosive Bubbles" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Corrosive Bubbles</span>
+                <span class="tooltip-target">Bolhas Corrosivas</span>
+                <span class="tooltip-desc">Cria bolhas de ácido que explodem ao atingir a quantidade máxima de acúmulos.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUNA 2: AS MESMAS 4 CARTAS DE AFLIÇÃO -->
+          <div class="flow-col col-mid gap-4-items">
+            <div class="card-tile border-affliction" id="a_ad_2">
+              <img src="Cards/ad.png" class="card-thumb" alt="Acid Drench" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Acid Drench</span>
+                <span class="tooltip-target">Veneno em Área</span>
+                <span class="tooltip-desc">Veneno que renova e mantém todos os acúmulos nas partes atingidas.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-affliction" id="a_ds_2">
+              <img src="Cards/ds.png" class="card-thumb" alt="Decaying Strike" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Decaying Strike</span>
+                <span class="tooltip-target">HP Crítico (<= 30%)</span>
+                <span class="tooltip-desc">Causa dano colossal proporcional ao HP restante diminuído da parte.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-affliction" id="a_gs_2">
+              <img src="Cards/gs.png" class="card-thumb" alt="Grim Shadow" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Grim Shadow</span>
+                <span class="tooltip-target">Foco Individual</span>
+                <span class="tooltip-desc">Acumula sombras sombrias no alvo até atingir detonação com dano brutal.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-affliction" id="a_bb_2">
+              <img src="Cards/bb.png" class="card-thumb" alt="Corrosive Bubbles" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Corrosive Bubbles</span>
+                <span class="tooltip-target">Bolhas Corrosivas</span>
+                <span class="tooltip-desc">Cria bolhas de ácido que explodem ao atingir a quantidade máxima de acúmulos.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUNA 3: SUPORTES -->
+          <div class="flow-col col-end gap-3-items">
+            <div class="card-tile border-support" id="a_iv">
+              <img src="Cards/iv.png" class="card-thumb" alt="Insanity Void" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Insanity Void</span>
+                <span class="tooltip-target">Contra Corpo</span>
+                <span class="tooltip-desc">Amplificação brutal para aflições aplicadas em áreas desprovidas de armadura.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="a_ss">
+              <img src="Cards/ss.png" class="card-thumb" alt="Skeletal Smash" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Skeletal Smash</span>
+                <span class="tooltip-target">Contra Armadura</span>
+                <span class="tooltip-desc">Potencializa aflições para perfurar armaduras resistentes mais rapidamente.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="a_bd">
+              <img src="Cards/bd.png" class="card-thumb" alt="Battle Drums" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Battle Drums</span>
+                <span class="tooltip-target">Neutro / Qualquer Parte</span>
+                <span class="tooltip-desc">Tambores de guerra que aumentam o ritmo de ataque e amplificam o dano geral.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-card yellow-border">
+          <h4>Regras Táticas do Deck de Dupla Aflição:</h4>
+          • <strong>Combinação Livre:</strong> Escolha <strong>duas aflições distintas</strong> entre Acid Drench, Decaying Strike, Grim Shadow e Corrosive Bubbles.<br>
+          • <strong>Sinergia com Decaying:</strong> Se usar <em>Decaying Strike</em>, priorize partes que já estejam abaixo de 30% de HP para aproveitamento máximo.<br>
+          • <strong>Suporte:</strong> Combine com <strong>Insanity Void</strong> para foco no corpo, <strong>Skeletal Smash</strong> contra armaduras, ou <strong>Battle Drums</strong> para suporte neutro universal.
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. DECK DE RADIANT KALEIDOSCOPE (TRIÂNGULO) -->
+    <div class="deck-section" id="sectionRadiant">
+      <div class="deck-header-toggle" onclick="toggleDeckSection('sectionRadiant')">
+        <div class="title-group">
+          <div class="title">COMO MONTAR <span class="pink">SEU DECK DE RADIANT (TRIÂNGULO)</span></div>
+          <div class="subtitle">Carta Principal (Suporte) + 1 Apoio + 1 Finalizador / Ativador</div>
+        </div>
+        <div class="toggle-btn" id="btn_sectionRadiant">−</div>
+      </div>
+
+      <div class="deck-collapsible-body" id="body_sectionRadiant">
+        <div class="flowchart-wrapper" id="flowRadiant" style="min-height: 420px;">
+          <svg class="flow-svg" id="svgRadiant">
+            <defs>
+              <marker id="arrowPink" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#718294" />
+              </marker>
+            </defs>
+            <g class="paths-layer"></g>
+          </svg>
+
+          <!-- 1ª COLUNA: RADIANT KALEIDOSCOPE -->
+          <div class="flow-col col-start">
+            <div class="card-tile border-main-radiant" id="k_rk">
+              <img src="Cards/rk.png" class="card-thumb" alt="Radiant Kaleidoscope" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Radiant Kaleidoscope</span>
+                <span class="tooltip-target">Híbrido Global</span>
+                <span class="tooltip-desc">Obrigatória. Suporte de triângulo que amplifica simultaneamente golpes de explosão e aflição.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2ª COLUNA: RAVENOUS SWARM E GUARD BREAK -->
+          <div class="flow-col col-mid gap-2-items">
+            <div class="card-tile border-affliction" id="k_rs">
+              <img src="Cards/rs.png" class="card-thumb" alt="Ravenous Swarm" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Ravenous Swarm</span>
+                <span class="tooltip-target">Rota Explosiva</span>
+                <span class="tooltip-desc">Aplica aflição contínua e rápida para ativar as cartas explosivas da 3ª coluna.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="k_gb">
+              <img src="Cards/gb.png" class="card-thumb" alt="Guard Break" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Guard Break</span>
+                <span class="tooltip-target">Rota de Aflição Focada</span>
+                <span class="tooltip-desc">Aumenta o dano maciço direto nos alvos feridos e peças abertas.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3ª COLUNA: PARA RAVENOUS (STATIC OU PURIFY) / PARA GUARD BREAK (SHADOW OU DECAY) -->
+          <div class="flow-col col-end gap-4-items">
+            <div class="card-tile border-burst" id="k_cs">
+              <img src="Cards/cs.png" class="card-thumb" alt="Celestial Static" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Celestial Static</span>
+                <span class="tooltip-target">Com Ravenous Swarm</span>
+                <span class="tooltip-desc">Explosão estática com acúmulos por toque, carregada pelas aflições rápidas de Swarm.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-burst" id="k_pb">
+              <img src="Cards/pb.png" class="card-thumb" alt="Purifying Blast" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Purifying Blast</span>
+                <span class="tooltip-target">Com Ravenous Swarm</span>
+                <span class="tooltip-desc">Detona instantaneamente todas as aflições ativas do enxame com alto multiplicador.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-affliction" id="k_gs">
+              <img src="Cards/gs.png" class="card-thumb" alt="Grim Shadow" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Grim Shadow</span>
+                <span class="tooltip-target">Com Guard Break</span>
+                <span class="tooltip-desc">Concentra camadas de sombra para detonação massiva sob amplificação do Guard Break.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-affliction" id="k_ds">
+              <img src="Cards/ds.png" class="card-thumb" alt="Decaying Strike" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Decaying Strike</span>
+                <span class="tooltip-target">Com Guard Break (HP <= 30%)</span>
+                <span class="tooltip-desc">Potencializa o dano de execução em alvos com baixa vida somado à quebra de guarda.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-card pink-border">
+          <h4>Regras Táticas do Deck de Radiant Kaleidoscope (Triângulo):</h4>
+          • <strong>Conceito:</strong> <em>Radiant Kaleidoscope</em> é o motor de suporte central para habilitar sinergias híbridas de alto valor.<br>
+          • <strong>Rota de Ravenous Swarm:</strong> Se usar <em>Ravenous Swarm</em> na 2ª coluna, combine obrigatoriamente com <strong>Celestial Static</strong> ou <strong>Purifying Blast</strong>.<br>
+          • <strong>Rota de Guard Break:</strong> Se usar <em>Guard Break</em> na 2ª coluna, combine obrigatoriamente com <strong>Grim Shadow</strong> ou <strong>Decaying Strike</strong>.
+        </div>
+      </div>
+    </div>
+
+    <!-- 7. DECK DE TEAM TACTICS -->
+    <div class="deck-section" id="sectionTeamTactics">
+      <div class="deck-header-toggle" onclick="toggleDeckSection('sectionTeamTactics')">
+        <div class="title-group">
+          <div class="title">COMO MONTAR <span class="blue">SEU DECK DE TEAM TACTICS</span></div>
+          <div class="subtitle">Carta Principal (Suporte do Clã) + 1 Suporte / Ativador + 1 Carta de Dano (Burst ou Aflição)</div>
+        </div>
+        <div class="toggle-btn" id="btn_sectionTeamTactics">−</div>
+      </div>
+
+      <div class="deck-collapsible-body" id="body_sectionTeamTactics">
+        <div class="flowchart-wrapper" id="flowTeamTactics" style="min-height: 420px;">
+          <svg class="flow-svg" id="svgTeamTactics">
+            <defs>
+              <marker id="arrowBlue" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#718294" />
+              </marker>
+            </defs>
+            <g class="paths-layer"></g>
+          </svg>
+
+          <!-- 1ª COLUNA: TEAM TACTICS -->
+          <div class="flow-col col-start">
+            <div class="card-tile border-main-tt" id="t_tt">
+              <img src="Cards/tt.png" class="card-thumb" alt="Team Tactics" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Team Tactics</span>
+                <span class="tooltip-target">Obrigatória por Ciclo</span>
+                <span class="tooltip-desc">Buff global do clã. Deve ser gasta 1 vez por ciclo para garantir o bônus de dano de raid.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2ª COLUNA: ANCESTRAL NO TOPO, GÁS NA BASE -->
+          <div class="flow-col col-mid gap-5-items">
+            <div class="card-tile border-support" id="t_af">
+              <img src="Cards/af.png" class="card-thumb" alt="Ancestral Favor" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Ancestral Favor</span>
+                <span class="tooltip-target">Suporte de Explosão</span>
+                <span class="tooltip-desc">Eleva a chance e dano de explosões. Conecta estritamente na rota de Burst.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-affliction" id="t_ma">
+              <img src="Cards/ma.png" class="card-thumb" alt="Maelstrom" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Maelstrom</span>
+                <span class="tooltip-target">Buff Universal</span>
+                <span class="tooltip-desc">Amplifica o dano geral contínuo. Conecta tanto em Burst quanto em Aflição.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="t_gb">
+              <img src="Cards/gb.png" class="card-thumb" alt="Guard Break" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Guard Break</span>
+                <span class="tooltip-target">Foco Direto</span>
+                <span class="tooltip-desc">Aumenta o dano maciço em partes feridas. Conecta tanto em Burst quanto em Aflição.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="t_gv">
+              <img src="Cards/gv.png" class="card-thumb" alt="Grasping Vines" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Grasping Vines</span>
+                <span class="tooltip-target">Foco em Membros</span>
+                <span class="tooltip-desc">Prende os membros do Titã e eleva o dano. Conecta tanto em Burst quanto em Aflição.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="t_rg">
+              <img src="Cards/rg.png" class="card-thumb" alt="Rancid Gas" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Rancid Gas</span>
+                <span class="tooltip-target">Suporte de Aflição</span>
+                <span class="tooltip-desc">Aumenta a chance e poder de aflição. Conecta estritamente na rota de Aflição.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3ª COLUNA: BURST EM CIMA, AFLIÇÃO EM BAIXO -->
+          <div class="flow-col col-end gap-2-items">
+            <div class="card-tile border-burst" id="t_burst">
+              <img src="Cards/b.png" class="card-thumb" alt="Carta de Burst" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Qualquer Burst</span>
+                <span class="tooltip-target">Explosão (b.png)</span>
+                <span class="tooltip-desc">Escolha uma carta de explosão (ex: Mirror Force, Haymaker, Skull Bash). Não combina com Gás.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-affliction" id="t_affliction">
+              <img src="Cards/a.png" class="card-thumb" alt="Carta de Aflição" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Qualquer Aflição</span>
+                <span class="tooltip-target">Aflição (a.png)</span>
+                <span class="tooltip-desc">Escolha uma carta de dano por tempo (ex: Fusion Bomb, Acid Drench, Swarm). Não combina com Ancestral.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-card blue-border">
+          <h4>Regras Táticas do Deck de Team Tactics (TT):</h4>
+          • <strong>Regra Fundamental:</strong> Use <strong>Team Tactics</strong> exatamente 1 vez por ciclo para ativar o moral compartilhado do clã.<br>
+          • <strong>Rota Superior (Burst):</strong> Ao optar por <strong>Ancestral Favor</strong>, finalize obrigatoriamente com uma carta de Explosão (<em>b.png</em>). <strong>Nunca use Rancid Gas com Burst!</strong><br>
+          • <strong>Rota Inferior (Aflição):</strong> Ao optar por <strong>Rancid Gas</strong>, finalize obrigatoriamente com uma carta de Aflição (<em>a.png</em>). <strong>Nunca use Ancestral Favor com Aflição!</strong><br>
+          • <strong>Suportes Centrais Flexíveis:</strong> <em>Maelstrom</em>, <em>Guard Break</em> e <em>Grasping Vines</em> conectam livremente com qualquer uma das duas rotas de dano.
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. DECK DE ASTRAL ECHO -->
+    <div class="deck-section" id="sectionAstralEcho">
+      <div class="deck-header-toggle" onclick="toggleDeckSection('sectionAstralEcho')">
+        <div class="title-group">
+          <div class="title">COMO MONTAR <span class="teal">SEU DECK DE ASTRAL ECHO</span></div>
+          <div class="subtitle">Carta Principal (Suporte de Carga) + 1 Ativador (Burst) + 1 Suporte Específico</div>
+        </div>
+        <div class="toggle-btn" id="btn_sectionAstralEcho">−</div>
+      </div>
+
+      <div class="deck-collapsible-body" id="body_sectionAstralEcho">
+        <div class="flowchart-wrapper" id="flowAstralEcho" style="min-height: 380px;">
+          <svg class="flow-svg" id="svgAstralEcho">
+            <defs>
+              <marker id="arrowTeal" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <path d="M 0 1.5 L 8 5 L 0 8.5 z" fill="#718294" />
+              </marker>
+            </defs>
+            <g class="paths-layer"></g>
+          </svg>
+
+          <!-- 1ª COLUNA: ASTRAL ECHO -->
+          <div class="flow-col col-start">
+            <div class="card-tile border-main-echo" id="e_ae">
+              <img src="Cards/ae.png" class="card-thumb" alt="Astral Echo" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Astral Echo</span>
+                <span class="tooltip-target">Carga e Repetição</span>
+                <span class="tooltip-desc">Obrigatória. Cria orbes astrais que duplicam e aceleram a ativação das cartas de ataque.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2ª COLUNA: STATIC E HAYMAKER -->
+          <div class="flow-col col-mid gap-2-items">
+            <div class="card-tile border-burst" id="e_cs">
+              <img src="Cards/cs.png" class="card-thumb" alt="Celestial Static" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Celestial Static</span>
+                <span class="tooltip-target">Dano por Toque</span>
+                <span class="tooltip-desc">Disparos estáticos com acúmulos progressivos. Conecta com Smash e Void.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-burst" id="e_ch">
+              <img src="Cards/ch.png" class="card-thumb" alt="Cosmic Haymaker" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Cosmic Haymaker</span>
+                <span class="tooltip-target">Golpe Pesado</span>
+                <span class="tooltip-desc">Soco cósmico concentrado. Conecta estritamente com Totem of Power.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3ª COLUNA: PARA STATIC (SMASH E VOID) / PARA HAYMAKER (TOTEM) -->
+          <div class="flow-col col-end gap-3-items">
+            <div class="card-tile border-support" id="e_ss">
+              <img src="Cards/ss.png" class="card-thumb" alt="Skeletal Smash" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Skeletal Smash</span>
+                <span class="tooltip-target">Com Static (Armadura)</span>
+                <span class="tooltip-desc">Quebra acelerada de armadura combinada com a cadência rápida de Static.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="e_iv">
+              <img src="Cards/iv.png" class="card-thumb" alt="Insanity Void" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Insanity Void</span>
+                <span class="tooltip-target">Com Static (Corpo)</span>
+                <span class="tooltip-desc">Amplificação brutal para dano direto no corpo do Titã.</span>
+              </div>
+            </div>
+
+            <div class="card-tile border-support" id="e_tot">
+              <img src="Cards/tot.png" class="card-thumb" alt="Totem of Power" onerror="this.src='Cards/wc.png'">
+              <div class="card-tooltip">
+                <span class="tooltip-name">Totem of Power</span>
+                <span class="tooltip-target">Com Haymaker</span>
+                <span class="tooltip-desc">Totem multiplicador massivo que potencializa os golpes gigantescos de Haymaker.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rules-card teal-border">
+          <h4>Regras Táticas do Deck de Astral Echo:</h4>
+          • <strong>Conceito Central:</strong> <em>Astral Echo</em> atua acelerando a ativação de golpes de explosão por meio de orbes.<br>
+          • <strong>Rota de Celestial Static:</strong> Ao escolher <em>Celestial Static</em>, combine com <strong>Skeletal Smash</strong> contra armaduras ou <strong>Insanity Void</strong> contra corpo exposto.<br>
+          • <strong>Rota de Cosmic Haymaker:</strong> Ao escolher <em>Cosmic Haymaker</em>, combine estritamente com <strong>Totem of Power</strong> para maximizar o pico de dano dos socos cósmicos.
+        </div>
       </div>
     </div>
 
   </div>
 
-  <!-- DRAWER FLUTUANTE EXCLUSIVO PARA MOBILE -->
+  <!-- DRAWER FLUTUANTE EXCLUSIVO PARA MOBILE (BOTTOM SHEET NATIVO) -->
   <div id="mobileCardDrawer">
+    <div class="drawer-drag-handle"></div>
     <div class="drawer-header">
       <span class="drawer-name" id="mDrawerName">-</span>
       <button class="drawer-close" onclick="fecharMobileDrawer()">&times;</button>
@@ -658,45 +1401,116 @@
   </div>
 
   <script>
-    function desenharSetasDeck(svgId, wrapId, mainId, apoiosIds, suportesIds, arrowId, restricaoFlak = false) {
+    // Alterna uma seção individual
+    function toggleDeckSection(sectionId) {
+      const body = document.getElementById('body_' + sectionId);
+      const btn = document.getElementById('btn_' + sectionId);
+      if (!body || !btn) return;
+
+      const estaFechado = body.classList.contains('collapsed');
+
+      if (estaFechado) {
+        body.classList.remove('collapsed');
+        btn.textContent = '−';
+        setTimeout(atualizarTodasConexoes, 50);
+      } else {
+        body.classList.add('collapsed');
+        btn.textContent = '+';
+      }
+    }
+
+    // Expande ou recolhe todas as seções simultaneamente
+    function alternarTodosBlocos(abrir) {
+      document.querySelectorAll('.deck-section').forEach(section => {
+        const body = section.querySelector('.deck-collapsible-body');
+        const btn = section.querySelector('.toggle-btn');
+        if (!body || !btn) return;
+
+        if (abrir) {
+          body.classList.remove('collapsed');
+          btn.textContent = '−';
+        } else {
+          body.classList.add('collapsed');
+          btn.textContent = '+';
+        }
+      });
+      if (abrir) {
+        setTimeout(atualizarTodasConexoes, 60);
+      }
+    }
+
+    function desenharSetasDeck(svgId, wrapId, mainId, apoiosIds, suportesIds, arrowId, modoEspecial = 'none') {
       const svg = document.getElementById(svgId);
       const wrapper = document.getElementById(wrapId);
       if (!svg || !wrapper) return;
+
+      if (wrapper.offsetParent === null) return;
 
       const layer = svg.querySelector('.paths-layer');
       layer.innerHTML = '';
 
       const wrapRect = wrapper.getBoundingClientRect();
-      const nMain = document.getElementById(mainId).getBoundingClientRect();
-      const apoios = apoiosIds.map(id => ({ id, el: document.getElementById(id), rect: document.getElementById(id).getBoundingClientRect() }));
-      const suportes = suportesIds.map(id => ({ id, el: document.getElementById(id), rect: document.getElementById(id).getBoundingClientRect() }));
+      const suportes = suportesIds.map(id => ({ id, el: document.getElementById(id), rect: document.getElementById(id)?.getBoundingClientRect() })).filter(s => s.rect);
 
-      // 1. Principal -> Apoios
-      const startX = nMain.right - wrapRect.left;
-      const startY = nMain.top + nMain.height / 2 - wrapRect.top;
+      const listaMains = Array.isArray(mainId) ? mainId : [mainId];
 
-      apoios.forEach(ap => {
-        const endX = ap.rect.left - wrapRect.left;
-        const endY = ap.rect.top + ap.rect.height / 2 - wrapRect.top;
-        const midX = startX + (endX - startX) * 0.45;
+      listaMains.forEach(mId => {
+        const elMain = document.getElementById(mId);
+        if (!elMain) return;
+        const nMain = elMain.getBoundingClientRect();
+        const startX = nMain.right - wrapRect.left;
+        const startY = nMain.top + nMain.height / 2 - wrapRect.top;
 
-        const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path.setAttribute('d', `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`);
-        path.setAttribute('fill', 'none');
-        path.setAttribute('stroke', '#62778d');
-        path.setAttribute('stroke-width', '2');
-        path.setAttribute('marker-end', `url(#${arrowId})`);
-        layer.appendChild(path);
+        apoiosIds.forEach(apId => {
+          if (modoEspecial === 'cross' && mId.slice(2, 4) === apId.slice(2, 4)) {
+            return;
+          }
+
+          const elAp = document.getElementById(apId);
+          if (!elAp) return;
+          const rectAp = elAp.getBoundingClientRect();
+
+          const endX = rectAp.left - wrapRect.left;
+          const endY = rectAp.top + rectAp.height / 2 - wrapRect.top;
+          const midX = startX + (endX - startX) * 0.45;
+
+          const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          path.setAttribute('d', `M ${startX} ${startY} C ${midX} ${startY}, ${midX} ${endY}, ${endX} ${endY}`);
+          path.setAttribute('fill', 'none');
+          path.setAttribute('stroke', '#62778d');
+          path.setAttribute('stroke-width', '1.6');
+          path.setAttribute('marker-end', `url(#${arrowId})`);
+          layer.appendChild(path);
+        });
       });
 
       // 2. Apoios -> Suportes
-      apoios.forEach(ap => {
-        const sX = ap.rect.right - wrapRect.left;
-        const sY = ap.rect.top + ap.rect.height / 2 - wrapRect.top;
+      apoiosIds.forEach(apId => {
+        const elAp = document.getElementById(apId);
+        if (!elAp) return;
+        const rectAp = elAp.getBoundingClientRect();
+        const sX = rectAp.right - wrapRect.left;
+        const sY = rectAp.top + rectAp.height / 2 - wrapRect.top;
 
         suportes.forEach(sup => {
-          if (restricaoFlak && ap.id === 'r_fs' && sup.id === 'r_gb') {
-            return;
+          if (modoEspecial === 'rockets') {
+            if (apId === 'r_fs' && sup.id === 'r_gb') return;
+            if (apId === 'r_gb_mid' && sup.id !== 'r_af') return;
+          }
+
+          if (modoEspecial === 'radiant') {
+            if (apId === 'k_rs' && sup.id !== 'k_cs' && sup.id !== 'k_pb') return;
+            if (apId === 'k_gb' && sup.id !== 'k_gs' && sup.id !== 'k_ds') return;
+          }
+
+          if (modoEspecial === 'team_tactics') {
+            if (apId === 't_rg' && sup.id === 't_burst') return;
+            if (apId === 't_af' && sup.id === 't_affliction') return;
+          }
+
+          if (modoEspecial === 'astral_echo') {
+            if (apId === 'e_cs' && sup.id !== 'e_ss' && sup.id !== 'e_iv') return;
+            if (apId === 'e_ch' && sup.id !== 'e_tot') return;
           }
 
           const eX = sup.rect.left - wrapRect.left;
@@ -707,7 +1521,7 @@
           path.setAttribute('d', `M ${sX} ${sY} C ${mX} ${sY}, ${mX} ${eY}, ${eX} ${eY}`);
           path.setAttribute('fill', 'none');
           path.setAttribute('stroke', '#718294');
-          path.setAttribute('stroke-width', '1.6');
+          path.setAttribute('stroke-width', '1.5');
           path.setAttribute('marker-end', `url(#${arrowId})`);
           layer.appendChild(path);
         });
@@ -715,32 +1529,89 @@
     }
 
     function atualizarTodasConexoes() {
+      // 1. Plague
       desenharSetasDeck(
         'svgPlague', 
         'flowPlague', 
         'p_tp', 
-        ['p_sot', 'p_ra', 'p_bi', 'p_am'], 
-        ['p_iv', 'p_ss'], 
+        ['p_sot', 'p_rs', 'p_bi', 'p_am'], 
+        ['p_iv', 'p_ss', 'p_bd'], 
         'arrowGreen'
       );
 
+      // 2. Foguetes
       desenharSetasDeck(
         'svgRockets', 
         'flowRockets', 
         'r_csb', 
-        ['r_mf', 'r_bm', 'r_fr', 'r_fs'], 
-        ['r_af', 'r_gb'], 
+        ['r_mf', 'r_bm', 'r_fr', 'r_fs', 'r_gb_mid'], 
+        ['r_gb', 'r_af'], 
         'arrowOrange',
-        true
+        'rockets'
       );
 
+      // 3. Purify
       desenharSetasDeck(
         'svgPurify', 
         'flowPurify', 
         'u_pb', 
-        ['u_rs', 'u_am', 'u_zz'], 
+        ['u_rs', 'u_am'], 
         ['u_rk', 'u_bd', 'u_iv', 'u_ss'], 
         'arrowCyan'
+      );
+
+      // 4. Sands of Time
+      desenharSetasDeck(
+        'svgSot',
+        'flowSot',
+        's_sot',
+        ['s_tp', 's_zz', 's_ds'],
+        ['s_iv', 's_ss', 's_bd'], 
+        'arrowPurple'
+      );
+
+      // 5. Dupla Aflição
+      desenharSetasDeck(
+        'svgAffliction',
+        'flowAffliction',
+        ['a_ad_1', 'a_ds_1', 'a_gs_1', 'a_bb_1'],
+        ['a_ad_2', 'a_ds_2', 'a_gs_2', 'a_bb_2'],
+        ['a_iv', 'a_ss', 'a_bd'],
+        'arrowYellow',
+        'cross'
+      );
+
+      // 6. Radiant Kaleidoscope (Triângulo)
+      desenharSetasDeck(
+        'svgRadiant',
+        'flowRadiant',
+        'k_rk',
+        ['k_rs', 'k_gb'],
+        ['k_cs', 'k_pb', 'k_gs', 'k_ds'],
+        'arrowPink',
+        'radiant'
+      );
+
+      // 7. Team Tactics
+      desenharSetasDeck(
+        'svgTeamTactics',
+        'flowTeamTactics',
+        't_tt',
+        ['t_af', 't_ma', 't_gb', 't_gv', 't_rg'],
+        ['t_burst', 't_affliction'],
+        'arrowBlue',
+        'team_tactics'
+      );
+
+      // 8. Astral Echo
+      desenharSetasDeck(
+        'svgAstralEcho',
+        'flowAstralEcho',
+        'e_ae',
+        ['e_cs', 'e_ch'],
+        ['e_ss', 'e_iv', 'e_tot'],
+        'arrowTeal',
+        'astral_echo'
       );
     }
 
@@ -783,10 +1654,15 @@
       }
     });
 
-    window.addEventListener('load', () => setTimeout(atualizarTodasConexoes, 120));
+    // Observador inteligente para recálculo de SVG em redimensionamento suave
+    window.addEventListener('load', () => setTimeout(atualizarTodasConexoes, 150));
     window.addEventListener('resize', () => {
       atualizarTodasConexoes();
       if (window.innerWidth > 600) fecharMobileDrawer();
+    });
+    window.addEventListener('orientationchange', () => {
+      setTimeout(atualizarTodasConexoes, 200);
+      fecharMobileDrawer();
     });
   </script>
 </body>
