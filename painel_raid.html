@@ -104,9 +104,6 @@
       color: #8fa0b5;
       text-transform: uppercase;
     }
-    .countdown-banner-label small {
-      display: none;
-    }
     .countdown-banner-timer {
       font-size: 15px;
       font-weight: 900;
@@ -198,8 +195,10 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
       margin-bottom: 8px;
-      padding-bottom: 4px;
+      padding-bottom: 6px;
       border-bottom: 1px solid #283545;
     }
     .section-title {
@@ -213,6 +212,65 @@
       gap: 6px;
     }
 
+    /* BARRA SUPERIOR ONDE ESTAVA O "EM BATALHA": VOID, SMASH, VM E BUFF */
+    .titan-status-top-bar {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .titan-support-badges {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    .badge-sup {
+      font-size: 9.5px;
+      font-weight: 900;
+      padding: 3px 7px;
+      border-radius: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      transition: all 0.25s ease;
+    }
+    .badge-sup.active {
+      background: rgba(80, 227, 194, 0.25);
+      border: 1.5px solid #50e3c2;
+      color: #50e3c2;
+      box-shadow: 0 0 8px rgba(80, 227, 194, 0.35);
+    }
+    .badge-sup.off {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #4b5868;
+      opacity: 0.6;
+    }
+
+    /* BUFF AZUL COM ÍCONE DE AFLIÇÃO E +30% DANO */
+    .buff-badge-display {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(56, 161, 243, 0.14);
+      border: 1px solid rgba(56, 161, 243, 0.5);
+      border-radius: 5px;
+      padding: 2px 7px;
+    }
+    .buff-badge-icon {
+      width: 15px;
+      height: 15px;
+      object-fit: contain;
+      display: block;
+    }
+    .buff-badge-text {
+      font-size: 10px;
+      font-weight: 900;
+      color: #38a1f3;
+      letter-spacing: 0.3px;
+      white-space: nowrap;
+    }
+
+    /* DETALHES NA ESQUERDA (280px) E CORPO DO TITÃ NA DIREITA (1fr) */
     .titan-dashboard-layout {
       display: grid;
       grid-template-columns: 280px 1fr;
@@ -224,7 +282,7 @@
       background: #121922;
       border: 1.5px solid #3a4b60;
       border-radius: 12px;
-      padding: 12px;
+      padding: 10px 12px;
       display: flex;
       flex-direction: column;
       gap: 8px;
@@ -232,13 +290,21 @@
       align-self: start;
     }
 
+    /* LINHA DO TOPO: MT1 + TITÃ 3/3 + CICLO 4 */
     .titan-zone-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
       gap: 6px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 5px;
+      padding-bottom: 6px;
+    }
+    .titan-zone-left-tags {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
     }
     .badge-zone {
       background: #1e2a38;
@@ -249,14 +315,23 @@
       padding: 2px 7px;
       border-radius: 5px;
     }
-    .buff-tag-text {
+    .badge-tita-count {
+      background: rgba(80, 227, 194, 0.15);
+      border: 1px solid #50e3c2;
+      color: #50e3c2;
       font-size: 10.5px;
-      font-weight: 700;
-      color: #ffd166;
-      text-align: right;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 5px;
+    }
+    .badge-ciclo-tag {
+      background: #f5a623;
+      color: #0f141c;
+      font-size: 10.5px;
+      font-weight: 900;
+      padding: 2px 7px;
+      border-radius: 5px;
+      text-transform: uppercase;
     }
 
     .titan-name-row {
@@ -286,16 +361,6 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-    }
-    .titan-count-badge {
-      background: rgba(80, 227, 194, 0.15);
-      border: 1px solid #50e3c2;
-      color: #50e3c2;
-      font-size: 10.5px;
-      font-weight: 800;
-      padding: 2px 6px;
-      border-radius: 5px;
-      white-space: nowrap;
     }
 
     .hp-overall-box {
@@ -328,50 +393,7 @@
       transition: width 0.4s ease;
     }
 
-    .titan-footer-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 6px;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 6px;
-    }
-    .titan-support-badges {
-      display: flex;
-      gap: 4px;
-    }
-    .badge-sup {
-      font-size: 9px;
-      font-weight: 900;
-      padding: 2px 6px;
-      border-radius: 4px;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
-    }
-    .badge-sup.active {
-      background: rgba(80, 227, 194, 0.25);
-      border: 1.5px solid #50e3c2;
-      color: #50e3c2;
-      box-shadow: 0 0 8px rgba(80, 227, 194, 0.35);
-    }
-    .badge-sup.off {
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      color: #4b5868;
-      opacity: 0.6;
-    }
-    .badge-ciclo {
-      background: #f5a623;
-      color: #0f141c;
-      font-size: 10.5px;
-      font-weight: 900;
-      padding: 2px 7px;
-      border-radius: 5px;
-      white-space: nowrap;
-      text-transform: uppercase;
-    }
-
-    /* GRID ANATÔMICO - DISPOSIÇÃO EM 6 COLUNAS */
+    /* GRID ANATÔMICO - 6 COLUNAS NO LADO DIREITO */
     .anatomy-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr) !important;
@@ -420,10 +442,6 @@
       opacity: 0.45;
       box-shadow: none;
     }
-    .anatomy-card.part-dead .part-title {
-      color: #6c7d93 !important;
-      text-decoration: line-through;
-    }
 
     .anatomy-card.decay-target {
       border-color: #b388ff !important;
@@ -453,15 +471,24 @@
       padding-bottom: 3px;
       gap: 2px;
     }
-    .part-title {
-      font-size: 10px;
-      font-weight: 800;
-      color: #ffffff;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
+
+    .status-badge-part {
+      font-size: 8px;
+      font-weight: 900;
+      letter-spacing: 0.2px;
       white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+    .status-badge-part.target-normal {
+      color: #50e3c2;
+      background: rgba(80, 227, 194, 0.12);
+      border: 1px solid rgba(80, 227, 194, 0.3);
+    }
+    .status-badge-part.target-armor {
+      color: #4facfe;
+      background: rgba(79, 172, 254, 0.12);
+      border: 1px solid rgba(79, 172, 254, 0.3);
     }
     .badge-skip {
       font-size: 8px;
@@ -469,7 +496,7 @@
       color: #ff5252;
       background: rgba(255, 82, 82, 0.18);
       border: 1px solid rgba(255, 82, 82, 0.4);
-      padding: 1px 3px;
+      padding: 1px 4px;
       border-radius: 3px;
       white-space: nowrap;
     }
@@ -479,26 +506,27 @@
       color: #8fa0b5;
       background: rgba(143, 160, 181, 0.15);
       border: 1px solid rgba(143, 160, 181, 0.3);
-      padding: 1px 3px;
+      padding: 1px 4px;
       border-radius: 3px;
       white-space: nowrap;
     }
 
-    .bar-group {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
     .bar-meta {
       display: flex;
       justify-content: space-between;
-      font-size: 9px;
-      font-weight: 600;
+      font-size: 9.5px;
+      font-weight: 700;
       align-items: center;
     }
-    .label-armor { color: #4facfe; font-weight: 700; }
-    .label-body  { color: #ff5e62; font-weight: 700; }
-    .bar-val     { color: #cfd9e5; font-size: 8.5px; }
+    .label-armor { color: #4facfe; font-weight: 700; display: inline-flex; align-items: center; gap: 3px; }
+    .label-body  { color: #ff5e62; font-weight: 700; display: inline-flex; align-items: center; gap: 3px; }
+    .bar-val     { color: #cfd9e5; font-size: 9px; font-weight: 800; }
+
+    .bar-group {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+    }
     .bar-track {
       width: 100%;
       height: 6px;
@@ -760,18 +788,17 @@
       .title {
         font-size: 17px;
       }
-      /* Remove descrição abaixo do título no mobile */
       .subtitle {
         display: none !important;
       }
       .top-header-bar {
-        margin-bottom: 12px;
+        margin-bottom: 10px;
       }
       .countdown-banner {
         padding: 4px 8px;
       }
       .countdown-banner-timer {
-        font-size: 14px;
+        font-size: 13.5px;
       }
 
       .widescreen-main-layout {
@@ -799,17 +826,18 @@
         justify-content: center;
       }
 
-      /* Mantém o Titã em 6 colunas anatômicas proporcionais no mobile */
+      /* Mantém o Titã em 6 colunas anatômicas no mobile */
       .anatomy-grid {
         column-gap: 4px;
-        row-gap: 6px;
-        padding: 8px 4px;
-      }
-      .anatomy-card {
+        row-gap: 5px;
         padding: 6px 4px;
       }
-      .part-title {
-        font-size: 9px;
+      .anatomy-card {
+        padding: 5px 3px;
+      }
+      .status-badge-part, .badge-decay, .badge-destroyed, .badge-skip {
+        font-size: 7.5px;
+        padding: 1px 3px;
       }
       .bar-meta {
         font-size: 8px;
@@ -836,7 +864,6 @@
       <div class="countdown-banner" id="bannerCiclo" style="display: none;">
         <div class="countdown-banner-label">
           <span>⏳</span>
-          <small id="cViradaInfo"></small>
         </div>
         <div class="countdown-banner-timer" id="mNextCiclo">--:--:--</div>
       </div>
@@ -854,23 +881,41 @@
         <div class="section-block" id="secCurrentTitan" style="display: none;">
           <div class="section-header">
             <span class="section-title">🎯 Titã Atual no Campo</span>
-            <span style="font-size: 11px; color: #50e3c2;" id="titanStatusHeader">Em Batalha</span>
+            
+            <!-- SUBSTITUÍDO O "EM BATALHA" PELOS CARDS DE SMASH, VOID, VM E BUFF +30% DANO -->
+            <div class="titan-status-top-bar">
+              <div class="titan-support-badges">
+                <span class="badge-sup off" id="bVoid" title="Void Ativo">Void</span>
+                <span class="badge-sup off" id="bSmash" title="Smash Ativo">Smash</span>
+                <span class="badge-sup off" id="bVM" title="VM Ativo">VM</span>
+              </div>
+
+              <!-- BUFF DA RAID EM AZUL COM ÍCONE DE AFLIÇÃO E +30% DANO -->
+              <div class="buff-badge-display" id="buffRaidContainer">
+                <img src="Cards/a.png" alt="Aflição" class="buff-badge-icon" id="buffRaidImg" onerror="this.src='Cards/b.png'">
+                <span class="buff-badge-text" id="mBuffRaid">+30% DANO</span>
+              </div>
+            </div>
           </div>
 
           <div class="titan-dashboard-layout">
             
+            <!-- DETALHES DA RAID NA ESQUERDA -->
             <div class="titan-info-box">
+              <!-- LINHA 1: MT1 + TITÃ 3/3 + CICLO 4 -->
               <div class="titan-zone-row">
-                <span class="badge-zone" id="mRaidName">MT1</span>
-                <span class="buff-tag-text" id="mBuffRaid" title="Buff da Raid">-</span>
+                <div class="titan-zone-left-tags">
+                  <span class="badge-zone" id="mRaidName">MT1</span>
+                  <span class="badge-tita-count" id="cTitanCount">Titã 3/3</span>
+                  <span class="badge-ciclo-tag" id="cRaidCycle">Ciclo 4</span>
+                </div>
               </div>
 
               <div class="titan-name-row">
                 <div class="titan-name-left">
-                  <span class="titan-seq" id="cTitanSeq">#1</span>
+                  <span class="titan-seq" id="cTitanSeq">#3</span>
                   <span class="titan-name-text" id="cTitanName">Nome do Titã</span>
                 </div>
-                <span class="titan-count-badge" id="mCurrentTitanHeader">TITÃ 1/1</span>
               </div>
 
               <div class="hp-overall-box">
@@ -882,18 +927,9 @@
                   <div class="hp-bar-fill-overall" id="cTitanHpFill" style="width: 100%;"></div>
                 </div>
               </div>
-
-              <div class="titan-footer-row">
-                <div class="titan-support-badges">
-                  <span class="badge-sup off" id="bSmash" title="Smash Ativo">Smash</span>
-                  <span class="badge-sup off" id="bVoid" title="Void Ativo">Void</span>
-                  <span class="badge-sup off" id="bVM" title="VM Ativo">VM</span>
-                </div>
-                <span class="badge-ciclo" id="mCicloAtual">Ciclo 1</span>
-              </div>
             </div>
 
-            <!-- ANATOMIA DINÂMICA (6 COLUNAS IGUAIS AO PC) -->
+            <!-- PAINEL ANATÔMICO DO TITÃ NA DIREITA -->
             <div class="anatomy-grid">
               <div class="anatomy-card area-shoulderR" id="card_ArmUpperRight"></div>
               <div class="anatomy-card area-head" id="card_Head"></div>
@@ -1040,20 +1076,20 @@
     const SPREADSHEET_ID_HP = '1HBEUBNdf0ZQKKNH-RkWoQOmHO-mE-z9DosWnhff4ynI';
 
     const ANATOMY_PARTS = [
-      { key: 'Head',          name: 'Cabeça' },
-      { key: 'ChestUpper',    name: 'Torso' },
-      { key: 'ArmUpperLeft',  name: 'Ombro Esq.' },
-      { key: 'ArmUpperRight', name: 'Ombro Dir.' },
-      { key: 'HandLeft',      name: 'Mão Esq.' },
-      { key: 'HandRight',     name: 'Mão Dir.' },
-      { key: 'LegUpperLeft',  name: 'Perna Esq.' },
-      { key: 'LegUpperRight', name: 'Perna Dir.' }
+      { key: 'Head' },
+      { key: 'ChestUpper' },
+      { key: 'ArmUpperLeft' },
+      { key: 'ArmUpperRight' },
+      { key: 'HandLeft' },
+      { key: 'HandRight' },
+      { key: 'LegUpperLeft' },
+      { key: 'LegUpperRight' }
     ];
 
     let todosJogadores = [];
     let todosAtaquesAoVivo = [];
-    let totalCiclosDaRaid = 1;
-    let limiteAtaquesAtual = 6;
+    let totalCiclosDaRaid = 4;
+    let limiteAtaquesAtual = 24;
     let temporizadorCiclo = null;
     let ordemDecrescente = true;
 
@@ -1189,20 +1225,24 @@
         const linhasRaids = tabelaRaids.rows;
         let nomeRaidAtual = '';
         let raidStatus = 'Em andamento';
-        let totalTitansDaRaid = 0;
+        let totalTitansDaRaid = 3;
 
         if (linhasRaids.length > 0) {
           const ultimaRaid = linhasRaids[linhasRaids.length - 1].c;
           nomeRaidAtual = String(ultimaRaid[0]?.v || '').trim();
           raidStatus = ultimaRaid[6]?.v || 'Em andamento';
-          const buffRaid = ultimaRaid[7]?.v || 'Nenhum';
-          totalCiclosDaRaid = Number(ultimaRaid[9]?.v || 1);
+          const buffRaid = String(ultimaRaid[7]?.v || '').trim();
+          totalCiclosDaRaid = Number(ultimaRaid[9]?.v || 4);
           limiteAtaquesAtual = totalCiclosDaRaid * 6;
-          totalTitansDaRaid = Number(ultimaRaid[14]?.v || 0);
+          totalTitansDaRaid = Number(ultimaRaid[14]?.v || 3);
 
           document.getElementById('mRaidName').textContent = nomeRaidAtual || 'MT1';
-          document.getElementById('mBuffRaid').textContent = buffRaid;
-          document.getElementById('mCicloAtual').textContent = `Ciclo ${totalCiclosDaRaid}`;
+          document.getElementById('cRaidCycle').textContent = `Ciclo ${totalCiclosDaRaid}`;
+
+          // Configuração do Buff com cor azul e +30% DANO
+          document.getElementById('mBuffRaid').textContent = '+30% DANO';
+          document.getElementById('buffRaidImg').src = 'Cards/a.png';
+
           document.getElementById('mDanoTotal').textContent = (ultimaRaid[8]?.f || (ultimaRaid[8]?.v ? ultimaRaid[8].v + 'B' : '-'));
           document.getElementById('mPresenca').textContent = ultimaRaid[12]?.f || (Math.round((ultimaRaid[12]?.v || 0) * 100) + '%');
           document.getElementById('mMediaAtk').textContent = ultimaRaid[13]?.f || (ultimaRaid[13]?.v ? Math.round(ultimaRaid[13].v) + 'M' : '-');
@@ -1286,7 +1326,7 @@
         titasDaRaid.sort((a, b) => a.seq - b.seq);
         if (totalTitansDaRaid === 0) totalTitansDaRaid = titasDaRaid.length;
 
-        let titaAtual = titasDaRaid.find(t => t.status !== 'Morto') || titasDaRaid[0];
+        let titaAtual = titasDaRaid.find(t => t.status !== 'Morto') || titasDaRaid[titasDaRaid.length - 1] || titasDaRaid[0];
 
         if (titaAtual) {
           if (titaAtual.hpTotal <= 0 && tabelaPartes && tabelaPartes.rows) {
@@ -1303,12 +1343,9 @@
             if (somaHpCorpo > 0) titaAtual.hpTotal = somaHpCorpo;
           }
 
-          document.getElementById('mCurrentTitanHeader').textContent = `TITÃ ${titaAtual.seq}/${totalTitansDaRaid}`;
+          document.getElementById('cTitanCount').textContent = `Titã ${titaAtual.seq}/${totalTitansDaRaid}`;
           document.getElementById('cTitanSeq').textContent = `#${titaAtual.seq}`;
           document.getElementById('cTitanName').textContent = titaAtual.nome;
-          
-          const statusTxt = titaAtual.status === 'Morto' ? 'Derrotado' : 'Em Batalha';
-          document.getElementById('titanStatusHeader').textContent = statusTxt;
 
           let percHp = 100;
           if (titaAtual.hpTotal > 0) {
@@ -1452,6 +1489,7 @@
 
         el.className = `anatomy-card area-${getAreaClass(part.key)} ${extraClass}`;
 
+        let statusTagHtml = '';
         let labelTipo = '';
         let classLabel = '';
         let hpAtual = 0;
@@ -1459,34 +1497,45 @@
         let classBarra = '';
 
         if (isPartDead) {
-          labelTipo = 'Destruída';
+          statusTagHtml = '<span class="badge-destroyed">DESTRUÍDA</span>';
+          labelTipo = '🛡️ Destruída';
           classLabel = 'label-armor';
           hpAtual = 0;
           percAtual = 0;
           classBarra = 'bar-fill-armor';
+        } else if (isSkip) {
+          statusTagHtml = '<span class="badge-skip">NÃO ATACAR</span>';
+          labelTipo = data.armorCur > 0 ? '🛡️ Armadura' : '❤️ Corpo';
+          classLabel = data.armorCur > 0 ? 'label-armor' : 'label-body';
+          hpAtual = data.armorCur > 0 ? data.armorCur : data.bodyCur;
+          percAtual = data.armorCur > 0 ? percArmor : percBody;
+          classBarra = data.armorCur > 0 ? 'bar-fill-armor' : 'bar-fill-body';
+        } else if (isDecayActive) {
+          statusTagHtml = '<span class="badge-decay">DECAY</span>';
+          labelTipo = data.armorCur > 0 ? '🛡️ Armadura' : '❤️ Corpo';
+          classLabel = data.armorCur > 0 ? 'label-armor' : 'label-body';
+          hpAtual = data.armorCur > 0 ? data.armorCur : data.bodyCur;
+          percAtual = data.armorCur > 0 ? percArmor : percBody;
+          classBarra = data.armorCur > 0 ? 'bar-fill-armor decay-bar' : 'bar-fill-body decay-bar';
         } else if (data.armorCur > 0) {
+          statusTagHtml = '<span class="status-badge-part target-armor">ARMADURA</span>';
           labelTipo = '🛡️ Armadura';
           classLabel = 'label-armor';
           hpAtual = data.armorCur;
           percAtual = percArmor;
-          classBarra = isArmorDecay ? 'bar-fill-armor decay-bar' : 'bar-fill-armor';
+          classBarra = 'bar-fill-armor';
         } else {
+          statusTagHtml = '<span class="status-badge-part target-normal">CORPO</span>';
           labelTipo = '❤️ Corpo';
           classLabel = 'label-body';
           hpAtual = data.bodyCur;
           percAtual = percBody;
-          classBarra = isBodyDecay ? 'bar-fill-body decay-bar' : ((!isSkip) ? 'bar-fill-body target-ok' : 'bar-fill-body');
+          classBarra = 'bar-fill-body target-ok';
         }
 
         el.innerHTML = `
           <div class="card-head-row">
-            <span class="part-title">${part.name}</span>
-            <div style="display: flex; gap: 3px; align-items: center;">
-              ${isDecayActive ? '<span class="badge-decay" title="HP Crítico (≤30%)">DECAY</span>' : ''}
-              ${isPartDead 
-                ? '<span class="badge-destroyed">DEST.</span>' 
-                : (isSkip ? '<span class="badge-skip">X</span>' : '')}
-            </div>
+            ${statusTagHtml}
           </div>
 
           <div class="bar-group">
@@ -1525,20 +1574,25 @@
         const isDead = tita.status === 'Morto';
 
         el.className = `anatomy-card area-${getAreaClass(part.key)} ${isDead ? 'part-dead' : (isSkip ? 'has-skip' : '')}`;
+        
+        let statusTagHtml = '';
+        if (isDead) {
+          statusTagHtml = '<span class="badge-destroyed">DESTRUÍDA</span>';
+        } else if (isSkip) {
+          statusTagHtml = '<span class="badge-skip">NÃO ATACAR</span>';
+        } else {
+          statusTagHtml = '<span class="status-badge-part target-normal">ALVO</span>';
+        }
+
         el.innerHTML = `
           <div class="card-head-row">
-            <span class="part-title">${part.name}</span>
-            <div style="display: flex; gap: 3px; align-items: center;">
-              ${isDead 
-                ? '<span class="badge-destroyed">MORTO</span>' 
-                : (isSkip ? '<span class="badge-skip">X</span>' : '')}
-            </div>
+            ${statusTagHtml}
           </div>
 
           <div class="bar-group">
             <div class="bar-meta">
               <span class="label-body">❤️ Corpo</span>
-              <span class="bar-val">${isDead ? '0' : (isSkip ? 'Ignorar' : 'Alvo')}</span>
+              <span class="bar-val">${isDead ? '0' : (isSkip ? 'Ignorar' : '100%')}</span>
             </div>
             <div class="bar-track">
               <div class="bar-fill-body ${!isSkip && !isDead ? 'target-ok' : ''}" style="width: ${isDead || isSkip ? 0 : 100}%;"></div>
@@ -1641,7 +1695,6 @@
 
     function calcularProximoCiclo(linhasCiclos, nomeRaid, statusRaid) {
       const el = document.getElementById('mNextCiclo');
-      const infoEl = document.getElementById('cViradaInfo');
       if (temporizadorCiclo) clearInterval(temporizadorCiclo);
 
       if (statusRaid === 'Encerrada') {
