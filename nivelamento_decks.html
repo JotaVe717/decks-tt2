@@ -62,20 +62,26 @@
       margin-bottom: 20px;
     }
 
-    /* CONTROLE INTERATIVO DO NÍVEL BASE */
+    /* CONTROLE INTERATIVO DO NÍVEL BASE + BOTÃO DE ACESSO */
+    .base-actions-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 22px;
+    }
     .base-input-box {
+      flex: 1;
       background: #212c3a;
       border: 1px solid #3c4f66;
       border-radius: 10px;
-      padding: 12px 16px;
+      padding: 10px 14px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 22px;
+      gap: 8px;
     }
     .base-input-box label {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 700;
       color: #e2b4f7;
       text-transform: uppercase;
@@ -84,23 +90,45 @@
     .base-input-wrapper {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
     }
     .base-input-wrapper input {
-      width: 80px;
+      width: 65px;
       background: #121921;
       border: 2px solid #8e44ad;
       color: #ffffff;
-      font-size: 16px;
+      font-size: 15px;
       font-weight: 800;
       text-align: center;
-      padding: 6px 8px;
+      padding: 5px 6px;
       border-radius: 6px;
       outline: none;
       transition: border-color 0.2s;
     }
     .base-input-wrapper input:focus {
       border-color: #f5a623;
+    }
+    .btn-builder-link {
+      background: linear-gradient(135deg, #f5a623 0%, #e67e22 100%);
+      color: #0f141c;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 12px 14px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(245, 166, 35, 0.25);
+      transition: transform 0.15s ease, filter 0.2s ease;
+    }
+    .btn-builder-link:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.1);
     }
 
     /* REGRAS DE COMPOSIÇÃO */
@@ -240,18 +268,17 @@
         font-size: 12px;
         margin-bottom: 16px;
       }
-      .base-input-box {
-        padding: 10px 12px;
+      .base-actions-row {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: stretch;
         gap: 8px;
       }
-      .base-input-wrapper {
-        width: 100%;
-        justify-content: space-between;
+      .base-input-box {
+        padding: 8px 12px;
       }
-      .base-input-wrapper input {
-        width: 100px;
+      .btn-builder-link {
+        width: 100%;
+        padding: 10px;
       }
       .card-thumb {
         width: 34px;
@@ -280,19 +307,22 @@
     <div class="title">Nivelamento de <span>Decks de Raid</span></div>
     <div class="subtitle">Equilíbrio ideal de nível das cartas baseado na composição do deck</div>
 
-    <!-- CAMPO DO NÍVEL BASE -->
-    <div class="base-input-box">
-      <label for="baseLevel">Seu Nível Base:</label>
-      <div class="base-input-wrapper">
-        <input type="number" id="baseLevel" value="60" min="1" max="100">
+    <!-- CAMPO DO NÍVEL BASE + BOTÃO DE CRIAR DECKS -->
+    <div class="base-actions-row">
+      <div class="base-input-box">
+        <label for="baseLevel">Nível Base:</label>
+        <div class="base-input-wrapper">
+          <input type="number" id="baseLevel" value="60" min="1" max="100">
+        </div>
       </div>
+      <a href="builder.html" class="btn-builder-link">Montar 6 Decks ⚔️</a>
     </div>
 
     <!-- REGRAS DE COMPOSIÇÃO -->
     <div class="section-title">Composições de Deck & Níveis Sugeridos</div>
     
     <div class="rules-grid">
-      <!-- REGRA 1: Dano (+10) / Buff (Base) / Efeito Fixo (-20) -->
+      <!-- REGRA 1 -->
       <div class="rule-card">
         <div class="slot">
           <div class="slot-type bg-dano">Dano</div>
@@ -311,7 +341,7 @@
         </div>
       </div>
 
-      <!-- REGRA 2: Dano (-10) / Dano (-10) / Buff (+10) -->
+      <!-- REGRA 2 -->
       <div class="rule-card">
         <div class="slot">
           <div class="slot-type bg-dano">Dano</div>
@@ -330,7 +360,7 @@
         </div>
       </div>
 
-      <!-- REGRA 3: Dano (+10) / Buff (-10) / Buff (-10) -->
+      <!-- REGRA 3 -->
       <div class="rule-card">
         <div class="slot">
           <div class="slot-type bg-dano">Dano</div>
@@ -349,7 +379,7 @@
         </div>
       </div>
 
-      <!-- REGRA 4: Dano (+10) / Efeito Fixo (-10) / Efeito Fixo (-10) -->
+      <!-- REGRA 4 -->
       <div class="rule-card">
         <div class="slot">
           <div class="slot-type bg-dano">Dano</div>
@@ -368,7 +398,7 @@
         </div>
       </div>
 
-      <!-- REGRA 5: Dano (+10) / Específico (20 fixo) / Buff (+10) -->
+      <!-- REGRA 5 -->
       <div class="rule-card">
         <div class="slot">
           <div class="slot-type bg-dano">Dano</div>
@@ -392,7 +422,6 @@
     <div class="section-title">Classificação das Cartas</div>
     
     <div class="classes-wrapper">
-      
       <!-- DANO -->
       <div class="class-group">
         <div class="class-header">
@@ -411,12 +440,12 @@
           <img src="Cards/fr.png" class="card-thumb" alt="Fragmentize" title="Fragmentize">
           <img src="Cards/rw.png" class="card-thumb" alt="Razor Wind" title="Razor Wind">
           <img src="Cards/ps.png" class="card-thumb" alt="Psychic Chain" title="Psychic Chain">
-          <img src="Cards/pb.png" class="card-thumb" alt="Carta Dano" title="Carta Dano">
+          <img src="Cards/pb.png" class="card-thumb" alt="Purifying Blast" title="Purifying Blast">
           <img src="Cards/ch.png" class="card-thumb" alt="Haymaker" title="Haymaker">
-          <img src="Cards/zz.jpg" class="card-thumb" alt="Crushing Instinct" title="Crushing Instinct">
+          <img src="Cards/zz.png" class="card-thumb" alt="Electro Zap" title="Electro Zap" onerror="this.src='Cards/zz.jpg'">
           <img src="Cards/rr.png" class="card-thumb" alt="Ruinous Rust" title="Ruinous Rust">
           <img src="Cards/tp.png" class="card-thumb" alt="Thriving Plague" title="Thriving Plague">
-          <img src="Cards/fb.png" class="card-thumb" alt="Carta Dano" title="Carta Dano">
+          <img src="Cards/fb.png" class="card-thumb" alt="Fusion Bomb" title="Fusion Bomb">
           <img src="Cards/ra.png" class="card-thumb" alt="Radioactivity" title="Radioactivity">
           <img src="Cards/bi.png" class="card-thumb" alt="Blazing Inferno" title="Blazing Inferno">
           <img src="Cards/ds.png" class="card-thumb" alt="Decaying Strike" title="Decaying Strike">
@@ -424,7 +453,8 @@
           <img src="Cards/bb.png" class="card-thumb" alt="Corrosive Bubbles" title="Corrosive Bubbles">
           <img src="Cards/gs.png" class="card-thumb" alt="Grim Shadow" title="Grim Shadow">
           <img src="Cards/ad.png" class="card-thumb" alt="Acid Drench" title="Acid Drench">
-          <img src="Cards/am.jpg" class="card-thumb" alt="Prismatic Rift" title="Amplify">
+          <img src="Cards/am.png" class="card-thumb" alt="Amplify" title="Amplify" onerror="this.src='Cards/am.jpg'">
+          <img src="Cards/bm.png" class="card-thumb" alt="Barbed Morningstar" title="Barbed Morningstar">
         </div>
       </div>
 
@@ -440,12 +470,13 @@
           <img src="Cards/ma.png" class="card-thumb" alt="Maelstrom" title="Maelstrom">
           <img src="Cards/gb.png" class="card-thumb" alt="Guard Break" title="Guard Break">
           <img src="Cards/tot.png" class="card-thumb" alt="Totem of Power" title="Totem of Power">
-          <img src="Cards/ci.png" class="card-thumb" alt="Martelo" title="Martelo">
-          <img src="Cards/sf.png" class="card-thumb" alt="Buff de Peito" title="Buff de Peito">
-          <img src="Cards/rk.png" class="card-thumb" alt="Triangle Support" title="Triangle Support">
-          <img src="Cards/ss.png" class="card-thumb" alt="Smash" title="Smash">
+          <img src="Cards/ci.png" class="card-thumb" alt="Crushing Instinct" title="Crushing Instinct">
+          <img src="Cards/sf.png" class="card-thumb" alt="Soul Fire" title="Soul Fire">
+          <img src="Cards/rk.png" class="card-thumb" alt="Radiant Kaleidoscope" title="Radiant Kaleidoscope">
+          <img src="Cards/ss.png" class="card-thumb" alt="Skeletal Smash" title="Skeletal Smash">
           <img src="Cards/iv.png" class="card-thumb" alt="Insanity Void" title="Insanity Void">
-          <img src="Cards/vm.png" class="card-thumb" alt="Team Tactics" title="Team Tactics">
+          <img src="Cards/vm.png" class="card-thumb" alt="Victory March" title="Victory March">
+          <img src="Cards/bd.png" class="card-thumb" alt="Battle Drums" title="Battle Drums">
         </div>
       </div>
 
@@ -457,8 +488,8 @@
         </div>
         <div class="cards-row">
           <img src="Cards/af.png" class="card-thumb" alt="Ancestral Favor" title="Ancestral Favor">
-          <img src="Cards/rg.png" class="card-thumb" alt="Efeito Fixo" title="Efeito Fixo">
-          <img src="Cards/ae.png" class="card-thumb" alt="Efeito Fixo" title="Efeito Fixo">
+          <img src="Cards/rg.png" class="card-thumb" alt="Rancid Gas" title="Rancid Gas">
+          <img src="Cards/ae.png" class="card-thumb" alt="Astral Echo" title="Astral Echo">
           <img src="Cards/tt.png" class="card-thumb" alt="Team Tactics" title="Team Tactics">
         </div>
       </div>
@@ -470,7 +501,7 @@
           Casos Especiais de Sinergia
         </div>
         <div class="cards-row">
-          <img src="Cards/sot.png" class="card-thumb" alt="Ampulheta" title="Ampulheta">
+          <img src="Cards/sot.png" class="card-thumb" alt="Sands of Time" title="Sands of Time">
           <span class="specific-note">
             (carta de <img src="Cards/a.png" alt="Aflição"> que coopera com <img src="Cards/pb.png" alt="Whip">)
           </span>
