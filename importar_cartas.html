@@ -258,7 +258,7 @@
       flex: 1;
     }
 
-    /* ---------------- 2. CATÁLOGO COMPLETO (3 GRUPOS LADO A LADO) ---------------- */
+    /* ---------------- 2. CATÁLOGO COMPLETO ---------------- */
     .catalog-wrapper {
       display: none;
       flex-direction: column;
@@ -277,11 +277,11 @@
       gap: 6px;
     }
 
-    /* Sempre 3 grupos lado a lado (inclusive no mobile) */
+    /* Desktop padrão: 3 grupos lado a lado com 2 colunas cada */
     .catalog-3-groups {
       display: grid;
-      grid-template-columns: repeat(3, 1fr) !important;
-      gap: 6px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
       align-items: start;
       width: 100%;
     }
@@ -289,7 +289,7 @@
       background: #141c26;
       border: 1px solid #263546;
       border-radius: 8px;
-      padding: 8px 5px;
+      padding: 10px 8px;
       display: flex;
       flex-direction: column;
       gap: 6px;
@@ -300,11 +300,11 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid #202d3c;
-      padding-bottom: 3px;
+      padding-bottom: 4px;
       gap: 2px;
     }
     .group-title {
-      font-size: 10.5px;
+      font-size: 11px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.4px;
@@ -313,7 +313,7 @@
       text-overflow: ellipsis;
     }
     .group-count {
-      font-size: 9px;
+      font-size: 9.5px;
       color: #8fa0b5;
       white-space: nowrap;
     }
@@ -321,11 +321,11 @@
     .color-affliction { color: #38a1f3; }
     .color-support { color: #4cd964; }
 
-    /* 2 Colunas dentro de cada um dos 3 grupos = 6 colunas totais */
-    .cards-grid-2 {
+    /* 2 Colunas dentro de cada grupo no desktop */
+    .cards-grid-catalog {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 4px;
+      gap: 6px;
       width: 100%;
     }
 
@@ -359,14 +359,14 @@
     }
     .card-overlay-lvl {
       position: absolute;
-      bottom: 1.5px;
-      right: 1.5px;
+      bottom: 2px;
+      right: 2px;
       background: rgba(15, 20, 28, 0.92);
       border: 1px solid rgba(255, 255, 255, 0.3);
       color: #ffffff;
-      font-size: 9px;
+      font-size: 9.5px;
       font-weight: 800;
-      padding: 1px 2.5px;
+      padding: 1px 3px;
       border-radius: 3px;
       line-height: 1;
       text-shadow: 0 1px 2px #000;
@@ -465,7 +465,7 @@
       display: block;
     }
 
-    /* ---------------- DRAWER MOBILE ---------------- */
+    /* ---------------- ADAPTAÇÃO MOBILE (3 COLUNAS POR TIPO NO CATÁLOGO) ---------------- */
     @media (max-width: 600px) {
       .card-tooltip { display: none !important; }
       
@@ -489,9 +489,29 @@
         gap: 3px;
       }
 
+      /* No mobile, cada grupo ocupa a largura total empilhado */
+      .catalog-3-groups {
+        grid-template-columns: 1fr !important;
+        gap: 12px;
+      }
+      .catalog-group {
+        padding: 10px;
+      }
+      .group-title {
+        font-size: 12px;
+      }
+
+      /* E dentro de cada tipo de carta, formam-se exatamente 3 COLUNAS */
+      .cards-grid-catalog {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 6px;
+      }
+
       .card-overlay-lvl {
-        font-size: 8px;
-        padding: 0.5px 2px;
+        font-size: 9px;
+        padding: 1px 3px;
+        bottom: 2px;
+        right: 2px;
       }
 
       #mobileCardDrawer {
@@ -600,38 +620,38 @@
       </div>
     </div>
 
-    <!-- ================= 2. CATÁLOGO COMPLETO (3 GRUPOS LADO A LADO) ================= -->
+    <!-- ================= 2. CATÁLOGO COMPLETO (3 COLUNAS POR TIPO NO MOBILE) ================= -->
     <div class="catalog-wrapper" id="secCatalog">
       <div class="catalog-header-title">
         <span>🃏 Catálogo Completo por Categoria</span>
       </div>
 
       <div class="catalog-3-groups">
-        <!-- GRUPO 1: EXPLOSÃO (2 COLUNAS) -->
+        <!-- GRUPO 1: EXPLOSÃO -->
         <div class="catalog-group">
           <div class="catalog-group-header">
             <span class="group-title color-burst">Explosão</span>
             <span class="group-count" id="countBurst">0</span>
           </div>
-          <div class="cards-grid-2" id="gridCatalogBurst"></div>
+          <div class="cards-grid-catalog" id="gridCatalogBurst"></div>
         </div>
 
-        <!-- GRUPO 2: AFLIÇÃO (2 COLUNAS) -->
+        <!-- GRUPO 2: AFLIÇÃO -->
         <div class="catalog-group">
           <div class="catalog-group-header">
             <span class="group-title color-affliction">Aflição</span>
             <span class="group-count" id="countAffliction">0</span>
           </div>
-          <div class="cards-grid-2" id="gridCatalogAffliction"></div>
+          <div class="cards-grid-catalog" id="gridCatalogAffliction"></div>
         </div>
 
-        <!-- GRUPO 3: SUPORTE (2 COLUNAS) -->
+        <!-- GRUPO 3: SUPORTE -->
         <div class="catalog-group">
           <div class="catalog-group-header">
             <span class="group-title color-support">Suporte</span>
             <span class="group-count" id="countSupport">0</span>
           </div>
-          <div class="cards-grid-2" id="gridCatalogSupport"></div>
+          <div class="cards-grid-catalog" id="gridCatalogSupport"></div>
         </div>
       </div>
     </div>
@@ -841,7 +861,7 @@
         renderStrip("resStripAffliction", afflictionList.slice(0, 6), "border-affliction");
         renderStrip("resStripSupport", supportList.slice(0, 6), "border-support");
 
-        // 2. Renderiza o Catálogo Restante (Apenas as cartas da 7ª em diante, sem repetir a Ressonância)
+        // 2. Renderiza o Catálogo Restante (da 7ª em diante, sem repetir a Ressonância)
         const remBurst = burstList.slice(6);
         const remAffliction = afflictionList.slice(6);
         const remSupport = supportList.slice(6);
