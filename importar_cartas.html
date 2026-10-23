@@ -45,7 +45,7 @@
       background: #18202a;
       border: 1px solid #283545;
       border-radius: 16px;
-      padding: 18px 14px;
+      padding: 18px 12px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
     .title {
@@ -179,15 +179,14 @@
       background: #121922;
       border: 1.5px solid #2b394a;
       border-radius: 12px;
-      padding: 14px;
-      margin-bottom: 24px;
+      padding: 12px;
+      margin-bottom: 20px;
       display: none;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
     }
     .resonance-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
       border-bottom: 1px solid #243344;
       padding-bottom: 6px;
@@ -202,24 +201,19 @@
       align-items: center;
       gap: 6px;
     }
-    .resonance-tag {
-      font-size: 10px;
-      color: #8fa0b5;
-      font-weight: 600;
-    }
 
     .resonance-row {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 8px;
       background: #16202c;
-      padding: 8px 10px;
+      padding: 6px 8px;
       border-radius: 8px;
       border: 1px solid #202d3c;
     }
     .resonance-category-badge {
-      width: 48px;
-      height: 48px;
+      width: 44px;
+      height: 44px;
       border-radius: 8px;
       display: flex;
       flex-direction: column;
@@ -230,8 +224,8 @@
       box-shadow: 0 4px 10px rgba(0,0,0,0.4);
     }
     .resonance-category-badge img {
-      width: 28px;
-      height: 28px;
+      width: 24px;
+      height: 24px;
       object-fit: contain;
     }
     .resonance-category-badge span {
@@ -260,18 +254,18 @@
     .resonance-cards-strip {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      gap: 6px;
+      gap: 5px;
       flex: 1;
     }
 
-    /* ---------------- 2. SEÇÃO DE CATÁLOGO (3 GRUPOS x 2 COLUNAS = 6 COLUNAS) ---------------- */
+    /* ---------------- 2. CATÁLOGO COMPLETO (3 GRUPOS LADO A LADO) ---------------- */
     .catalog-wrapper {
       display: none;
       flex-direction: column;
       gap: 12px;
     }
     .catalog-header-title {
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 800;
       color: #8fa0b5;
       text-transform: uppercase;
@@ -282,47 +276,60 @@
       align-items: center;
       gap: 6px;
     }
+
+    /* Sempre 3 grupos lado a lado (inclusive no mobile) */
     .catalog-3-groups {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 6px;
       align-items: start;
+      width: 100%;
     }
     .catalog-group {
       background: #141c26;
       border: 1px solid #263546;
-      border-radius: 10px;
-      padding: 10px;
+      border-radius: 8px;
+      padding: 8px 5px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 6px;
+      min-width: 0;
     }
     .catalog-group-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid #202d3c;
-      padding-bottom: 4px;
+      padding-bottom: 3px;
+      gap: 2px;
     }
     .group-title {
-      font-size: 11.5px;
+      font-size: 10.5px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .group-count {
+      font-size: 9px;
+      color: #8fa0b5;
+      white-space: nowrap;
     }
     .color-burst { color: #ff5722; }
     .color-affliction { color: #38a1f3; }
     .color-support { color: #4cd964; }
 
-    /* ESTRITAMENTE 2 COLUNAS DENTRO DE CADA GRUPO */
+    /* 2 Colunas dentro de cada um dos 3 grupos = 6 colunas totais */
     .cards-grid-2 {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
+      gap: 4px;
       width: 100%;
     }
 
-    /* ---------------- DESIGN DO CARD COMPACTO ---------------- */
+    /* ---------------- DESIGN DO CARD ---------------- */
     .card-tile {
       position: relative;
       aspect-ratio: 1 / 1;
@@ -352,14 +359,14 @@
     }
     .card-overlay-lvl {
       position: absolute;
-      bottom: 2px;
-      right: 2px;
+      bottom: 1.5px;
+      right: 1.5px;
       background: rgba(15, 20, 28, 0.92);
       border: 1px solid rgba(255, 255, 255, 0.3);
       color: #ffffff;
-      font-size: 10px;
+      font-size: 9px;
       font-weight: 800;
-      padding: 1px 3px;
+      padding: 1px 2.5px;
       border-radius: 3px;
       line-height: 1;
       text-shadow: 0 1px 2px #000;
@@ -458,37 +465,33 @@
       display: block;
     }
 
-    /* ---------------- BOTTOM SHEET MODAL MOBILE ---------------- */
+    /* ---------------- DRAWER MOBILE ---------------- */
     @media (max-width: 600px) {
       .card-tooltip { display: none !important; }
       
       .resonance-row {
-        gap: 6px;
-        padding: 6px;
+        gap: 5px;
+        padding: 5px 6px;
       }
       .resonance-category-badge {
-        width: 40px;
-        height: 40px;
+        width: 36px;
+        height: 36px;
+        border-radius: 6px;
       }
       .resonance-category-badge img {
-        width: 22px;
-        height: 22px;
+        width: 20px;
+        height: 20px;
       }
       .resonance-category-badge span {
-        font-size: 7px;
+        font-size: 6.5px;
       }
       .resonance-cards-strip {
-        gap: 4px;
-      }
-
-      .catalog-3-groups {
-        grid-template-columns: 1fr;
-        gap: 12px;
+        gap: 3px;
       }
 
       .card-overlay-lvl {
-        font-size: 9px;
-        padding: 1px 2px;
+        font-size: 8px;
+        padding: 0.5px 2px;
       }
 
       #mobileCardDrawer {
@@ -563,11 +566,10 @@
       Nenhum perfil carregado. Cole o JSON ou selecione um colega de clã na lista suspensa acima.
     </div>
 
-    <!-- ================= 1. RESSONÂNCIA DE CARTAS (6 MAIS FORTES DE CADA TIPO) ================= -->
+    <!-- ================= 1. RESSONÂNCIA (6 MAIS FORTES DE CADA TIPO) ================= -->
     <div class="resonance-section" id="secResonance">
       <div class="resonance-header">
-        <span class="resonance-title">⚡ Ressonância de Cartas</span>
-        <span class="resonance-tag">Top 6 Níveis de Cada Categoria</span>
+        <span class="resonance-title">⚡ Ressonância</span>
       </div>
 
       <!-- LINHA 1: EXPLOSÃO -->
@@ -588,17 +590,17 @@
         <div class="resonance-cards-strip" id="resStripAffliction"></div>
       </div>
 
-      <!-- LINHA 3: SUPORTE -->
+      <!-- LINHA 3: SUPORTE (ÍCONE s.png) -->
       <div class="resonance-row">
         <div class="resonance-category-badge badge-support-res">
-          <img src="Cards/tt.png" alt="Support" onerror="this.src='Cards/wc.png'">
+          <img src="Cards/s.png" alt="Support" onerror="this.src='Cards/wc.png'">
           <span>Suporte</span>
         </div>
         <div class="resonance-cards-strip" id="resStripSupport"></div>
       </div>
     </div>
 
-    <!-- ================= 2. CATÁLOGO COMPLETO (3 GRUPOS x 2 COLUNAS = 6 COLUNAS) ================= -->
+    <!-- ================= 2. CATÁLOGO COMPLETO (3 GRUPOS LADO A LADO) ================= -->
     <div class="catalog-wrapper" id="secCatalog">
       <div class="catalog-header-title">
         <span>🃏 Catálogo Completo por Categoria</span>
@@ -609,7 +611,7 @@
         <div class="catalog-group">
           <div class="catalog-group-header">
             <span class="group-title color-burst">Explosão</span>
-            <span style="font-size: 10px; color: #8fa0b5;" id="countBurst">0 cartas</span>
+            <span class="group-count" id="countBurst">0</span>
           </div>
           <div class="cards-grid-2" id="gridCatalogBurst"></div>
         </div>
@@ -618,7 +620,7 @@
         <div class="catalog-group">
           <div class="catalog-group-header">
             <span class="group-title color-affliction">Aflição</span>
-            <span style="font-size: 10px; color: #8fa0b5;" id="countAffliction">0 cartas</span>
+            <span class="group-count" id="countAffliction">0</span>
           </div>
           <div class="cards-grid-2" id="gridCatalogAffliction"></div>
         </div>
@@ -627,7 +629,7 @@
         <div class="catalog-group">
           <div class="catalog-group-header">
             <span class="group-title color-support">Suporte</span>
-            <span style="font-size: 10px; color: #8fa0b5;" id="countSupport">0 cartas</span>
+            <span class="group-count" id="countSupport">0</span>
           </div>
           <div class="cards-grid-2" id="gridCatalogSupport"></div>
         </div>
@@ -839,15 +841,19 @@
         renderStrip("resStripAffliction", afflictionList.slice(0, 6), "border-affliction");
         renderStrip("resStripSupport", supportList.slice(0, 6), "border-support");
 
-        // 2. Renderiza o Catálogo Completo (3 grupos de 2 colunas = 6 colunas totais)
-        document.getElementById("secCatalog").style.display = "flex";
-        document.getElementById("countBurst").textContent = `${burstList.length} cartas`;
-        document.getElementById("countAffliction").textContent = `${afflictionList.length} cartas`;
-        document.getElementById("countSupport").textContent = `${supportList.length} cartas`;
+        // 2. Renderiza o Catálogo Restante (Apenas as cartas da 7ª em diante, sem repetir a Ressonância)
+        const remBurst = burstList.slice(6);
+        const remAffliction = afflictionList.slice(6);
+        const remSupport = supportList.slice(6);
 
-        renderGrid("gridCatalogBurst", burstList, "border-burst");
-        renderGrid("gridCatalogAffliction", afflictionList, "border-affliction");
-        renderGrid("gridCatalogSupport", supportList, "border-support");
+        document.getElementById("secCatalog").style.display = "flex";
+        document.getElementById("countBurst").textContent = remBurst.length;
+        document.getElementById("countAffliction").textContent = remAffliction.length;
+        document.getElementById("countSupport").textContent = remSupport.length;
+
+        renderGrid("gridCatalogBurst", remBurst, "border-burst");
+        renderGrid("gridCatalogAffliction", remAffliction, "border-affliction");
+        renderGrid("gridCatalogSupport", remSupport, "border-support");
 
       } catch (err) {
         alert("Erro ao interpretar o JSON colado.");
