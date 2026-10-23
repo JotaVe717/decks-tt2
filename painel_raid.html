@@ -393,6 +393,26 @@
       transition: width 0.4s ease;
     }
 
+    .anatomy-panel {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+    .titan-hp-percent {
+      align-self: flex-end;
+      min-width: 76px;
+      text-align: center;
+      background: #4b5563;
+      border: 1px solid #6b7280;
+      color: #f3f4f6;
+      border-radius: 7px;
+      padding: 5px 12px;
+      font-size: 14px;
+      font-weight: 900;
+      font-variant-numeric: tabular-nums;
+    }
+
     /* GRID ANATÔMICO - 6 COLUNAS NO LADO DIREITO */
     .anatomy-grid {
       display: grid;
@@ -423,10 +443,10 @@
       background: #161f2a;
       border: 1px solid #28394d;
       border-radius: 8px;
-      padding: 8px 6px;
+      padding: 12px 5px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 8px;
       box-shadow: 0 3px 10px rgba(0,0,0,0.4);
       transition: all 0.25s ease;
       position: relative;
@@ -921,7 +941,7 @@
               <div class="hp-overall-box">
                 <div class="hp-overall-labels">
                   <span>Vida do Titã</span>
-                  <span id="cTitanHpTxt">0 / 0 (0%)</span>
+                  <span id="cTitanHpTxt">0 / 0</span>
                 </div>
                 <div class="hp-bar-outer">
                   <div class="hp-bar-fill-overall" id="cTitanHpFill" style="width: 100%;"></div>
@@ -930,7 +950,9 @@
             </div>
 
             <!-- PAINEL ANATÔMICO DO TITÃ NA DIREITA -->
-            <div class="anatomy-grid">
+            <div class="anatomy-panel">
+              <div class="titan-hp-percent" id="cTitanHpPercent">100%</div>
+              <div class="anatomy-grid">
               <div class="anatomy-card area-shoulderR" id="card_ArmUpperRight"></div>
               <div class="anatomy-card area-head" id="card_Head"></div>
               <div class="anatomy-card area-shoulderL" id="card_ArmUpperLeft"></div>
@@ -941,6 +963,7 @@
 
               <div class="anatomy-card area-legR" id="card_LegUpperRight"></div>
               <div class="anatomy-card area-legL" id="card_LegUpperLeft"></div>
+              </div>
             </div>
 
           </div>
@@ -1357,7 +1380,8 @@
             percHp = titaAtual.status === 'Morto' ? 0 : 100;
           }
 
-          document.getElementById('cTitanHpTxt').textContent = `${formatarHp(titaAtual.hpRestante)} / ${formatarHp(titaAtual.hpTotal)} (${percHp.toFixed(1)}%)`;
+          document.getElementById('cTitanHpTxt').textContent = `${formatarHp(titaAtual.hpRestante)} / ${formatarHp(titaAtual.hpTotal)}`;
+          document.getElementById('cTitanHpPercent').textContent = percHp <= 0 ? '-' : `${percHp.toFixed(1)}%`;
           document.getElementById('cTitanHpFill').style.width = `${Math.max(0, Math.min(100, percHp))}%`;
 
           atualizarBadgeSuporte('bSmash', titaAtual.smash);
@@ -1534,10 +1558,6 @@
         }
 
         el.innerHTML = `
-          <div class="card-head-row">
-            ${statusTagHtml}
-          </div>
-
           <div class="bar-group">
             <div class="bar-meta">
               <span class="${classLabel}">${labelTipo}</span>
@@ -1585,10 +1605,6 @@
         }
 
         el.innerHTML = `
-          <div class="card-head-row">
-            ${statusTagHtml}
-          </div>
-
           <div class="bar-group">
             <div class="bar-meta">
               <span class="label-body">❤️ Corpo</span>
