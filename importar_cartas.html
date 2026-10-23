@@ -334,6 +334,18 @@
       text-shadow: 0 1px 2px #000;
       pointer-events: none;
     }
+    .card-overlay-boost {
+      position: absolute;
+      background: #f5a623;
+      border: 1px solid #ffeaa7;
+      color: #0f141c;
+      font-weight: 900;
+      border-radius: 3px;
+      line-height: 1;
+      text-shadow: none;
+      pointer-events: none;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+    }
 
     .border-burst { border-color: rgba(255, 87, 34, 0.45); }
     .border-affliction { border-color: rgba(56, 161, 243, 0.45); }
@@ -466,6 +478,12 @@
         bottom: 1.5px;
         right: 1.5px;
       }
+      .card-overlay-boost {
+        font-size: 9px;
+        padding: 1px 2.5px;
+        bottom: 1.5px;
+        left: 1.5px;
+      }
 
       /* Tooltip flutuante desktop */
       .card-tooltip {
@@ -552,6 +570,12 @@
         padding: 0.5px 1.5px !important;
         bottom: 1px !important;
         right: 1px !important;
+      }
+      .card-overlay-boost {
+        font-size: 7.5px !important;
+        padding: 0.5px 1.5px !important;
+        bottom: 1px !important;
+        left: 1px !important;
       }
       .resonance-category-badge {
         width: 34px !important;
@@ -760,6 +784,12 @@
   </div>
 
   <script>
+    const SEASON_BOOSTS = {
+      "FlakShot": "20",     // fs
+      "MirrorForce": "20",  // mf
+      "BurstBoost": "10"    // af
+    };
+
     const CARD_METADATA = {
       "MoonBeam": { name: "Moon Beam", rank: "A", type: "Burst", img: "Cards/mb.png", target: "Torso/Braços", desc: "Foco exclusivo de dano explosivo." },
       "Fragmentize": { name: "Fragmentize", rank: "B", type: "Burst", img: "Cards/fr.png", target: "Armadura", desc: "Dano aumentado contra armadura." },
@@ -898,8 +928,12 @@
         }
       };
 
+      const boostVal = SEASON_BOOSTS[card.id];
+      const boostBadgeHtml = boostVal ? `<span class="card-overlay-boost">${boostVal}</span>` : '';
+
       div.innerHTML = `
         <img src="${card.img}" class="card-thumb" alt="${card.name}" onerror="this.src='Cards/wc.png'">
+        ${boostBadgeHtml}
         <span class="card-overlay-lvl">${card.level}</span>
         <div class="card-tooltip">
           <div class="tooltip-header">
