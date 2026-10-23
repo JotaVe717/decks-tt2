@@ -112,7 +112,7 @@
       color: #50e3c2;
     }
 
-    /* SEÇÃO COM BOTÃO RETRÁTIL (FECHAR / ABRIR) */
+    /* SEÇÃO */
     .section-block { margin-bottom: 0; }
     .section-header {
       display: flex;
@@ -135,7 +135,7 @@
       gap: 6px;
     }
 
-    /* BARRA SUPERIOR: VOID, SMASH, VM E BUFF */
+    /* BARRA SUPERIOR: VOID, SMASH, VM */
     .titan-status-top-bar {
       display: flex;
       align-items: center;
@@ -169,7 +169,7 @@
       opacity: 0.6;
     }
 
-    /* BUFF AZUL COM ÍCONE DE AFLIÇÃO E +30% DANO */
+    /* BUFF AZUL COM ÍCONE DE AFLIÇÃO */
     .buff-badge-display {
       display: inline-flex;
       align-items: center;
@@ -193,7 +193,7 @@
       white-space: nowrap;
     }
 
-    /* DETALHES NA ESQUERDA (280px INTACTO) E CORPO NA DIREITA */
+    /* DETALHES NA ESQUERDA (280px) E CORPO NA DIREITA */
     .titan-dashboard-layout {
       display: grid;
       grid-template-columns: 280px 1fr;
@@ -213,12 +213,11 @@
       align-self: start;
     }
 
-    /* TOPO: MT1 + TITÃ 3/3 + CICLO 4 */
+    /* TOPO: MT1 + BUFF */
     .titan-zone-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
       gap: 6px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       padding-bottom: 6px;
@@ -272,6 +271,13 @@
       align-items: center;
       gap: 6px;
       overflow: hidden;
+      flex-shrink: 1;
+    }
+    .titan-name-right-tags {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      flex-shrink: 0;
     }
     .titan-seq {
       background: #f5a623;
@@ -373,7 +379,7 @@
     }
     .clan-inline-item strong.green { color: #4cd964; }
 
-    /* GRID ANATÔMICO - AMPLO, ROBUSTO E FÁCIL DE ENXERGAR */
+    /* GRID ANATÔMICO */
     .anatomy-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr) !important;
@@ -399,7 +405,6 @@
     .area-legR      { grid-column: 2 / span 2; }
     .area-legL      { grid-column: 4 / span 2; }
 
-    /* CARD ANATÔMICO ESPAÇOSO E PROPORCIONAL */
     .anatomy-card {
       background: #161f2a;
       border: 1px solid #2e3f54;
@@ -436,7 +441,6 @@
       background: linear-gradient(90deg, #b388ff, #7c4dff) !important;
     }
 
-    /* LINHA SUPERIOR: STATUS À ESQUERDA E CARD CINZA À DIREITA */
     .card-head-row {
       display: flex;
       justify-content: space-between;
@@ -485,7 +489,6 @@
       white-space: nowrap;
     }
 
-    /* CARD CINZA DE PORCENTAGEM DESTACADO */
     .badge-hp-perc {
       background: #202c38;
       border: 1px solid #3c5066;
@@ -500,7 +503,6 @@
       letter-spacing: 0.3px;
     }
 
-    /* METAS DE DANO */
     .bar-meta {
       display: flex;
       justify-content: space-between;
@@ -542,7 +544,7 @@
       background: linear-gradient(90deg, #38ef7d, #11998e);
     }
 
-    /* ADAPTAÇÃO MOBILE */
+    /* ---------------- ADAPTAÇÃO MOBILE ESPECÍFICA ---------------- */
     @media (max-width: 1080px) {
       body {
         padding: 8px 6px calc(35px + env(safe-area-inset-bottom, 0px)) 6px;
@@ -551,15 +553,48 @@
         padding: 10px 10px;
         border-radius: 12px;
       }
-      .title { font-size: 17px; }
-      .subtitle { display: none !important; }
-      .top-header-bar { margin-bottom: 10px; }
-      .countdown-banner { padding: 4px 8px; }
-      .countdown-banner-timer { font-size: 13.5px; }
+
+      /* TÍTULO PRINCIPAL GRANDE NO ESPAÇO DO TITÃ */
+      .top-header-bar {
+        margin-bottom: 6px;
+      }
+      .title {
+        font-size: 23px;
+        font-weight: 900;
+        letter-spacing: 0.5px;
+      }
+      .subtitle {
+        display: none !important;
+      }
+
+      /* OCULTA O TEXTO "🎯 TITÃ ATUAL NO CAMPO" PARA LIBERAR ESPAÇO AO TÍTULO */
+      .section-title {
+        display: none !important;
+      }
+      .section-header {
+        justify-content: flex-end;
+        margin-bottom: 6px;
+        padding-bottom: 4px;
+      }
+
+      .countdown-banner {
+        padding: 4px 8px;
+      }
+      .countdown-banner-timer {
+        font-size: 13.5px;
+      }
 
       .titan-dashboard-layout {
         grid-template-columns: 1fr;
         gap: 10px;
+      }
+
+      /* LINHA DO NOME: ESTICADA PARA ALINHAR STERL NA ESQ E TITÃ/CICLO NA DIR */
+      .titan-name-row {
+        width: 100%;
+      }
+      .titan-name-right-tags {
+        margin-left: auto;
       }
 
       .anatomy-grid {
@@ -579,7 +614,9 @@
       .badge-hp-perc, .bar-meta, .label-armor, .label-body, .bar-val {
         font-size: 9px;
       }
-      .bar-track { height: 6px; }
+      .bar-track {
+        height: 6px;
+      }
     }
   </style>
 </head>
@@ -608,18 +645,12 @@
       <div class="section-header">
         <span class="section-title">🎯 Titã Atual no Campo</span>
         
-        <!-- CARDS DE VOID, SMASH, VM E BUFF +30% DANO NO TOPO -->
+        <!-- CARDS DE VOID, SMASH E VM NO TOPO -->
         <div class="titan-status-top-bar">
           <div class="titan-support-badges">
             <span class="badge-sup off" id="bVoid" title="Void Ativo">Void</span>
             <span class="badge-sup off" id="bSmash" title="Smash Ativo">Smash</span>
             <span class="badge-sup off" id="bVM" title="VM Ativo">VM</span>
-          </div>
-
-          <!-- BUFF DA RAID EM AZUL COM ÍCONE DE AFLIÇÃO E +30% DANO -->
-          <div class="buff-badge-display" id="buffRaidContainer">
-            <img src="Cards/a.png" alt="Aflição" class="buff-badge-icon" id="buffRaidImg" onerror="this.src='Cards/b.png'">
-            <span class="buff-badge-text" id="mBuffRaid">+30% DANO</span>
           </div>
         </div>
       </div>
@@ -628,19 +659,29 @@
         
         <!-- DETALHES DA RAID NA ESQUERDA (EXATOS 280px) -->
         <div class="titan-info-box">
-          <!-- LINHA 1: MT1 (ROXO) + TITÃ 3/3 (CIANO) + CICLO 4 (DOURADO) -->
+          <!-- LINHA 1: MT1 (ROXO) + BUFF DA RAID (+30% DANO) AO LADO -->
           <div class="titan-zone-row">
             <div class="titan-zone-left-tags">
               <span class="badge-zone" id="mRaidName">MT1</span>
-              <span class="badge-tita-count" id="cTitanCount">Titã 3/3</span>
-              <span class="badge-ciclo-tag" id="cRaidCycle">Ciclo 4</span>
+              
+              <!-- BUFF DA RAID EM AZUL COM ÍCONE DE AFLIÇÃO -->
+              <div class="buff-badge-display" id="buffRaidContainer">
+                <img src="Cards/a.png" alt="Aflição" class="buff-badge-icon" id="buffRaidImg" onerror="this.src='Cards/b.png'">
+                <span class="buff-badge-text" id="mBuffRaid">+30% DANO</span>
+              </div>
             </div>
           </div>
 
+          <!-- LINHA 2: #3 STERL À ESQUERDA | TITÃ 3/3 E CICLO 4 À DIREITA NA MESMA ALTURA -->
           <div class="titan-name-row">
             <div class="titan-name-left">
               <span class="titan-seq" id="cTitanSeq">#3</span>
               <span class="titan-name-text" id="cTitanName">Nome do Titã</span>
+            </div>
+            
+            <div class="titan-name-right-tags">
+              <span class="badge-tita-count" id="cTitanCount">Titã 3/3</span>
+              <span class="badge-ciclo-tag" id="cRaidCycle">Ciclo 4</span>
             </div>
           </div>
 
