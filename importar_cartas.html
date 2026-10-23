@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Importar Perfil & Cartas - Tap Titans 2</title>
   <style>
     * {
@@ -11,6 +11,7 @@
       padding: 0;
       font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
       -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
     }
     body {
       background-color: #0f141c;
@@ -18,18 +19,18 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 16px 8px 70px 8px;
+      padding: 14px 6px calc(65px + env(safe-area-inset-bottom, 0px)) 6px;
       min-height: 100vh;
       overflow-x: hidden;
     }
     .back-btn {
       align-self: flex-start;
       max-width: 960px;
-      margin: 0 auto 12px auto;
+      margin: 0 auto 10px auto;
       width: 100%;
       text-decoration: none;
       color: #8fa0b5;
-      font-size: 14px;
+      font-size: 13.5px;
       font-weight: 600;
       display: inline-flex;
       align-items: center;
@@ -44,43 +45,43 @@
       max-width: 960px;
       background: #18202a;
       border: 1px solid #283545;
-      border-radius: 16px;
-      padding: 18px 12px;
+      border-radius: 14px;
+      padding: 14px 8px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
     .title {
       text-align: center;
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 800;
-      letter-spacing: 1px;
+      letter-spacing: 0.8px;
       text-transform: uppercase;
-      margin-bottom: 4px;
+      margin-bottom: 3px;
     }
     .title span {
       color: #f5a623;
     }
     .subtitle {
       text-align: center;
-      font-size: 12px;
+      font-size: 11.5px;
       color: #8fa0b5;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     /* ENTRADA DE DADOS E SELETOR */
     .import-card {
       background: #212c3a;
       border: 1px dashed #3a4b60;
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 16px;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 14px;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
     .import-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 6px;
       align-items: center;
     }
     .clan-select-group {
@@ -88,16 +89,16 @@
       align-items: center;
       gap: 6px;
       flex: 1;
-      min-width: 200px;
+      min-width: 180px;
     }
     .filter-select {
       flex: 1;
       background: #141c24;
       border: 1px solid #324357;
-      border-radius: 8px;
+      border-radius: 6px;
       color: #ffffff;
-      padding: 8px 10px;
-      font-size: 12px;
+      padding: 7px 9px;
+      font-size: 11.5px;
       outline: none;
       cursor: pointer;
     }
@@ -108,13 +109,13 @@
       border: none;
       color: #0f141c;
       font-weight: 800;
-      padding: 8px 16px;
-      border-radius: 8px;
+      padding: 7px 14px;
+      border-radius: 6px;
       cursor: pointer;
-      font-size: 12.5px;
+      font-size: 12px;
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       transition: opacity 0.2s;
     }
     .btn-paste:hover { opacity: 0.9; }
@@ -123,24 +124,24 @@
       border: 1px solid #324357;
       color: #d1dbe5;
       font-weight: 600;
-      padding: 8px 14px;
-      border-radius: 8px;
+      padding: 7px 12px;
+      border-radius: 6px;
       cursor: pointer;
-      font-size: 12.5px;
+      font-size: 12px;
       transition: border-color 0.2s;
     }
     .btn-secondary:hover { border-color: #f5a623; color: #fff; }
 
     textarea {
       width: 100%;
-      height: 48px;
+      height: 44px;
       background: #141c24;
       border: 1px solid #2d3c4e;
-      border-radius: 8px;
-      padding: 8px;
+      border-radius: 6px;
+      padding: 6px 8px;
       color: #a0aec0;
       font-family: monospace;
-      font-size: 11px;
+      font-size: 10.5px;
       resize: vertical;
     }
     textarea:focus { outline: none; border-color: #f5a623; }
@@ -149,12 +150,12 @@
     .player-summary {
       background: #121922;
       border: 1px solid #283545;
-      border-radius: 10px;
-      padding: 10px 12px;
-      margin-bottom: 18px;
+      border-radius: 8px;
+      padding: 8px 10px;
+      margin-bottom: 14px;
       display: none;
-      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-      gap: 8px;
+      grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
+      gap: 6px;
       text-align: center;
     }
     .summary-item {
@@ -163,36 +164,36 @@
       gap: 2px;
     }
     .summary-item span {
-      font-size: 9px;
+      font-size: 8.5px;
       color: #8fa0b5;
       text-transform: uppercase;
       font-weight: 700;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.4px;
     }
     .summary-item strong {
-      font-size: 13.5px;
+      font-size: 13px;
       color: #50e3c2;
     }
 
-    /* ---------------- 1. SEÇÃO DE RESSONÂNCIA (6 CARTAS DE CADA TIPO) ---------------- */
+    /* ---------------- 1. SEÇÃO DE RESSONÂNCIA ---------------- */
     .resonance-section {
       background: #121922;
       border: 1.5px solid #2b394a;
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 20px;
+      border-radius: 10px;
+      padding: 10px;
+      margin-bottom: 16px;
       display: none;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
     }
     .resonance-header {
       display: flex;
       align-items: center;
       border-bottom: 1px solid #243344;
-      padding-bottom: 6px;
+      padding-bottom: 4px;
     }
     .resonance-title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 800;
       color: #f5a623;
       text-transform: uppercase;
@@ -205,31 +206,31 @@
     .resonance-row {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 6px;
       background: #16202c;
-      padding: 6px 8px;
-      border-radius: 8px;
+      padding: 5px 6px;
+      border-radius: 6px;
       border: 1px solid #202d3c;
     }
     .resonance-category-badge {
-      width: 44px;
-      height: 44px;
-      border-radius: 8px;
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       gap: 2px;
       flex-shrink: 0;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+      box-shadow: 0 3px 8px rgba(0,0,0,0.4);
     }
     .resonance-category-badge img {
-      width: 24px;
-      height: 24px;
+      width: 22px;
+      height: 22px;
       object-fit: contain;
     }
     .resonance-category-badge span {
-      font-size: 8px;
+      font-size: 7.5px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.4px;
@@ -254,34 +255,35 @@
     .resonance-cards-strip {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      gap: 5px;
+      gap: 4px;
       flex: 1;
     }
 
-    /* ---------------- 2. CATÁLOGO COMPLETO ---------------- */
+    /* ---------------- 2. CATÁLOGO COMPLETO (3 GRUPOS LADO A LADO) ---------------- */
     .catalog-wrapper {
       display: none;
       flex-direction: column;
-      gap: 12px;
+      gap: 10px;
+      width: 100%;
     }
     .catalog-header-title {
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 800;
       color: #8fa0b5;
       text-transform: uppercase;
-      letter-spacing: 0.6px;
+      letter-spacing: 0.5px;
       border-bottom: 1px solid #283545;
-      padding-bottom: 6px;
+      padding-bottom: 4px;
       display: flex;
       align-items: center;
       gap: 6px;
     }
 
-    /* Desktop padrão: 3 grupos lado a lado com 2 colunas cada */
+    /* SEMPRE 3 GRUPOS LADO A LADO (DESKTOP E MOBILE) */
     .catalog-3-groups {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 5px;
       align-items: start;
       width: 100%;
     }
@@ -289,10 +291,10 @@
       background: #141c26;
       border: 1px solid #263546;
       border-radius: 8px;
-      padding: 10px 8px;
+      padding: 6px 4px;
       display: flex;
       flex-direction: column;
-      gap: 6px;
+      gap: 5px;
       min-width: 0;
     }
     .catalog-group-header {
@@ -300,20 +302,20 @@
       align-items: center;
       justify-content: space-between;
       border-bottom: 1px solid #202d3c;
-      padding-bottom: 4px;
+      padding-bottom: 3px;
       gap: 2px;
     }
     .group-title {
-      font-size: 11px;
+      font-size: 9.5px;
       font-weight: 800;
       text-transform: uppercase;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.3px;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
     }
     .group-count {
-      font-size: 9.5px;
+      font-size: 8.5px;
       color: #8fa0b5;
       white-space: nowrap;
     }
@@ -321,80 +323,27 @@
     .color-affliction { color: #38a1f3; }
     .color-support { color: #4cd964; }
 
-    /* 2 Colunas dentro de cada grupo no desktop */
-    .cards-grid-catalog {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 6px;
-      width: 100%;
-    }
-
-    /* ---------------- DESIGN DO CARD ---------------- */
-    .card-tile {
-      position: relative;
-      aspect-ratio: 1 / 1;
-      border-radius: 6px;
-      background: #0f141c;
-      border: 1.5px solid #2b394a;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      user-select: none;
-      transition: transform 0.15s ease, border-color 0.15s ease;
-      min-width: 0;
-    }
-    .card-tile:hover, .card-tile.active-selected {
-      transform: translateY(-2px);
-      border-color: #f5a623 !important;
-      z-index: 20;
-    }
-    .card-thumb {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      border-radius: 5px;
-    }
-    .card-overlay-lvl {
-      position: absolute;
-      bottom: 2px;
-      right: 2px;
-      background: rgba(15, 20, 28, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #ffffff;
-      font-size: 9.5px;
-      font-weight: 800;
-      padding: 1px 3px;
-      border-radius: 3px;
-      line-height: 1;
-      text-shadow: 0 1px 2px #000;
-      pointer-events: none;
-    }
-
-    .border-burst { border-color: rgba(255, 87, 34, 0.45); }
-    .border-affliction { border-color: rgba(56, 161, 243, 0.45); }
-    .border-support { border-color: rgba(76, 217, 100, 0.45); }
-
-    .empty-state {
-      text-align: center;
-      color: #8fa0b5;
-      font-size: 13px;
-      padding: 30px 10px;
-    }
-
-    /* TOOLTIP DESKTOP */
+    /* Desktop (>600px): 2 colunas por grupo = 6 colunas totais */
     @media (min-width: 601px) {
+      .cards-grid-catalog {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+        width: 100%;
+      }
+      .card-overlay-lvl {
+        font-size: 9.5px;
+        padding: 1px 3px;
+      }
       .card-tooltip {
         visibility: hidden;
         opacity: 0;
-        width: 180px;
+        width: 175px;
         background-color: #121922;
         color: #fff;
         text-align: left;
         border-radius: 8px;
-        padding: 8px 10px;
+        padding: 7px 9px;
         position: absolute;
         z-index: 100;
         bottom: 112%;
@@ -423,109 +372,54 @@
       #mobileCardDrawer { display: none !important; }
     }
 
-    .tooltip-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-      margin-bottom: 4px;
-    }
-    .tooltip-name {
-      font-size: 11.5px;
-      font-weight: 700;
-      color: #f5a623;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-    .tooltip-rank {
-      font-size: 9.5px;
-      font-weight: 900;
-      color: #ff5722;
-      background: rgba(255, 69, 0, 0.25);
-      border: 1px solid rgba(255, 87, 34, 0.6);
-      padding: 1px 4px;
-      border-radius: 3px;
-    }
-    .tooltip-target {
-      display: inline-block;
-      font-size: 9.5px;
-      font-weight: 700;
-      color: #50e3c2;
-      background: rgba(80, 227, 194, 0.12);
-      border: 1px solid rgba(80, 227, 194, 0.35);
-      padding: 1px 5px;
-      border-radius: 4px;
-      margin-bottom: 4px;
-    }
-    .tooltip-desc {
-      font-size: 10px;
-      color: #c0ccdc;
-      line-height: 1.35;
-      display: block;
-    }
-
-    /* ---------------- ADAPTAÇÃO MOBILE (3 COLUNAS POR TIPO NO CATÁLOGO) ---------------- */
+    /* Mobile (<=600px): 3 colunas por grupo = 9 colunas totais lado a lado */
     @media (max-width: 600px) {
-      .card-tooltip { display: none !important; }
-      
-      .resonance-row {
-        gap: 5px;
-        padding: 5px 6px;
+      .cards-grid-catalog {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 2.5px !important;
+        width: 100%;
       }
-      .resonance-category-badge {
-        width: 36px;
-        height: 36px;
-        border-radius: 6px;
-      }
-      .resonance-category-badge img {
-        width: 20px;
-        height: 20px;
-      }
-      .resonance-category-badge span {
-        font-size: 6.5px;
-      }
-      .resonance-cards-strip {
-        gap: 3px;
-      }
-
-      /* No mobile, cada grupo ocupa a largura total empilhado */
       .catalog-3-groups {
-        grid-template-columns: 1fr !important;
-        gap: 12px;
+        gap: 3px !important;
       }
       .catalog-group {
-        padding: 10px;
+        padding: 5px 2px !important;
       }
-      .group-title {
-        font-size: 12px;
-      }
-
-      /* E dentro de cada tipo de carta, formam-se exatamente 3 COLUNAS */
-      .cards-grid-catalog {
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: 6px;
-      }
-
       .card-overlay-lvl {
-        font-size: 9px;
-        padding: 1px 3px;
-        bottom: 2px;
-        right: 2px;
+        font-size: 7.5px !important;
+        padding: 0.5px 1.5px !important;
+        bottom: 1px !important;
+        right: 1px !important;
       }
+      .resonance-category-badge {
+        width: 34px !important;
+        height: 34px !important;
+      }
+      .resonance-category-badge img {
+        width: 18px !important;
+        height: 18px !important;
+      }
+      .resonance-category-badge span {
+        font-size: 6px !important;
+      }
+      .resonance-cards-strip {
+        gap: 2.5px !important;
+      }
+      .card-tooltip { display: none !important; }
 
       #mobileCardDrawer {
         position: fixed;
-        bottom: 12px;
+        bottom: 10px;
         left: 50%;
         transform: translateX(-50%) translateY(120%);
-        width: calc(100vw - 20px);
+        width: calc(100vw - 16px);
         max-width: 420px;
         background: #141d27;
         border: 1.5px solid #f5a623;
         box-shadow: 0 12px 35px rgba(0, 0, 0, 0.95);
         border-radius: 12px;
-        padding: 12px 14px;
+        padding: 10px 12px;
         z-index: 10000;
         transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.2s ease;
         opacity: 0;
@@ -540,13 +434,111 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
-        gap: 8px;
-        margin-bottom: 4px;
+        gap: 6px;
+        margin-bottom: 3px;
       }
-      .drawer-name { font-size: 13.5px; font-weight: 800; color: #f5a623; }
+      .drawer-name { font-size: 13px; font-weight: 800; color: #f5a623; }
       .drawer-close { background: none; border: none; color: #8fa0b5; font-size: 18px; cursor: pointer; }
-      .drawer-target { display: inline-block; font-size: 10.5px; color: #50e3c2; background: rgba(80, 227, 194, 0.12); padding: 1px 6px; border-radius: 4px; margin-bottom: 6px; }
-      .drawer-desc { font-size: 11px; color: #d1dbe5; line-height: 1.4; }
+      .drawer-target { display: inline-block; font-size: 10px; color: #50e3c2; background: rgba(80, 227, 194, 0.12); padding: 1px 5px; border-radius: 4px; margin-bottom: 4px; }
+      .drawer-desc { font-size: 10.5px; color: #d1dbe5; line-height: 1.35; }
+    }
+
+    /* ---------------- DESIGN DO CARD ---------------- */
+    .card-tile {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: 5px;
+      background: #0f141c;
+      border: 1.5px solid #2b394a;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+      min-width: 0;
+      width: 100%;
+    }
+    .card-tile:hover, .card-tile.active-selected {
+      transform: translateY(-2px);
+      border-color: #f5a623 !important;
+      z-index: 20;
+    }
+    .card-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 4px;
+    }
+    .card-overlay-lvl {
+      position: absolute;
+      bottom: 1.5px;
+      right: 1.5px;
+      background: rgba(15, 20, 28, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      font-size: 9px;
+      font-weight: 800;
+      padding: 1px 2px;
+      border-radius: 3px;
+      line-height: 1;
+      text-shadow: 0 1px 2px #000;
+      pointer-events: none;
+    }
+
+    .border-burst { border-color: rgba(255, 87, 34, 0.45); }
+    .border-affliction { border-color: rgba(56, 161, 243, 0.45); }
+    .border-support { border-color: rgba(76, 217, 100, 0.45); }
+
+    .empty-state {
+      text-align: center;
+      color: #8fa0b5;
+      font-size: 13px;
+      padding: 30px 10px;
+    }
+
+    .tooltip-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 3px;
+    }
+    .tooltip-name {
+      font-size: 11px;
+      font-weight: 700;
+      color: #f5a623;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .tooltip-rank {
+      font-size: 9px;
+      font-weight: 900;
+      color: #ff5722;
+      background: rgba(255, 69, 0, 0.25);
+      border: 1px solid rgba(255, 87, 34, 0.6);
+      padding: 1px 4px;
+      border-radius: 3px;
+    }
+    .tooltip-target {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 700;
+      color: #50e3c2;
+      background: rgba(80, 227, 194, 0.12);
+      border: 1px solid rgba(80, 227, 194, 0.35);
+      padding: 1px 4px;
+      border-radius: 3px;
+      margin-bottom: 3px;
+    }
+    .tooltip-desc {
+      font-size: 9.5px;
+      color: #c0ccdc;
+      line-height: 1.35;
+      display: block;
     }
   </style>
 </head>
@@ -610,7 +602,7 @@
         <div class="resonance-cards-strip" id="resStripAffliction"></div>
       </div>
 
-      <!-- LINHA 3: SUPORTE (ÍCONE s.png) -->
+      <!-- LINHA 3: SUPORTE (s.png) -->
       <div class="resonance-row">
         <div class="resonance-category-badge badge-support-res">
           <img src="Cards/s.png" alt="Support" onerror="this.src='Cards/wc.png'">
@@ -620,7 +612,7 @@
       </div>
     </div>
 
-    <!-- ================= 2. CATÁLOGO COMPLETO (3 COLUNAS POR TIPO NO MOBILE) ================= -->
+    <!-- ================= 2. CATÁLOGO COMPLETO (3 GRUPOS LADO A LADO) ================= -->
     <div class="catalog-wrapper" id="secCatalog">
       <div class="catalog-header-title">
         <span>🃏 Catálogo Completo por Categoria</span>
