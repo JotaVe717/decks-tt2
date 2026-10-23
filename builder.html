@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Decks de Raid - Tap Titans 2</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body {
+      background-color: #0f141c;
+      color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 6px 6px calc(10px + env(safe-area-inset-bottom, 0px)) 6px;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* TOPO COMPACTO EM LINHA */
+    .top-bar {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 6px;
+      margin-bottom: 6px;
+    }
+    .back-btn {
+      text-decoration: none;
+      color: #8fa0b5;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+    .back-btn:hover { color: #f5a623; }
+
+    .base-level-compact {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: #18202a;
+      border: 1px solid #2d3e52;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+    .base-level-compact label {
+      font-size: 10px;
+      font-weight: 800;
+      color: #e2b4f7;
+      text-transform: uppercase;
+    }
+    .base-level-compact input {
+      width: 44px;
+      height: 22px;
+      background: #0f141c;
+      border: 1.5px solid #8e44ad;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      text-align: center;
+      border-radius: 4px;
+      outline: none;
+    }
+
+    .btn-reset-all {
+      background: rgba(231, 76, 60, 0.15);
+      border: 1px solid #e74c3c;
+      color: #e74c3c;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 4px 7px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    /* CONTAINER PRINCIPAL */
+    .decks-container {
+      width: 100%;
+      max-width: 440px;
+      display: flex;
+      flex-direction: column;
+      gap: 4.5px;
+    }
+
+    /* DECK EM LINHA ÚNICA */
+    .deck-row-card {
+      background: #141c26;
+      border: 1px solid #243344;
+      border-radius: 8px;
+      padding: 4px 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* IDENTIFICADOR LATERAL ESQUERDO */
+    .deck-side-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-width: 54px;
+      flex-shrink: 0;
+      text-align: center;
+      gap: 2px;
+    }
+    .deck-num {
+      font-size: 13px;
+      font-weight: 900;
+      color: #f5a623;
+      line-height: 1;
+    }
+    .deck-rule-tag {
+      font-size: 7px;
+      font-weight: 800;
+      padding: 1.5px 3.5px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      line-height: 1;
+      white-space: nowrap;
+    }
+    .status-complete {
+      background: rgba(80, 227, 194, 0.15);
+      border: 1px solid #50e3c2;
+      color: #50e3c2;
+    }
+    .status-incomplete {
+      background: rgba(143, 160, 181, 0.12);
+      border: 1px solid #3c4f66;
+      color: #8fa0b5;
+    }
+    .status-custom {
+      background: rgba(245, 166, 35, 0.15);
+      border: 1px solid #f5a623;
+      color: #f5a623;
+    }
+
+    /* OS 3 SLOTS ALINHADOS */
+    .deck-slots-row {
+      display: flex;
+      gap: 5px;
+      flex: 1;
+    }
+
+    .slot-box {
+      flex: 1;
+      aspect-ratio: 1 / 1;
+      max-height: 64px;
+      background: #0f141c;
+      border: 1px dashed #3a4b60;
+      border-radius: 6px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      overflow: hidden;
+    }
+    .slot-box.filled {
+      border-style: solid;
+      border-color: #2b394a;
+    }
+    .slot-box.active-selecting {
+      border-color: #f5a623 !important;
+    }
+
+    .slot-empty-icon {
+      font-size: 14px;
+      color: #4f637b;
+      line-height: 1;
+    }
+    .slot-empty-text {
+      font-size: 7px;
+      font-weight: 700;
+      color: #5c728e;
+      text-transform: uppercase;
+    }
+
+    .slot-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* BADGE PAPEL (INFERIOR ESQUERDO) */
+    .slot-badge-role {
+      position: absolute;
+      bottom: 1.5px;
+      left: 1.5px;
+      font-size: 6.5px;
+      font-weight: 800;
+      padding: 0.5px 3px;
+      border-radius: 2.5px;
+      text-transform: uppercase;
+      color: #ffffff;
+      line-height: 1;
+      pointer-events: none;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.8);
+    }
+
+    /* BADGE NÍVEL (INFERIOR DIREITO) */
+    .slot-sug-lvl {
+      position: absolute;
+      bottom: 1.5px;
+      right: 1.5px;
+      background: rgba(15, 20, 28, 0.94);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: #50e3c2;
+      font-weight: 900;
+      font-size: 7.5px;
+      padding: 0.5px 2.5px;
+      border-radius: 2.5px;
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .btn-remove-card {
+      position: absolute;
+      top: 1.5px;
+      right: 1.5px;
+      width: 13px;
+      height: 13px;
+      background: rgba(15, 20, 28, 0.9);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ff5252;
+      border-radius: 50%;
+      font-size: 9px;
+      font-weight: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      line-height: 1;
+    }
+
+    /* CORES DE FUNÇÃO */
+    .role-dano { background: #e74c3c; }
+    .role-buff { background: #27ae60; }
+    .role-efeito { background: #2980b9; }
+    .role-especifico { background: #576574; }
+
+    /* MODAL DE SELEÇÃO DE CARTAS */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(3px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 10px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-content {
+      background: #18202a;
+      border: 1.5px solid #2d3e52;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 420px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 16px 40px rgba(0,0,0,0.8);
+    }
+    .modal-header {
+      padding: 10px 12px;
+      border-bottom: 1px solid #243344;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .modal-title {
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #f5a623;
+    }
+    .modal-close {
+      background: none;
+      border: none;
+      color: #8fa0b5;
+      font-size: 18px;
+      cursor: pointer;
+      line-height: 1;
+    }
+    .modal-body {
+      padding: 10px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .modal-group-title {
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      margin-bottom: 5px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .modal-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 4px;
+    }
+    .modal-card-item {
+      aspect-ratio: 1 / 1;
+      border-radius: 5px;
+      border: 1.5px solid #2d3e52;
+      background: #101721;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .modal-card-item.disabled {
+      opacity: 0.25;
+      cursor: not-allowed;
+      filter: grayscale(1);
+    }
+    .modal-card-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <a href="nivelamento.html" class="back-btn">&larr; Voltar</a>
+    <div class="base-level-compact">
+      <label for="deckBaseLevel">Nível Base:</label>
+      <input type="number" id="deckBaseLevel" value="60" min="1" max="100">
+    </div>
+    <button class="btn-reset-all" onclick="resetAllDecks()">Limpar</button>
+  </div>
+
+  <div class="decks-container" id="decksGrid"></div>
+
+  <!-- MODAL DE SELEÇÃO -->
+  <div class="modal-overlay" id="modalPicker">
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="modal-title" id="modalPickerTitle">Escolha a Carta</span>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    const CARDS = [
+      // DANO (Explosão / Aflição)
+      { id: "mf", name: "Mirror Force", role: "dano", roleLabel: "Dano", img: "Cards/mf.png" },
+      { id: "csb", name: "Clanship Barrage", role: "dano", roleLabel: "Dano", img: "Cards/csb.png" },
+      { id: "cs", name: "Celestial Static", role: "dano", roleLabel: "Dano", img: "Cards/cs.png" },
+      { id: "wol", name: "Whip of Lightning", role: "dano", roleLabel: "Dano", img: "Cards/wol.png" },
+      { id: "cov", name: "Chain of Vengeance", role: "dano", roleLabel: "Dano", img: "Cards/cov.png" },
+      { id: "fs", name: "Flak Shot", role: "dano", roleLabel: "Dano", img: "Cards/fs.png" },
+      { id: "mb", name: "Moon Beam", role: "dano", roleLabel: "Dano", img: "Cards/mb.png" },
+      { id: "sb", name: "Skull Bash", role: "dano", roleLabel: "Dano", img: "Cards/sb.png" },
+      { id: "fr", name: "Fragmentize", role: "dano", roleLabel: "Dano", img: "Cards/fr.png" },
+      { id: "rw", name: "Razor Wind", role: "dano", roleLabel: "Dano", img: "Cards/rw.png" },
+      { id: "ps", name: "Psychic Shackles", role: "dano", roleLabel: "Dano", img: "Cards/ps.png" },
+      { id: "pb", name: "Purifying Blast", role: "dano", roleLabel: "Dano", img: "Cards/pb.png" },
+      { id: "ch", name: "Cosmic Haymaker", role: "dano", roleLabel: "Dano", img: "Cards/ch.png" },
+      { id: "bm", name: "Barbed Morningstar", role: "dano", roleLabel: "Dano", img: "Cards/bm.png" },
+      { id: "zz", name: "Electro Zap", role: "dano", roleLabel: "Dano", img: "Cards/zz.png" },
+      { id: "rr", name: "Ruinous Rain", role: "dano", roleLabel: "Dano", img: "Cards/rr.png" },
+      { id: "tp", name: "Thriving Plague", role: "dano", roleLabel: "Dano", img: "Cards/tp.png" },
+      { id: "fb", name: "Fusion Bomb", role: "dano", roleLabel: "Dano", img: "Cards/fb.png" },
+      { id: "ra", name: "Radioactivity", role: "dano", roleLabel: "Dano", img: "Cards/ra.png" },
+      { id: "bi", name: "Blazing Inferno", role: "dano", roleLabel: "Dano", img: "Cards/bi.png" },
+      { id: "ds", name: "Decaying Strike", role: "dano", roleLabel: "Dano", img: "Cards/ds.png" },
+      { id: "rs", name: "Ravenous Swarm", role: "dano", roleLabel: "Dano", img: "Cards/rs.png" },
+      { id: "bb", name: "Corrosive Bubbles", role: "dano", roleLabel: "Dano", img: "Cards/bb.png" },
+      { id: "gs", name: "Grim Shadow", role: "dano", roleLabel: "Dano", img: "Cards/gs.png" },
+      { id: "ad", name: "Acid Drench", role: "dano", roleLabel: "Dano", img: "Cards/ad.png" },
+      { id: "am", name: "Amplify", role: "dano", roleLabel: "Dano", img: "Cards/am.png" },
+
+      // BUFF
+      { id: "if", name: "Inspiring Force", role: "buff", roleLabel: "Buff", img: "Cards/if.png" },
+      { id: "pr", name: "Prismatic Rift", role: "buff", roleLabel: "Buff", img: "Cards/pr.png" },
+      { id: "ma", name: "Maelstrom", role: "buff", roleLabel: "Buff", img: "Cards/ma.png" },
+      { id: "gb", name: "Guard Break", role: "buff", roleLabel: "Buff", img: "Cards/gb.png" },
+      { id: "tot", name: "Totem of Power", role: "buff", roleLabel: "Buff", img: "Cards/tot.png" },
+      { id: "ci", name: "Crushing Instinct", role: "buff", roleLabel: "Buff", img: "Cards/ci.png" },
+      { id: "sf", name: "Soul Fire", role: "buff", roleLabel: "Buff", img: "Cards/sf.png" },
+      { id: "rk", name: "Radiant Kaleidoscope", role: "buff", roleLabel: "Buff", img: "Cards/rk.png" },
+      { id: "ss", name: "Skeletal Smash", role: "buff", roleLabel: "Buff", img: "Cards/ss.png" },
+      { id: "iv", name: "Insanity Void", role: "buff", roleLabel: "Buff", img: "Cards/iv.png" },
+      { id: "vm", name: "Victory March", role: "buff", roleLabel: "Buff", img: "Cards/vm.png" },
+      { id: "bd", name: "Battle Drums", role: "buff", roleLabel: "Buff", img: "Cards/bd.png" },
+
+      // EFEITO FIXO
+      { id: "af", name: "Ancestral Favor", role: "efeito", roleLabel: "Fixo", img: "Cards/af.png" },
+      { id: "rg", name: "Rancid Gas", role: "efeito", roleLabel: "Fixo", img: "Cards/rg.png" },
+      { id: "ae", name: "Astral Echo", role: "efeito", roleLabel: "Fixo", img: "Cards/ae.png" },
+      { id: "tt", name: "Team Tactics", role: "efeito", roleLabel: "Fixo", img: "Cards/tt.png" },
+
+      // ESPECÍFICO
+      { id: "sot", name: "Sands of Time", role: "especifico", roleLabel: "Espec.", img: "Cards/sot.png" }
+    ];
+
+    const AFFLICTION_ACTIVATORS_FOR_PB = [
+      "ad", "bi", "ds", "fb", "gs", "tp", "ra", "rs", "rr", "bb", "ma", "am", "sot"
+    ];
+
+    const STORAGE_KEY = "tt2_user_decks_v1";
+    const BASE_STORAGE_KEY = "tt2_base_lvl_v1";
+
+    let decks = [
+      [null, null, null],
+      [null, null, null],
+      [null, null, null],
+      [null, null, null],
+      [null, null, null],
+      [null, null, null]
+    ];
+
+    let currentSelecting = null;
+
+    function getBaseLevel() {
+      const input = document.getElementById("deckBaseLevel");
+      let base = parseInt(input.value, 10);
+      return isNaN(base) ? 0 : base;
+    }
+
+    function loadSavedData() {
+      try {
+        const savedDecks = localStorage.getItem(STORAGE_KEY);
+        if (savedDecks) {
+          const parsed = JSON.parse(savedDecks);
+          if (Array.isArray(parsed) && parsed.length === 6) decks = parsed;
+        }
+
+        const savedBase = localStorage.getItem(BASE_STORAGE_KEY);
+        if (savedBase) {
+          document.getElementById("deckBaseLevel").value = savedBase;
+        }
+      } catch (e) {
+        console.error("Erro ao carregar dados:", e);
+      }
+    }
+
+    function saveDecks() {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(decks));
+      } catch (e) {
+        console.error("Erro ao salvar decks:", e);
+      }
+    }
+
+    function saveBaseLevel() {
+      try {
+        localStorage.setItem(BASE_STORAGE_KEY, document.getElementById("deckBaseLevel").value);
+      } catch (e) {
+        console.error("Erro ao salvar base level:", e);
+      }
+    }
+
+    function calculateDeckLevels(deck) {
+      const base = getBaseLevel();
+      const cardDatas = deck.map(id => id ? CARDS.find(c => c.id === id) : null);
+
+      if (cardDatas.some(c => c === null)) {
+        return {
+          statusText: `${deck.filter(c => c !== null).length}/3`,
+          statusClass: "status-incomplete",
+          levels: [null, null, null],
+          effectiveRoles: cardDatas.map(c => c ? c.role : null),
+          effectiveLabels: cardDatas.map(c => c ? c.roleLabel : "")
+        };
+      }
+
+      let roles = cardDatas.map(c => c.role);
+      let roleLabels = cardDatas.map(c => c.roleLabel);
+
+      const hasPB = deck.includes("pb");
+      if (hasPB) {
+        const affIdx = deck.findIndex(id => id !== "pb" && AFFLICTION_ACTIVATORS_FOR_PB.includes(id));
+        if (affIdx !== -1) {
+          roles[affIdx] = "especifico";
+          roleLabels[affIdx] = "Espec.";
+        }
+      }
+
+      const counts = { dano: 0, buff: 0, efeito: 0, especifico: 0 };
+      roles.forEach(r => counts[r] = (counts[r] || 0) + 1);
+
+      let ruleName = "";
+      const levels = [0, 0, 0];
+
+      if (counts.dano === 1 && counts.especifico === 1 && counts.buff === 1) {
+        ruleName = "Regra 5";
+        roles.forEach((r, idx) => {
+          if (r === "dano") levels[idx] = Math.max(0, base + 10);
+          else if (r === "especifico") levels[idx] = Math.max(20, base - 30);
+          else if (r === "buff") levels[idx] = Math.max(0, base + 10);
+        });
+      }
+      else if (counts.dano === 1 && counts.buff === 1 && counts.efeito === 1) {
+        ruleName = "Regra 1";
+        roles.forEach((r, idx) => {
+          if (r === "dano") levels[idx] = Math.max(0, base + 10);
+          else if (r === "buff") levels[idx] = Math.max(0, base);
+          else if (r === "efeito") levels[idx] = Math.max(0, base - 20);
+        });
+      }
+      else if (counts.dano === 2 && counts.buff === 1) {
+        ruleName = "Regra 2";
+        roles.forEach((r, idx) => {
+          if (r === "dano") levels[idx] = Math.max(0, base - 10);
+          else if (r === "buff") levels[idx] = Math.max(0, base + 10);
+        });
+      }
+      else if (counts.dano === 1 && counts.buff === 2) {
+        ruleName = "Regra 3";
+        roles.forEach((r, idx) => {
+          if (r === "dano") levels[idx] = Math.max(0, base + 10);
+          else if (r === "buff") levels[idx] = Math.max(0, base - 10);
+        });
+      }
+      else if (counts.dano === 1 && counts.efeito === 2) {
+        ruleName = "Regra 4";
+        roles.forEach((r, idx) => {
+          if (r === "dano") levels[idx] = Math.max(0, base + 10);
+          else if (r === "efeito") levels[idx] = Math.max(0, base - 10);
+        });
+      }
+      else {
+        ruleName = "Misto";
+        roles.forEach((r, idx) => {
+          if (r === "dano") levels[idx] = Math.max(0, base + 10);
+          else if (r === "buff") levels[idx] = Math.max(0, base);
+          else if (r === "efeito") levels[idx] = Math.max(0, base - 10);
+          else if (r === "especifico") levels[idx] = Math.max(20, base - 30);
+        });
+      }
+
+      // AJUSTE AMPLIFY ('am')
+      const amIndex = deck.indexOf("am");
+      if (amIndex !== -1) {
+        levels[amIndex] = levels[amIndex] + 1;
+        const bonusAmplify = Math.ceil(levels[amIndex] / 10);
+        [0, 1, 2].forEach(idx => {
+          if (idx !== amIndex) {
+            levels[idx] = Math.max(0, levels[idx] - bonusAmplify);
+          }
+        });
+      }
+
+      const isCustom = ruleName === "Misto";
+      return {
+        statusText: ruleName,
+        statusClass: isCustom ? "status-custom" : "status-complete",
+        levels,
+        effectiveRoles: roles,
+        effectiveLabels: roleLabels
+      };
+    }
+
+    function renderDecks() {
+      const container = document.getElementById("decksGrid");
+      container.innerHTML = "";
+
+      decks.forEach((deck, dIdx) => {
+        const deckDiv = document.createElement("div");
+        deckDiv.className = "deck-row-card";
+
+        const deckCalc = calculateDeckLevels(deck);
+
+        deckDiv.innerHTML = `
+          <div class="deck-side-info">
+            <span class="deck-num">#${dIdx + 1}</span>
+            <span class="deck-rule-tag ${deckCalc.statusClass}">${deckCalc.statusText}</span>
+          </div>
+          <div class="deck-slots-row" id="slots-deck-${dIdx}"></div>
+        `;
+
+        const slotsContainer = deckDiv.querySelector(`#slots-deck-${dIdx}`);
+
+        deck.forEach((cardId, sIdx) => {
+          const slot = document.createElement("div");
+          const isCurrent = currentSelecting && currentSelecting.deckIndex === dIdx && currentSelecting.slotIndex === sIdx;
+          slot.className = `slot-box ${cardId ? "filled" : ""} ${isCurrent ? "active-selecting" : ""}`;
+
+          if (cardId) {
+            const cardData = CARDS.find(c => c.id === cardId) || { name: cardId, role: "dano", roleLabel: "Dano", img: "Cards/wc.png" };
+            const sugLvl = deckCalc.levels[sIdx];
+            const currentRole = deckCalc.effectiveRoles[sIdx] || cardData.role;
+            const currentRoleLabel = deckCalc.effectiveLabels[sIdx] || cardData.roleLabel;
+            const lvlBadge = sugLvl !== null ? `<span class="slot-sug-lvl">${sugLvl}</span>` : "";
+
+            slot.innerHTML = `
+              <img src="${cardData.img}" class="slot-img" alt="${cardData.name}" onerror="this.src='Cards/wc.png'">
+              <span class="slot-badge-role role-${currentRole}">${currentRoleLabel}</span>
+              ${lvlBadge}
+              <button class="btn-remove-card" title="Remover">&times;</button>
+            `;
+
+            slot.querySelector(".btn-remove-card").onclick = (e) => {
+              e.stopPropagation();
+              removeCard(dIdx, sIdx);
+            };
+
+            slot.onclick = () => openPicker(dIdx, sIdx);
+          } else {
+            slot.innerHTML = `
+              <span class="slot-empty-icon">+</span>
+              <span class="slot-empty-text">Carta ${sIdx + 1}</span>
+            `;
+            slot.onclick = () => openPicker(dIdx, sIdx);
+          }
+
+          slotsContainer.appendChild(slot);
+        });
+
+        container.appendChild(deckDiv);
+      });
+    }
+
+    function removeCard(dIdx, sIdx) {
+      decks[dIdx][sIdx] = null;
+      saveDecks();
+      renderDecks();
+    }
+
+    function resetAllDecks() {
+      if (confirm("Limpar todos os decks?")) {
+        decks = [
+          [null, null, null],
+          [null, null, null],
+          [null, null, null],
+          [null, null, null],
+          [null, null, null],
+          [null, null, null]
+        ];
+        saveDecks();
+        renderDecks();
+      }
+    }
+
+    function getUsedCardIds(excludeDeckIdx, excludeSlotIdx) {
+      const used = new Set();
+      decks.forEach((deck, dIdx) => {
+        deck.forEach((cardId, sIdx) => {
+          if (cardId && !(dIdx === excludeDeckIdx && sIdx === excludeSlotIdx)) {
+            used.add(cardId);
+          }
+        });
+      });
+      return used;
+    }
+
+    function openPicker(dIdx, sIdx) {
+      currentSelecting = { deckIndex: dIdx, slotIndex: sIdx };
+      renderDecks();
+
+      document.getElementById("modalPickerTitle").textContent = `Deck #${dIdx + 1} - Carta ${sIdx + 1}`;
+
+      const usedCards = getUsedCardIds(dIdx, sIdx);
+      const modalBody = document.getElementById("modalBody");
+      modalBody.innerHTML = "";
+
+      const groups = [
+        { key: "dano", title: "Dano (Atacantes / Aflição)", color: "#e74c3c" },
+        { key: "buff", title: "Buff (Amplificação)", color: "#27ae60" },
+        { key: "efeito", title: "Efeito Fixo", color: "#2980b9" },
+        { key: "especifico", title: "Específico", color: "#576574" }
+      ];
+
+      groups.forEach(grp => {
+        const cardsInGrp = CARDS.filter(c => c.role === grp.key);
+        if (!cardsInGrp.length) return;
+
+        const groupDiv = document.createElement("div");
+        groupDiv.innerHTML = `
+          <div class="modal-group-title" style="color: ${grp.color};">
+            <span>●</span> ${grp.title}
+          </div>
+          <div class="modal-cards-grid"></div>
+        `;
+
+        const grid = groupDiv.querySelector(".modal-cards-grid");
+
+        cardsInGrp.forEach(card => {
+          const isUsed = usedCards.has(card.id);
+          const item = document.createElement("div");
+          item.className = `modal-card-item ${isUsed ? "disabled" : ""}`;
+          item.title = isUsed ? `${card.name} (Em uso)` : card.name;
+
+          item.innerHTML = `<img src="${card.img}" alt="${card.name}" onerror="this.src='Cards/wc.png'">`;
+
+          if (!isUsed) {
+            item.onclick = () => selectCard(card.id);
+          }
+
+          grid.appendChild(item);
+        });
+
+        modalBody.appendChild(groupDiv);
+      });
+
+      document.getElementById("modalPicker").classList.add("open");
+    }
+
+    function selectCard(cardId) {
+      if (!currentSelecting) return;
+      const { deckIndex, slotIndex } = currentSelecting;
+      decks[deckIndex][slotIndex] = cardId;
+      saveDecks();
+      closeModal();
+      renderDecks();
+    }
+
+    function closeModal() {
+      document.getElementById("modalPicker").classList.remove("open");
+      currentSelecting = null;
+      renderDecks();
+    }
+
+    document.getElementById("deckBaseLevel").addEventListener("input", () => {
+      saveBaseLevel();
+      renderDecks();
+    });
+
+    document.getElementById("modalPicker").addEventListener("click", (e) => {
+      if (e.target.id === "modalPicker") {
+        closeModal();
+      }
+    });
+
+    loadSavedData();
+    renderDecks();
+  </script>
+</body>
+</html>
