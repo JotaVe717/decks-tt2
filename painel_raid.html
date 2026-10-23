@@ -477,6 +477,7 @@
       letter-spacing: 0.3px;
     }
 
+    /* METAS DE DANO */
     .bar-meta {
       display: flex;
       justify-content: space-between;
@@ -485,9 +486,10 @@
       align-items: center;
       margin-top: 1px;
     }
-    .label-armor { color: #4facfe; font-weight: 800; display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; }
-    .label-body  { color: #ff5e62; font-weight: 800; display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; }
-    .bar-val     { color: #ffffff; font-size: 10.5px; font-weight: 900; letter-spacing: 0.2px; }
+    .label-armor    { color: #4facfe; font-weight: 800; display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; }
+    .label-body     { color: #ff5e62; font-weight: 800; display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; }
+    .label-skeleton { color: #8fa0b5; font-weight: 800; display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; }
+    .bar-val        { color: #ffffff; font-size: 10.5px; font-weight: 900; letter-spacing: 0.2px; }
 
     .bar-group {
       display: flex;
@@ -575,7 +577,7 @@
         font-size: 7.5px;
         padding: 1px 3px;
       }
-      .badge-hp-perc, .bar-meta, .label-armor, .label-body, .bar-val {
+      .badge-hp-perc, .bar-meta, .label-armor, .label-body, .label-skeleton, .bar-val {
         font-size: 9px;
       }
       .bar-track {
@@ -1031,8 +1033,8 @@
 
         if (isPartDead) {
           statusTagHtml = '<span class="badge-destroyed">DESTRUÍDA</span>';
-          labelTipo = '🛡️ Armadura';
-          classLabel = 'label-armor';
+          labelTipo = '💀 Esqueleto';
+          classLabel = 'label-skeleton';
           hpAtual = 0;
           percAtual = 0;
           classBarra = 'bar-fill-armor';
@@ -1112,6 +1114,9 @@
         el.className = `anatomy-card area-${getAreaClass(part.key)} ${isDead ? 'part-dead' : (isSkip ? 'has-skip' : '')}`;
         
         let statusTagHtml = '';
+        let labelTipo = isDead ? '💀 Esqueleto' : '❤️ Corpo';
+        let classLabel = isDead ? 'label-skeleton' : 'label-body';
+
         if (isDead) {
           statusTagHtml = '<span class="badge-destroyed">DESTRUÍDA</span>';
         } else if (isSkip) {
@@ -1128,7 +1133,7 @@
 
           <div class="bar-group">
             <div class="bar-meta">
-              <span class="label-body">❤️ Corpo</span>
+              <span class="${classLabel}">${labelTipo}</span>
               <span class="bar-val">${isDead ? '0' : 'Alvo'}</span>
             </div>
             <div class="bar-track">
