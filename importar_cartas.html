@@ -25,12 +25,10 @@
     }
     .back-btn {
       align-self: flex-start;
-      max-width: 960px;
       margin: 0 auto 10px auto;
-      width: 100%;
       text-decoration: none;
       color: #8fa0b5;
-      font-size: 13.5px;
+      font-size: 13px;
       font-weight: 600;
       display: inline-flex;
       align-items: center;
@@ -42,11 +40,10 @@
     }
     .container {
       width: 100%;
-      max-width: 960px;
       background: #18202a;
       border: 1px solid #283545;
       border-radius: 14px;
-      padding: 14px 8px;
+      padding: 14px 12px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
     .title {
@@ -55,104 +52,87 @@
       font-weight: 800;
       letter-spacing: 0.8px;
       text-transform: uppercase;
-      margin-bottom: 3px;
+      margin-bottom: 12px;
     }
     .title span {
       color: #f5a623;
     }
-    .subtitle {
-      text-align: center;
-      font-size: 11.5px;
-      color: #8fa0b5;
-      margin-bottom: 14px;
-    }
 
-    /* ENTRADA DE DADOS E SELETOR */
-    .import-card {
-      background: #212c3a;
-      border: 1px dashed #3a4b60;
+    /* BARRA DE ENTRADA COMPACTA INTEGRADA */
+    .import-inline-bar {
+      background: #141c26;
+      border: 1px solid #2d3e52;
       border-radius: 10px;
-      padding: 10px;
+      padding: 6px 8px;
       margin-bottom: 14px;
       display: flex;
-      flex-direction: column;
+      align-items: center;
       gap: 8px;
+      width: 100%;
     }
-    .import-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      align-items: center;
-    }
-    .clan-select-group {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex: 1;
-      min-width: 180px;
-    }
-    .filter-select {
-      flex: 1;
-      background: #141c24;
-      border: 1px solid #324357;
-      border-radius: 6px;
-      color: #ffffff;
-      padding: 7px 9px;
-      font-size: 11.5px;
-      outline: none;
-      cursor: pointer;
-    }
-    .filter-select:focus { border-color: #f5a623; }
-
     .btn-paste {
       background: #f5a623;
       border: none;
       color: #0f141c;
       font-weight: 800;
-      padding: 7px 14px;
+      padding: 8px 14px;
       border-radius: 6px;
       cursor: pointer;
       font-size: 12px;
       display: inline-flex;
       align-items: center;
       gap: 5px;
+      white-space: nowrap;
+      flex-shrink: 0;
       transition: opacity 0.2s;
     }
     .btn-paste:hover { opacity: 0.9; }
+
     .btn-secondary {
-      background: #18202a;
-      border: 1px solid #324357;
+      background: #1e2a3a;
+      border: 1px solid #36495e;
       color: #d1dbe5;
-      font-weight: 600;
-      padding: 7px 12px;
+      font-weight: 700;
+      padding: 8px 12px;
       border-radius: 6px;
       cursor: pointer;
       font-size: 12px;
-      transition: border-color 0.2s;
+      white-space: nowrap;
+      flex-shrink: 0;
+      transition: border-color 0.2s, color 0.2s;
     }
     .btn-secondary:hover { border-color: #f5a623; color: #fff; }
 
-    textarea {
-      width: 100%;
-      height: 44px;
-      background: #141c24;
-      border: 1px solid #2d3c4e;
+    .json-inline-input {
+      flex: 1;
+      height: 34px;
+      background: #0d131a;
+      border: 1px solid #283749;
       border-radius: 6px;
-      padding: 6px 8px;
+      padding: 0 10px;
       color: #a0aec0;
       font-family: monospace;
-      font-size: 10.5px;
-      resize: vertical;
+      font-size: 11px;
+      outline: none;
+      min-width: 0;
+      transition: border-color 0.2s;
     }
-    textarea:focus { outline: none; border-color: #f5a623; }
+    .json-inline-input:focus { border-color: #f5a623; }
 
-    /* SUMÁRIO */
+    /* ESTRUTURA PARA ALINHAR SUMÁRIO E RESSONÂNCIA */
+    .top-profile-resonance-row {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    /* SUMÁRIO DO JOGADOR */
     .player-summary {
       background: #121922;
       border: 1px solid #283545;
-      border-radius: 8px;
-      padding: 8px 10px;
-      margin-bottom: 14px;
+      border-radius: 10px;
+      padding: 10px 12px;
       display: none;
       grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
       gap: 6px;
@@ -181,7 +161,6 @@
       border: 1.5px solid #2b394a;
       border-radius: 10px;
       padding: 10px;
-      margin-bottom: 16px;
       display: none;
       flex-direction: column;
       gap: 8px;
@@ -213,8 +192,6 @@
       border: 1px solid #202d3c;
     }
     .resonance-category-badge {
-      width: 40px;
-      height: 40px;
       border-radius: 6px;
       display: flex;
       flex-direction: column;
@@ -225,12 +202,9 @@
       box-shadow: 0 3px 8px rgba(0,0,0,0.4);
     }
     .resonance-category-badge img {
-      width: 22px;
-      height: 22px;
       object-fit: contain;
     }
     .resonance-category-badge span {
-      font-size: 7.5px;
       font-weight: 800;
       text-transform: uppercase;
       letter-spacing: 0.4px;
@@ -255,11 +229,10 @@
     .resonance-cards-strip {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      gap: 4px;
       flex: 1;
     }
 
-    /* ---------------- 2. CATÁLOGO COMPLETO (3 GRUPOS LADO A LADO) ---------------- */
+    /* ---------------- 2. CATÁLOGO COMPLETO ---------------- */
     .catalog-wrapper {
       display: none;
       flex-direction: column;
@@ -279,11 +252,9 @@
       gap: 6px;
     }
 
-    /* SEMPRE 3 GRUPOS LADO A LADO (DESKTOP E MOBILE) */
     .catalog-3-groups {
       display: grid;
       grid-template-columns: repeat(3, 1fr) !important;
-      gap: 5px;
       align-items: start;
       width: 100%;
     }
@@ -291,10 +262,10 @@
       background: #141c26;
       border: 1px solid #263546;
       border-radius: 8px;
-      padding: 6px 4px;
+      padding: 8px 6px;
       display: flex;
       flex-direction: column;
-      gap: 5px;
+      gap: 6px;
       min-width: 0;
     }
     .catalog-group-header {
@@ -323,18 +294,180 @@
     .color-affliction { color: #38a1f3; }
     .color-support { color: #4cd964; }
 
-    /* Desktop (>600px): 2 colunas por grupo = 6 colunas totais */
+    /* ---------------- DESIGN DO CARD ---------------- */
+    .card-tile {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: 6px;
+      background: #0f141c;
+      border: 1.5px solid #2b394a;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      user-select: none;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+      min-width: 0;
+      width: 100%;
+    }
+    .card-tile:hover, .card-tile.active-selected {
+      transform: translateY(-2px);
+      border-color: #f5a623 !important;
+      z-index: 20;
+    }
+    .card-thumb {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 4px;
+    }
+    .card-overlay-lvl {
+      position: absolute;
+      background: rgba(15, 20, 28, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      color: #ffffff;
+      font-weight: 800;
+      border-radius: 3px;
+      line-height: 1;
+      text-shadow: 0 1px 2px #000;
+      pointer-events: none;
+    }
+
+    .border-burst { border-color: rgba(255, 87, 34, 0.45); }
+    .border-affliction { border-color: rgba(56, 161, 243, 0.45); }
+    .border-support { border-color: rgba(76, 217, 100, 0.45); }
+
+    .empty-state {
+      text-align: center;
+      color: #8fa0b5;
+      font-size: 13px;
+      padding: 30px 10px;
+    }
+
+    /* =========================================================
+       DESKTOP DE MESA (> 600px): ALINHAMENTO JUSTO E PERFEITO
+    ========================================================= */
     @media (min-width: 601px) {
+      .container {
+        width: fit-content;
+        max-width: 90vw;
+        margin: 0 auto;
+        padding: 16px 20px;
+      }
+      .back-btn {
+        width: fit-content;
+        margin: 0 auto 10px auto;
+      }
+      .import-inline-bar {
+        max-width: 580px;
+        margin: 0 auto 16px auto;
+      }
+
+      /* Alinhamento superior comprimido */
+      .top-profile-resonance-row {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: stretch;
+        gap: 16px;
+        width: fit-content;
+        margin: 0 auto 18px auto;
+      }
+
+      .player-summary {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        width: 175px;
+        padding: 12px 14px;
+        border-radius: 10px;
+        margin-bottom: 0;
+        gap: 6px;
+        text-align: left;
+      }
+      .summary-item {
+        border-bottom: 1px solid rgba(43, 57, 74, 0.4);
+        padding-bottom: 4px;
+      }
+      .summary-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+      }
+      .summary-item span {
+        font-size: 8.5px;
+      }
+      .summary-item strong {
+        font-size: 13.5px;
+      }
+
+      /* Ressonância compactada */
+      .resonance-section {
+        width: fit-content;
+        margin-bottom: 0;
+        padding: 12px 14px;
+      }
+      .resonance-row {
+        display: flex;
+        width: fit-content;
+        gap: 8px;
+        padding: 5px 8px;
+      }
+      .resonance-category-badge {
+        width: 44px;
+        height: 44px;
+      }
+      .resonance-category-badge img {
+        width: 22px;
+        height: 22px;
+      }
+      .resonance-category-badge span {
+        font-size: 7px;
+      }
+      .resonance-cards-strip {
+        display: flex;
+        gap: 6px;
+      }
+      .resonance-cards-strip .card-tile {
+        width: 44px;
+        height: 44px;
+        flex-shrink: 0;
+      }
+
+      /* Catálogo perfeitamente contido e centralizado */
+      .catalog-wrapper {
+        width: fit-content;
+        margin: 0 auto;
+      }
+      .catalog-3-groups {
+        display: flex !important;
+        justify-content: center;
+        gap: 14px;
+        width: fit-content;
+      }
+      .catalog-group {
+        width: fit-content;
+        padding: 8px 10px;
+      }
       .cards-grid-catalog {
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 5px;
-        width: 100%;
+        grid-template-columns: repeat(3, 44px) !important;
+        gap: 6px;
       }
+      .cards-grid-catalog .card-tile {
+        width: 44px;
+        height: 44px;
+      }
+
       .card-overlay-lvl {
-        font-size: 9.5px;
-        padding: 1px 3px;
+        font-size: 9px;
+        padding: 1px 2.5px;
+        bottom: 1.5px;
+        right: 1.5px;
       }
+
+      /* Tooltip flutuante desktop */
       .card-tooltip {
         visibility: hidden;
         opacity: 0;
@@ -372,8 +505,36 @@
       #mobileCardDrawer { display: none !important; }
     }
 
-    /* Mobile (<=600px): 3 colunas por grupo = 9 colunas totais lado a lado */
+    /* =========================================================
+       MOBILE (<= 600px): EXATAMENTE O LAYOUT PERFEITO ANTERIOR
+    ========================================================= */
     @media (max-width: 600px) {
+      .import-inline-bar {
+        padding: 6px;
+        gap: 5px;
+      }
+      .btn-paste {
+        padding: 7px 10px;
+        font-size: 11px;
+      }
+      .btn-secondary {
+        padding: 7px 10px;
+        font-size: 11px;
+      }
+      .json-inline-input {
+        height: 32px;
+        font-size: 10px;
+        padding: 0 6px;
+      }
+
+      .top-profile-resonance-row {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+      .player-summary {
+        margin-bottom: 0;
+      }
       .cards-grid-catalog {
         display: grid;
         grid-template-columns: repeat(3, 1fr) !important;
@@ -443,62 +604,6 @@
       .drawer-desc { font-size: 10.5px; color: #d1dbe5; line-height: 1.35; }
     }
 
-    /* ---------------- DESIGN DO CARD ---------------- */
-    .card-tile {
-      position: relative;
-      aspect-ratio: 1 / 1;
-      border-radius: 5px;
-      background: #0f141c;
-      border: 1.5px solid #2b394a;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      user-select: none;
-      transition: transform 0.15s ease, border-color 0.15s ease;
-      min-width: 0;
-      width: 100%;
-    }
-    .card-tile:hover, .card-tile.active-selected {
-      transform: translateY(-2px);
-      border-color: #f5a623 !important;
-      z-index: 20;
-    }
-    .card-thumb {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      border-radius: 4px;
-    }
-    .card-overlay-lvl {
-      position: absolute;
-      bottom: 1.5px;
-      right: 1.5px;
-      background: rgba(15, 20, 28, 0.92);
-      border: 1px solid rgba(255, 255, 255, 0.3);
-      color: #ffffff;
-      font-size: 9px;
-      font-weight: 800;
-      padding: 1px 2px;
-      border-radius: 3px;
-      line-height: 1;
-      text-shadow: 0 1px 2px #000;
-      pointer-events: none;
-    }
-
-    .border-burst { border-color: rgba(255, 87, 34, 0.45); }
-    .border-affliction { border-color: rgba(56, 161, 243, 0.45); }
-    .border-support { border-color: rgba(76, 217, 100, 0.45); }
-
-    .empty-state {
-      text-align: center;
-      color: #8fa0b5;
-      font-size: 13px;
-      padding: 30px 10px;
-    }
-
     .tooltip-header {
       display: flex;
       align-items: center;
@@ -548,71 +653,65 @@
 
   <div class="container">
     <div class="title">Importar <span>Cartas & Níveis</span></div>
-    <div class="subtitle">Cole o seu JSON ou selecione um membro do clã para inspecionar as cartas</div>
 
-    <!-- ENTRADA E SELETOR -->
-    <div class="import-card">
-      <div class="import-actions">
-        <button class="btn-paste" onclick="colarDoClipboard()">📋 Paste (Colar)</button>
-        <button class="btn-secondary" onclick="processarTextoManual()">Processar</button>
-        
-        <div class="clan-select-group">
-          <select id="clanMemberSelect" class="filter-select" onchange="selecionarMembroClan(this.value)">
-            <option value="">👤 Buscar membro do clã...</option>
-          </select>
-        </div>
-      </div>
-      <textarea id="jsonInput" placeholder='Cole seu JSON exportado aqui'></textarea>
+    <!-- BARRA COMPACTA EM LINHA ÚNICA -->
+    <div class="import-inline-bar">
+      <button class="btn-paste" onclick="colarDoClipboard()">📋 Colar</button>
+      <button class="btn-secondary" onclick="processarTextoManual()">Processar</button>
+      <input type="text" id="jsonInput" class="json-inline-input" placeholder="Cole o JSON exportado aqui..." onkeydown="if(event.key==='Enter') processarTextoManual()">
     </div>
 
-    <!-- SUMÁRIO DO JOGADOR -->
-    <div class="player-summary" id="playerSummary">
-      <div class="summary-item"><span>Max Stage</span><strong id="sumStage">-</strong></div>
-      <div class="summary-item"><span>Raid Level</span><strong id="sumRaidLvl">-</strong></div>
-      <div class="summary-item"><span>Soma Níveis</span><strong id="sumLvlSum">-</strong></div>
-      <div class="summary-item"><span>Wildcards</span><strong id="sumWildcards" style="color: #f5a623;">-</strong></div>
-      <div class="summary-item"><span>Necrobear</span><strong id="sumNecrobear" style="color: #a29bfe;">-</strong></div>
+    <!-- WRAPPER DO SUMÁRIO + RESSONÂNCIA -->
+    <div class="top-profile-resonance-row" id="topProfileRow">
+      <!-- SUMÁRIO DO JOGADOR -->
+      <div class="player-summary" id="playerSummary">
+        <div class="summary-item"><span>Max Stage</span><strong id="sumStage">-</strong></div>
+        <div class="summary-item"><span>Raid Level</span><strong id="sumRaidLvl">-</strong></div>
+        <div class="summary-item"><span>Soma Níveis</span><strong id="sumLvlSum">-</strong></div>
+        <div class="summary-item"><span>Wildcards</span><strong id="sumWildcards" style="color: #f5a623;">-</strong></div>
+        <div class="summary-item"><span>Necrobear</span><strong id="sumNecrobear" style="color: #a29bfe;">-</strong></div>
+      </div>
+
+      <!-- RESSONÂNCIA -->
+      <div class="resonance-section" id="secResonance">
+        <div class="resonance-header">
+          <span class="resonance-title">⚡ Ressonância</span>
+        </div>
+
+        <!-- LINHA 1: EXPLOSÃO -->
+        <div class="resonance-row">
+          <div class="resonance-category-badge badge-burst-res">
+            <img src="Cards/b.png" alt="Burst" onerror="this.src='Cards/wc.png'">
+            <span>Burst</span>
+          </div>
+          <div class="resonance-cards-strip" id="resStripBurst"></div>
+        </div>
+
+        <!-- LINHA 2: AFLIÇÃO -->
+        <div class="resonance-row">
+          <div class="resonance-category-badge badge-affliction-res">
+            <img src="Cards/a.png" alt="Affliction" onerror="this.src='Cards/wc.png'">
+            <span>Aflição</span>
+          </div>
+          <div class="resonance-cards-strip" id="resStripAffliction"></div>
+        </div>
+
+        <!-- LINHA 3: SUPORTE (s.png) -->
+        <div class="resonance-row">
+          <div class="resonance-category-badge badge-support-res">
+            <img src="Cards/s.png" alt="Support" onerror="this.src='Cards/wc.png'">
+            <span>Suporte</span>
+          </div>
+          <div class="resonance-cards-strip" id="resStripSupport"></div>
+        </div>
+      </div>
     </div>
 
     <div id="emptyMessage" class="empty-state">
-      Nenhum perfil carregado. Cole o JSON ou selecione um colega de clã na lista suspensa acima.
+      Nenhum perfil carregado. Clique em <strong>Colar</strong> ou insira o JSON na barra acima para visualizar as cartas.
     </div>
 
-    <!-- ================= 1. RESSONÂNCIA (6 MAIS FORTES DE CADA TIPO) ================= -->
-    <div class="resonance-section" id="secResonance">
-      <div class="resonance-header">
-        <span class="resonance-title">⚡ Ressonância</span>
-      </div>
-
-      <!-- LINHA 1: EXPLOSÃO -->
-      <div class="resonance-row">
-        <div class="resonance-category-badge badge-burst-res">
-          <img src="Cards/b.png" alt="Burst" onerror="this.src='Cards/wc.png'">
-          <span>Burst</span>
-        </div>
-        <div class="resonance-cards-strip" id="resStripBurst"></div>
-      </div>
-
-      <!-- LINHA 2: AFLIÇÃO -->
-      <div class="resonance-row">
-        <div class="resonance-category-badge badge-affliction-res">
-          <img src="Cards/a.png" alt="Affliction" onerror="this.src='Cards/wc.png'">
-          <span>Aflição</span>
-        </div>
-        <div class="resonance-cards-strip" id="resStripAffliction"></div>
-      </div>
-
-      <!-- LINHA 3: SUPORTE (s.png) -->
-      <div class="resonance-row">
-        <div class="resonance-category-badge badge-support-res">
-          <img src="Cards/s.png" alt="Support" onerror="this.src='Cards/wc.png'">
-          <span>Suporte</span>
-        </div>
-        <div class="resonance-cards-strip" id="resStripSupport"></div>
-      </div>
-    </div>
-
-    <!-- ================= 2. CATÁLOGO COMPLETO (3 GRUPOS LADO A LADO) ================= -->
+    <!-- ================= 2. CATÁLOGO COMPLETO ================= -->
     <div class="catalog-wrapper" id="secCatalog">
       <div class="catalog-header-title">
         <span>🃏 Catálogo Completo por Categoria</span>
@@ -661,8 +760,6 @@
   </div>
 
   <script>
-    const SPREADSHEET_ID_PRINCIPAL = '1xo8zcjYt2Kiytq-D9vF9oO3wamCcBKbvH1fn7fqtsSM';
-
     const CARD_METADATA = {
       "MoonBeam": { name: "Moon Beam", rank: "A", type: "Burst", img: "Cards/mb.png", target: "Torso/Braços", desc: "Foco exclusivo de dano explosivo." },
       "Fragmentize": { name: "Fragmentize", rank: "B", type: "Burst", img: "Cards/fr.png", target: "Armadura", desc: "Dano aumentado contra armadura." },
@@ -712,101 +809,20 @@
       "BattleDrums": { name: "Battle Drums", rank: "B", type: "Support", img: "Cards/bd.png", target: "Membros", desc: "Tambores de guerra." }
     };
 
-    function carregarAbaJSONP(nomeAba) {
-      return new Promise((resolve, reject) => {
-        const callbackName = 'googleQueryCallback_' + Math.floor(Math.random() * 100000);
-        window[callbackName] = function(data) {
-          delete window[callbackName];
-          document.body.removeChild(script);
-          if (data && data.table) resolve(data.table);
-          else reject(new Error('Formato inválido'));
-        };
-
-        const script = document.createElement('script');
-        script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID_PRINCIPAL}/gviz/tq?tqx=responseHandler:${callbackName}&sheet=${encodeURIComponent(nomeAba)}`;
-        script.onerror = () => {
-          delete window[callbackName];
-          document.body.removeChild(script);
-          reject(new Error('Erro ao carregar ' + nomeAba));
-        };
-        document.body.appendChild(script);
-      });
-    }
-
-    async function inicializarSeletorMembros() {
-      try {
-        const tabela = await carregarAbaJSONP('TT_Jogadores');
-        const rows = tabela.rows || [];
-        const nomesUnicos = new Set();
-
-        rows.forEach(r => {
-          const nome = r.c && r.c[3]?.v;
-          if (nome) nomesUnicos.add(String(nome).trim());
-        });
-
-        const select = document.getElementById('clanMemberSelect');
-        Array.from(nomesUnicos).sort().forEach(nome => {
-          const opt = document.createElement('option');
-          opt.value = nome;
-          opt.textContent = nome;
-          select.appendChild(opt);
-        });
-      } catch (e) {
-        console.log('Não foi possível carregar a lista de membros do clã automaticamente.', e);
-      }
-    }
-
-    async function selecionarMembroClan(nomeJogador) {
-      if (!nomeJogador) return;
-      document.getElementById('jsonInput').value = `Carregando dados de ${nomeJogador}...`;
-      
-      try {
-        const tabela = await carregarAbaJSONP('TT_Jogadores');
-        const rows = tabela.rows || [];
-        
-        let jogadorEncontrado = null;
-        rows.forEach(r => {
-          const c = r.c;
-          if (c && String(c[3]?.v || '').trim().toLowerCase() === nomeJogador.toLowerCase()) {
-            jogadorEncontrado = c;
-          }
-        });
-
-        if (jogadorEncontrado) {
-          document.getElementById("playerSummary").style.display = "grid";
-          document.getElementById("sumStage").textContent = "-";
-          document.getElementById("sumRaidLvl").textContent = "-";
-          document.getElementById("sumLvlSum").textContent = jogadorEncontrado[4]?.f || (jogadorEncontrado[4]?.v + 'B Dano') || "-";
-          document.getElementById("sumWildcards").textContent = "-";
-          document.getElementById("sumNecrobear").textContent = "-";
-
-          document.getElementById("emptyMessage").style.display = "none";
-          document.getElementById("jsonInput").value = `// Dados de ${nomeJogador} carregados via resumo do clã. Para cartas detalhadas, cole o JSON completo do jogo.`;
-          
-          document.getElementById("secResonance").style.display = "none";
-          document.getElementById("secCatalog").style.display = "none";
-        } else {
-          alert(`Membro "${nomeJogador}" não localizado nos registros recentes.`);
-        }
-      } catch (err) {
-        alert("Erro ao buscar dados do membro na API.");
-      }
-    }
-
     async function colarDoClipboard() {
       try {
         const text = await navigator.clipboard.readText();
         document.getElementById("jsonInput").value = text;
         processarJSON(text);
       } catch (err) {
-        alert("Permissão negada. Cole o JSON manualmente no campo abaixo.");
+        alert("Permissão negada. Cole o JSON manualmente no campo.");
       }
     }
 
     function processarTextoManual() {
       const text = document.getElementById("jsonInput").value.trim();
-      if (!text || text.startsWith('//')) {
-        alert("Cole um JSON válido do jogo na caixa de texto.");
+      if (!text) {
+        alert("Cole um JSON válido do jogo no campo.");
         return;
       }
       processarJSON(text);
@@ -820,7 +836,7 @@
           return;
         }
 
-        document.getElementById("playerSummary").style.display = "grid";
+        document.getElementById("playerSummary").style.display = (window.innerWidth > 600) ? "flex" : "grid";
         document.getElementById("sumStage").textContent = data.playerStats?.["Max Prestige Stage"] || "-";
         document.getElementById("sumRaidLvl").textContent = data.raidStats?.["Raid Level"] || "-";
         document.getElementById("sumLvlSum").textContent = data.raidStats?.["Total Raid Card Levels"] || "-";
@@ -842,18 +858,17 @@
           else supportList.push(cardObj);
         }
 
-        // Ordena por nível decrescente (mais fortes primeiro)
         burstList.sort((a, b) => b.level - a.level);
         afflictionList.sort((a, b) => b.level - a.level);
         supportList.sort((a, b) => b.level - a.level);
 
-        // 1. Renderiza a Ressonância (Top 6 de cada tipo)
+        // 1. Ressonância (Top 6)
         document.getElementById("secResonance").style.display = "flex";
         renderStrip("resStripBurst", burstList.slice(0, 6), "border-burst");
         renderStrip("resStripAffliction", afflictionList.slice(0, 6), "border-affliction");
         renderStrip("resStripSupport", supportList.slice(0, 6), "border-support");
 
-        // 2. Renderiza o Catálogo Restante (da 7ª em diante, sem repetir a Ressonância)
+        // 2. Catálogo Restante (sem repetir)
         const remBurst = burstList.slice(6);
         const remAffliction = afflictionList.slice(6);
         const remSupport = supportList.slice(6);
@@ -934,7 +949,12 @@
       }
     });
 
-    window.addEventListener('load', inicializarSeletorMembros);
+    window.addEventListener('resize', () => {
+      const pSummary = document.getElementById("playerSummary");
+      if (pSummary && pSummary.style.display !== "none" && pSummary.style.display !== "") {
+        pSummary.style.display = (window.innerWidth > 600) ? "flex" : "grid";
+      }
+    });
   </script>
 </body>
 </html>
