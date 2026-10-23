@@ -24,7 +24,7 @@
     }
     .back-btn {
       align-self: flex-start;
-      max-width: 900px;
+      max-width: 960px;
       margin: 0 auto 12px auto;
       width: 100%;
       text-decoration: none;
@@ -41,11 +41,11 @@
     }
     .container {
       width: 100%;
-      max-width: 900px;
+      max-width: 960px;
       background: #18202a;
       border: 1px solid #283545;
       border-radius: 16px;
-      padding: 16px 10px;
+      padding: 18px 14px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
     .title {
@@ -66,7 +66,7 @@
       margin-bottom: 16px;
     }
 
-    /* ENTRADA DE DADOS */
+    /* ENTRADA DE DADOS E SELETOR */
     .import-card {
       background: #212c3a;
       border: 1px dashed #3a4b60;
@@ -75,7 +75,7 @@
       margin-bottom: 16px;
       display: flex;
       flex-direction: column;
-      gap: 8px;
+      gap: 10px;
     }
     .import-actions {
       display: flex;
@@ -83,41 +83,57 @@
       gap: 8px;
       align-items: center;
     }
+    .clan-select-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: 1;
+      min-width: 200px;
+    }
+    .filter-select {
+      flex: 1;
+      background: #141c24;
+      border: 1px solid #324357;
+      border-radius: 8px;
+      color: #ffffff;
+      padding: 8px 10px;
+      font-size: 12px;
+      outline: none;
+      cursor: pointer;
+    }
+    .filter-select:focus { border-color: #f5a623; }
+
     .btn-paste {
       background: #f5a623;
       border: none;
       color: #0f141c;
       font-weight: 800;
-      padding: 9px 18px;
+      padding: 8px 16px;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 12.5px;
       display: inline-flex;
       align-items: center;
       gap: 6px;
       transition: opacity 0.2s;
     }
-    .btn-paste:hover {
-      opacity: 0.9;
-    }
+    .btn-paste:hover { opacity: 0.9; }
     .btn-secondary {
       background: #18202a;
       border: 1px solid #324357;
       color: #d1dbe5;
       font-weight: 600;
-      padding: 9px 14px;
+      padding: 8px 14px;
       border-radius: 8px;
       cursor: pointer;
-      font-size: 13px;
+      font-size: 12.5px;
       transition: border-color 0.2s;
     }
-    .btn-secondary:hover {
-      border-color: #f5a623;
-      color: #fff;
-    }
+    .btn-secondary:hover { border-color: #f5a623; color: #fff; }
+
     textarea {
       width: 100%;
-      height: 55px;
+      height: 48px;
       background: #141c24;
       border: 1px solid #2d3c4e;
       border-radius: 8px;
@@ -127,20 +143,17 @@
       font-size: 11px;
       resize: vertical;
     }
-    textarea:focus {
-      outline: none;
-      border-color: #f5a623;
-    }
+    textarea:focus { outline: none; border-color: #f5a623; }
 
-    /* SUMÁRIO DO JOGADOR */
+    /* SUMÁRIO */
     .player-summary {
       background: #121922;
       border: 1px solid #283545;
       border-radius: 10px;
-      padding: 12px;
-      margin-bottom: 20px;
+      padding: 10px 12px;
+      margin-bottom: 18px;
       display: none;
-      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
       gap: 8px;
       text-align: center;
     }
@@ -150,65 +163,182 @@
       gap: 2px;
     }
     .summary-item span {
-      font-size: 9.5px;
+      font-size: 9px;
       color: #8fa0b5;
       text-transform: uppercase;
       font-weight: 700;
       letter-spacing: 0.5px;
     }
     .summary-item strong {
-      font-size: 14px;
+      font-size: 13.5px;
       color: #50e3c2;
     }
 
-    /* CATEGORIAS */
-    .section-category {
-      margin-bottom: 22px;
+    /* ---------------- 1. SEÇÃO DE RESSONÂNCIA (6 CARTAS DE CADA TIPO) ---------------- */
+    .resonance-section {
+      background: #121922;
+      border: 1.5px solid #2b394a;
+      border-radius: 12px;
+      padding: 14px;
+      margin-bottom: 24px;
       display: none;
+      flex-direction: column;
+      gap: 12px;
     }
-    .category-header {
+    .resonance-header {
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      gap: 8px;
-      margin-bottom: 8px;
-      padding-bottom: 4px;
-      border-bottom: 1px solid #283545;
+      border-bottom: 1px solid #243344;
+      padding-bottom: 6px;
     }
-    .category-title {
+    .resonance-title {
       font-size: 13px;
       font-weight: 800;
+      color: #f5a623;
       text-transform: uppercase;
       letter-spacing: 0.8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
     }
-    .title-burst { color: #ff5722; }
-    .title-affliction { color: #38a1f3; }
-    .title-support { color: #4cd964; }
+    .resonance-tag {
+      font-size: 10px;
+      color: #8fa0b5;
+      font-weight: 600;
+    }
 
-    /* ESTRITAMENTE 6 COLUNAS */
-    .cards-grid-6 {
+    .resonance-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #16202c;
+      padding: 8px 10px;
+      border-radius: 8px;
+      border: 1px solid #202d3c;
+    }
+    .resonance-category-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      flex-shrink: 0;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    }
+    .resonance-category-badge img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+    }
+    .resonance-category-badge span {
+      font-size: 8px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      line-height: 1;
+    }
+    .badge-burst-res {
+      background: rgba(255, 87, 34, 0.15);
+      border: 1.5px solid #ff5722;
+      color: #ff5722;
+    }
+    .badge-affliction-res {
+      background: rgba(56, 161, 243, 0.15);
+      border: 1.5px solid #38a1f3;
+      color: #38a1f3;
+    }
+    .badge-support-res {
+      background: rgba(76, 217, 100, 0.15);
+      border: 1.5px solid #4cd964;
+      color: #4cd964;
+    }
+
+    .resonance-cards-strip {
       display: grid;
-      grid-template-columns: repeat(6, 1fr) !important;
-      gap: 5px;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 6px;
+      flex: 1;
+    }
+
+    /* ---------------- 2. SEÇÃO DE CATÁLOGO (3 GRUPOS x 2 COLUNAS = 6 COLUNAS) ---------------- */
+    .catalog-wrapper {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .catalog-header-title {
+      font-size: 13.5px;
+      font-weight: 800;
+      color: #8fa0b5;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      border-bottom: 1px solid #283545;
+      padding-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .catalog-3-groups {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      align-items: start;
+    }
+    .catalog-group {
+      background: #141c26;
+      border: 1px solid #263546;
+      border-radius: 10px;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .catalog-group-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #202d3c;
+      padding-bottom: 4px;
+    }
+    .group-title {
+      font-size: 11.5px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .color-burst { color: #ff5722; }
+    .color-affliction { color: #38a1f3; }
+    .color-support { color: #4cd964; }
+
+    /* ESTRITAMENTE 2 COLUNAS DENTRO DE CADA GRUPO */
+    .cards-grid-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 6px;
       width: 100%;
     }
 
-    /* CONTAINER DA CARTA */
+    /* ---------------- DESIGN DO CARD COMPACTO ---------------- */
     .card-tile {
       position: relative;
       aspect-ratio: 1 / 1;
       border-radius: 6px;
       background: #0f141c;
       border: 1.5px solid #2b394a;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
       user-select: none;
       transition: transform 0.15s ease, border-color 0.15s ease;
+      min-width: 0;
     }
-    .card-tile:hover,
-    .card-tile.active-selected {
+    .card-tile:hover, .card-tile.active-selected {
       transform: translateY(-2px);
       border-color: #f5a623 !important;
       z-index: 20;
@@ -220,25 +350,22 @@
       display: block;
       border-radius: 5px;
     }
-
-    /* NÍVEL SOBRESCRITO */
     .card-overlay-lvl {
       position: absolute;
       bottom: 2px;
       right: 2px;
-      background: rgba(15, 20, 28, 0.9);
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      background: rgba(15, 20, 28, 0.92);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       color: #ffffff;
-      font-size: 10.5px;
+      font-size: 10px;
       font-weight: 800;
       padding: 1px 3px;
-      border-radius: 4px;
+      border-radius: 3px;
       line-height: 1;
       text-shadow: 0 1px 2px #000;
       pointer-events: none;
     }
 
-    /* BORDAS POR TIPO */
     .border-burst { border-color: rgba(255, 87, 34, 0.45); }
     .border-affliction { border-color: rgba(56, 161, 243, 0.45); }
     .border-support { border-color: rgba(76, 217, 100, 0.45); }
@@ -250,12 +377,12 @@
       padding: 30px 10px;
     }
 
-    /* ---------------- TOOLTIP DESKTOP (FLUTUANTE NAS CARTAS) ---------------- */
+    /* TOOLTIP DESKTOP */
     @media (min-width: 601px) {
       .card-tooltip {
         visibility: hidden;
         opacity: 0;
-        width: 190px;
+        width: 180px;
         background-color: #121922;
         color: #fff;
         text-align: left;
@@ -286,36 +413,7 @@
         opacity: 1;
         transform: translateX(-50%) translateY(-4px);
       }
-      /* Coluna 1: abre para a direita */
-      .cards-grid-6 .card-tile:nth-child(6n+1) .card-tooltip {
-        left: 0;
-        transform: translateX(0);
-      }
-      .cards-grid-6 .card-tile:nth-child(6n+1) .card-tooltip::after {
-        left: 20px;
-        margin-left: 0;
-      }
-      .cards-grid-6 .card-tile:nth-child(6n+1):hover .card-tooltip {
-        transform: translateX(0) translateY(-4px);
-      }
-      /* Coluna 6: abre para a esquerda */
-      .cards-grid-6 .card-tile:nth-child(6n) .card-tooltip {
-        left: 100%;
-        transform: translateX(-100%);
-      }
-      .cards-grid-6 .card-tile:nth-child(6n) .card-tooltip::after {
-        left: auto;
-        right: 20px;
-        margin-left: 0;
-      }
-      .cards-grid-6 .card-tile:nth-child(6n):hover .card-tooltip {
-        transform: translateX(-100%) translateY(-4px);
-      }
-
-      /* Painel mobile ocultado no desktop */
-      #mobileCardDrawer {
-        display: none !important;
-      }
+      #mobileCardDrawer { display: none !important; }
     }
 
     .tooltip-header {
@@ -326,7 +424,7 @@
       margin-bottom: 4px;
     }
     .tooltip-name {
-      font-size: 12px;
+      font-size: 11.5px;
       font-weight: 700;
       color: #f5a623;
       white-space: nowrap;
@@ -334,21 +432,17 @@
       text-overflow: ellipsis;
     }
     .tooltip-rank {
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 900;
       color: #ff5722;
       background: rgba(255, 69, 0, 0.25);
       border: 1px solid rgba(255, 87, 34, 0.6);
-      padding: 1px 5px;
-      border-radius: 4px;
-      line-height: 1.1;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      flex-shrink: 0;
+      padding: 1px 4px;
+      border-radius: 3px;
     }
     .tooltip-target {
       display: inline-block;
-      font-size: 10px;
+      font-size: 9.5px;
       font-weight: 700;
       color: #50e3c2;
       background: rgba(80, 227, 194, 0.12);
@@ -356,28 +450,47 @@
       padding: 1px 5px;
       border-radius: 4px;
       margin-bottom: 4px;
-      letter-spacing: 0.2px;
     }
     .tooltip-desc {
-      font-size: 10.5px;
+      font-size: 10px;
       color: #c0ccdc;
       line-height: 1.35;
       display: block;
     }
 
-    /* ---------------- MODAL / DRAWER FIXO EXCLUSIVO MOBILE ---------------- */
+    /* ---------------- BOTTOM SHEET MODAL MOBILE ---------------- */
     @media (max-width: 600px) {
-      /* Oculta os tooltips internos para não quebrar a tela */
-      .card-tooltip {
-        display: none !important;
+      .card-tooltip { display: none !important; }
+      
+      .resonance-row {
+        gap: 6px;
+        padding: 6px;
       }
+      .resonance-category-badge {
+        width: 40px;
+        height: 40px;
+      }
+      .resonance-category-badge img {
+        width: 22px;
+        height: 22px;
+      }
+      .resonance-category-badge span {
+        font-size: 7px;
+      }
+      .resonance-cards-strip {
+        gap: 4px;
+      }
+
+      .catalog-3-groups {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+
       .card-overlay-lvl {
         font-size: 9px;
         padding: 1px 2px;
-        bottom: 1px;
-        right: 1px;
       }
-      /* Banner Fixo no Rodapé do Mobile */
+
       #mobileCardDrawer {
         position: fixed;
         bottom: 12px;
@@ -407,56 +520,10 @@
         gap: 8px;
         margin-bottom: 4px;
       }
-      .drawer-title-group {
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        overflow: hidden;
-      }
-      .drawer-name {
-        font-size: 13.5px;
-        font-weight: 800;
-        color: #f5a623;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      .drawer-rank {
-        font-size: 10.5px;
-        font-weight: 900;
-        color: #ff5722;
-        background: rgba(255, 69, 0, 0.25);
-        border: 1px solid rgba(255, 87, 34, 0.6);
-        padding: 1px 5px;
-        border-radius: 4px;
-        flex-shrink: 0;
-      }
-      .drawer-close {
-        background: none;
-        border: none;
-        color: #8fa0b5;
-        font-size: 18px;
-        font-weight: 700;
-        line-height: 1;
-        padding: 2px 6px;
-        cursor: pointer;
-      }
-      .drawer-target {
-        display: inline-block;
-        font-size: 10.5px;
-        font-weight: 700;
-        color: #50e3c2;
-        background: rgba(80, 227, 194, 0.12);
-        border: 1px solid rgba(80, 227, 194, 0.35);
-        padding: 1px 6px;
-        border-radius: 4px;
-        margin-bottom: 6px;
-      }
-      .drawer-desc {
-        font-size: 11px;
-        color: #d1dbe5;
-        line-height: 1.4;
-      }
+      .drawer-name { font-size: 13.5px; font-weight: 800; color: #f5a623; }
+      .drawer-close { background: none; border: none; color: #8fa0b5; font-size: 18px; cursor: pointer; }
+      .drawer-target { display: inline-block; font-size: 10.5px; color: #50e3c2; background: rgba(80, 227, 194, 0.12); padding: 1px 6px; border-radius: 4px; margin-bottom: 6px; }
+      .drawer-desc { font-size: 11px; color: #d1dbe5; line-height: 1.4; }
     }
   </style>
 </head>
@@ -466,78 +533,113 @@
 
   <div class="container">
     <div class="title">Importar <span>Cartas & Níveis</span></div>
-    <div class="subtitle">Toque na carta para inspecionar rank, alvo e descrição sem cortes</div>
+    <div class="subtitle">Cole o seu JSON ou selecione um membro do clã para inspecionar as cartas</div>
 
-    <!-- ENTRADA -->
+    <!-- ENTRADA E SELETOR -->
     <div class="import-card">
       <div class="import-actions">
         <button class="btn-paste" onclick="colarDoClipboard()">📋 Paste (Colar)</button>
-        <button class="btn-secondary" onclick="processarTextoManual()">Processar Texto</button>
+        <button class="btn-secondary" onclick="processarTextoManual()">Processar</button>
+        
+        <div class="clan-select-group">
+          <select id="clanMemberSelect" class="filter-select" onchange="selecionarMembroClan(this.value)">
+            <option value="">👤 Buscar membro do clã...</option>
+          </select>
+        </div>
       </div>
       <textarea id="jsonInput" placeholder='Cole seu JSON exportado aqui'></textarea>
     </div>
 
     <!-- SUMÁRIO DO JOGADOR -->
     <div class="player-summary" id="playerSummary">
-      <div class="summary-item">
-        <span>Max Stage</span>
-        <strong id="sumStage">-</strong>
-      </div>
-      <div class="summary-item">
-        <span>Raid Level</span>
-        <strong id="sumRaidLvl">-</strong>
-      </div>
-      <div class="summary-item">
-        <span>Soma dos Níveis</span>
-        <strong id="sumLvlSum">-</strong>
-      </div>
-      <div class="summary-item">
-        <span>Wildcards</span>
-        <strong id="sumWildcards" style="color: #f5a623;">-</strong>
-      </div>
-      <div class="summary-item">
-        <span>Necrobear</span>
-        <strong id="sumNecrobear" style="color: #a29bfe;">-</strong>
-      </div>
+      <div class="summary-item"><span>Max Stage</span><strong id="sumStage">-</strong></div>
+      <div class="summary-item"><span>Raid Level</span><strong id="sumRaidLvl">-</strong></div>
+      <div class="summary-item"><span>Soma Níveis</span><strong id="sumLvlSum">-</strong></div>
+      <div class="summary-item"><span>Wildcards</span><strong id="sumWildcards" style="color: #f5a623;">-</strong></div>
+      <div class="summary-item"><span>Necrobear</span><strong id="sumNecrobear" style="color: #a29bfe;">-</strong></div>
     </div>
 
     <div id="emptyMessage" class="empty-state">
-      Nenhum perfil carregado. Clique em <strong>Paste</strong> ou cole o JSON acima para visualizar as cartas.
+      Nenhum perfil carregado. Cole o JSON ou selecione um colega de clã na lista suspensa acima.
     </div>
 
-    <!-- 1. EXPLOSÃO (BURST) -->
-    <div class="section-category" id="secBurst">
-      <div class="category-header">
-        <span class="category-title title-burst">Explosão</span>
+    <!-- ================= 1. RESSONÂNCIA DE CARTAS (6 MAIS FORTES DE CADA TIPO) ================= -->
+    <div class="resonance-section" id="secResonance">
+      <div class="resonance-header">
+        <span class="resonance-title">⚡ Ressonância de Cartas</span>
+        <span class="resonance-tag">Top 6 Níveis de Cada Categoria</span>
       </div>
-      <div class="cards-grid-6" id="gridBurst"></div>
+
+      <!-- LINHA 1: EXPLOSÃO -->
+      <div class="resonance-row">
+        <div class="resonance-category-badge badge-burst-res">
+          <img src="Cards/b.png" alt="Burst" onerror="this.src='Cards/wc.png'">
+          <span>Burst</span>
+        </div>
+        <div class="resonance-cards-strip" id="resStripBurst"></div>
+      </div>
+
+      <!-- LINHA 2: AFLIÇÃO -->
+      <div class="resonance-row">
+        <div class="resonance-category-badge badge-affliction-res">
+          <img src="Cards/a.png" alt="Affliction" onerror="this.src='Cards/wc.png'">
+          <span>Aflição</span>
+        </div>
+        <div class="resonance-cards-strip" id="resStripAffliction"></div>
+      </div>
+
+      <!-- LINHA 3: SUPORTE -->
+      <div class="resonance-row">
+        <div class="resonance-category-badge badge-support-res">
+          <img src="Cards/tt.png" alt="Support" onerror="this.src='Cards/wc.png'">
+          <span>Suporte</span>
+        </div>
+        <div class="resonance-cards-strip" id="resStripSupport"></div>
+      </div>
     </div>
 
-    <!-- 2. AFLIÇÃO (AFFLICTION) -->
-    <div class="section-category" id="secAffliction">
-      <div class="category-header">
-        <span class="category-title title-affliction">Aflição</span>
+    <!-- ================= 2. CATÁLOGO COMPLETO (3 GRUPOS x 2 COLUNAS = 6 COLUNAS) ================= -->
+    <div class="catalog-wrapper" id="secCatalog">
+      <div class="catalog-header-title">
+        <span>🃏 Catálogo Completo por Categoria</span>
       </div>
-      <div class="cards-grid-6" id="gridAffliction"></div>
-    </div>
 
-    <!-- 3. SUPORTE (SUPPORT) -->
-    <div class="section-category" id="secSupport">
-      <div class="category-header">
-        <span class="category-title title-support">Suporte</span>
+      <div class="catalog-3-groups">
+        <!-- GRUPO 1: EXPLOSÃO (2 COLUNAS) -->
+        <div class="catalog-group">
+          <div class="catalog-group-header">
+            <span class="group-title color-burst">Explosão</span>
+            <span style="font-size: 10px; color: #8fa0b5;" id="countBurst">0 cartas</span>
+          </div>
+          <div class="cards-grid-2" id="gridCatalogBurst"></div>
+        </div>
+
+        <!-- GRUPO 2: AFLIÇÃO (2 COLUNAS) -->
+        <div class="catalog-group">
+          <div class="catalog-group-header">
+            <span class="group-title color-affliction">Aflição</span>
+            <span style="font-size: 10px; color: #8fa0b5;" id="countAffliction">0 cartas</span>
+          </div>
+          <div class="cards-grid-2" id="gridCatalogAffliction"></div>
+        </div>
+
+        <!-- GRUPO 3: SUPORTE (2 COLUNAS) -->
+        <div class="catalog-group">
+          <div class="catalog-group-header">
+            <span class="group-title color-support">Suporte</span>
+            <span style="font-size: 10px; color: #8fa0b5;" id="countSupport">0 cartas</span>
+          </div>
+          <div class="cards-grid-2" id="gridCatalogSupport"></div>
+        </div>
       </div>
-      <div class="cards-grid-6" id="gridSupport"></div>
     </div>
 
   </div>
 
-  <!-- DRAWER FLUTUANTE EXCLUSIVO PARA MOBILE -->
+  <!-- DRAWER MÓVEL -->
   <div id="mobileCardDrawer">
     <div class="drawer-header">
-      <div class="drawer-title-group">
-        <span class="drawer-name" id="mDrawerName">-</span>
-        <span class="drawer-rank" id="mDrawerRank">S</span>
-      </div>
+      <span class="drawer-name" id="mDrawerName">-</span>
       <button class="drawer-close" onclick="fecharMobileDrawer()">&times;</button>
     </div>
     <span class="drawer-target" id="mDrawerTarget">-</span>
@@ -545,57 +647,137 @@
   </div>
 
   <script>
+    const SPREADSHEET_ID_PRINCIPAL = '1xo8zcjYt2Kiytq-D9vF9oO3wamCcBKbvH1fn7fqtsSM';
+
     const CARD_METADATA = {
-      // EXPLOSÃO (BURST)
-      "MoonBeam": { name: "Moon Beam", rank: "A", type: "Burst", img: "Cards/mb.png", target: "Torso/Braços", desc: "Foco exclusivo de dano explosivo nessas partes." },
-      "Fragmentize": { name: "Fragmentize", rank: "B", type: "Burst", img: "Cards/fr.png", target: "Armadura Amaldiçoada", desc: "Dano aumentado contra partes protegidas por armadura." },
-      "SkullBash": { name: "Skull Bash", rank: "A", type: "Burst", img: "Cards/sb.png", target: "Cabeça/Pernas", desc: "Foco exclusivo de dano explosivo nessas partes." },
-      "RazorWind": { name: "Razor Wind", rank: "B", type: "Burst", img: "Cards/rw.png", target: "Corpo", desc: "Espalha rajadas de vento cortante em armadura." },
-      "WhipOfLightning": { name: "Whip of Lightning", rank: "A", type: "Burst", img: "Cards/wol.png", target: "5 ou 6 Partes", desc: "Golpes elétricos rápidos divididos pelo corpo." },
-      "BurstCount": { name: "Clanship Barrage", rank: "S", type: "Burst", img: "Cards/csb.png", target: "Qualquer Parte", desc: "Disparos do Clan Ship. Usar com Explosão e Suporte." },
-      "Purify": { name: "Purifying Blast", rank: "S", type: "Burst", img: "Cards/pb.png", target: "2 ou 3 Partes", desc: "Detona acúmulos de aflição. Bater espalhado." },
-      "LimbBurst": { name: "Psychic Shackles", rank: "A", type: "Burst", img: "Cards/ps.png", target: "Membros (Braços/Pernas)", desc: "Dano de explosão focado exclusivo nos membros." },
-      "FlakShot": { name: "Flak Shot", rank: "B", type: "Burst", img: "Cards/fs.png", target: "Armadura", desc: "Disparos de estilhaços espalhados por múltiplos alvos." },
-      "Haymaker": { name: "Cosmic Haymaker", rank: "S", type: "Burst", img: "Cards/ch.png", target: "Qualquer Parte", desc: "Dano massivo concentrado no tronco superior." },
-      "ChainLightning": { name: "Chain of Vengeance", rank: "A", type: "Burst", img: "Cards/cov.png", target: "6 Partes", desc: "Ativa dano elétrico em cadeia onde não há armadura." },
-      "MirrorForce": { name: "Mirror Force", rank: "S", type: "Burst", img: "Cards/mf.png", target: "Qualquer Parte", desc: "Cada uso aumenta o dano da própria carta no próximo ciclo." },
-      "CelestialStatic": { name: "Celestial Static", rank: "S", type: "Burst", img: "Cards/cs.png", target: "Membros + Cabeça/Torso", desc: "Causa bônus de dano contínuo na parte que você atacar." },
-      "Weaken": { name: "Guard Break", rank: "A", type: "Burst", img: "Cards/gb.png", target: "Qualquer Parte", desc: "Potencializa o dano quando há partes já destruídas." },
-      "BarbedMorningstar": { name: "Barbed Morningstar", rank: "B", type: "Burst", img: "Cards/bm.jpg", target: "Armadura ou Corpo", desc: "Explosão perfurante de alto impacto." },
+      "MoonBeam": { name: "Moon Beam", rank: "A", type: "Burst", img: "Cards/mb.png", target: "Torso/Braços", desc: "Foco exclusivo de dano explosivo." },
+      "Fragmentize": { name: "Fragmentize", rank: "B", type: "Burst", img: "Cards/fr.png", target: "Armadura", desc: "Dano aumentado contra armadura." },
+      "SkullBash": { name: "Skull Bash", rank: "A", type: "Burst", img: "Cards/sb.png", target: "Cabeça/Pernas", desc: "Foco exclusivo de dano explosivo." },
+      "RazorWind": { name: "Razor Wind", rank: "B", type: "Burst", img: "Cards/rw.png", target: "Corpo", desc: "Rajadas cortantes." },
+      "WhipOfLightning": { name: "Whip of Lightning", rank: "A", type: "Burst", img: "Cards/wol.png", target: "5 ou 6 Partes", desc: "Golpes elétricos divididos." },
+      "BurstCount": { name: "Clanship Barrage", rank: "S", type: "Burst", img: "Cards/csb.png", target: "Qualquer Parte", desc: "Disparos do Clan Ship." },
+      "Purify": { name: "Purifying Blast", rank: "S", type: "Burst", img: "Cards/pb.png", target: "2 ou 3 Partes", desc: "Detona acúmulos de aflição." },
+      "LimbBurst": { name: "Psychic Shackles", rank: "A", type: "Burst", img: "Cards/ps.png", target: "Membros", desc: "Foco em membros." },
+      "FlakShot": { name: "Flak Shot", rank: "B", type: "Burst", img: "Cards/fs.png", target: "Armadura", desc: "Estilhaços em múltiplos alvos." },
+      "Haymaker": { name: "Cosmic Haymaker", rank: "S", type: "Burst", img: "Cards/ch.png", target: "Qualquer Parte", desc: "Dano massivo no tronco superior." },
+      "ChainLightning": { name: "Chain of Vengeance", rank: "A", type: "Burst", img: "Cards/cov.png", target: "6 Partes", desc: "Dano elétrico em cadeia." },
+      "MirrorForce": { name: "Mirror Force", rank: "S", type: "Burst", img: "Cards/mf.png", target: "Qualquer Parte", desc: "Bônus progressivo por ciclo." },
+      "CelestialStatic": { name: "Celestial Static", rank: "S", type: "Burst", img: "Cards/cs.png", target: "Membros + Cabeça/Torso", desc: "Dano contínuo na parte atacada." },
+      "Weaken": { name: "Guard Break", rank: "A", type: "Burst", img: "Cards/gb.png", target: "Qualquer Parte", desc: "Potencializa dano com partes destruídas." },
+      "BarbedMorningstar": { name: "Barbed Morningstar", rank: "B", type: "Burst", img: "Cards/bm.png", target: "Armadura ou Corpo", desc: "Explosão perfurante." },
 
-      // AFLIÇÃO (AFFLICTION)
-      "BurningAttack": { name: "Blazing Inferno", rank: "B", type: "Affliction", img: "Cards/bi.png", target: "Até 6 Partes", desc: "Fogo contínuo que queima múltiplos alvos." },
-      "PoisonAttack": { name: "Acid Drench", rank: "A", type: "Affliction", img: "Cards/ad.png", target: "Parte Afetada", desc: "Veneno corrosivo que amplifica dano na parte atingida." },
-      "DecayingAttack": { name: "Decaying Strike", rank: "S", type: "Affliction", img: "Cards/ds.png", target: "Corpo (+70% Vida)", desc: "Causa dano colossal em partes saudáveis no início." },
-      "Fuse": { name: "Fusion Bomb", rank: "A", type: "Affliction", img: "Cards/fb.png", target: "Múltiplas Partes", desc: "Planta bombas que explodem após contagem regressiva." },
-      "Shadow": { name: "Grim Shadow", rank: "A", type: "Affliction", img: "Cards/fs.png", target: "Até 6 Partes", desc: "Acúmulo de sombras que drena a vida do Titan." },
-      "PlagueAttack": { name: "Thriving Plague", rank: "S", type: "Affliction", img: "Cards/tp.png", target: "1 a 3 Partes", desc: "Praga altamente concentrada. Focar em poucos alvos." },
-      "Disease": { name: "Radioactivity", rank: "A", type: "Affliction", img: "Cards/ra.png", target: "Até 6 Partes", desc: "Radiação contínua por segundo distribuída pelo Titan." },
-      "Swarm": { name: "Ravenous Swarm", rank: "A", type: "Affliction", img: "Cards/rs.png", target: "6 Partes (Armadura)", desc: "Enxame voraz que devora placas de armadura." },
-      "RuinousRust": { name: "Ruinous Rain", rank: "S", type: "Affliction", img: "Cards/rr.png", target: "Armadura", desc: "Chuva corrosiva ácida devastadora contra armaduras." },
-      "PowerBubble": { name: "Corrosive Bubbles", rank: "A", type: "Affliction", img: "Cards/bb.png", target: "Armadura Amaldiçoada", desc: "Causa dano crítico e bônus em partes amaldiçoadas." },
-      "RuneAttack": { name: "Maelstrom", rank: "S", type: "Affliction", img: "Cards/ma.png", target: "Parte Afetada", desc: "Vórtice que aumenta a força de todas as aflições ativas." },
-      "MagicPotion": { name: "Amplify", rank: "S", type: "Affliction", img: "Cards/am.jpg", target: "Todas as Aflições", desc: "Amplifica diretamente o dano de venenos e pragas." },
-      "SandsOfTime": { name: "Sands of Time", rank: "B", type: "Affliction", img: "Cards/sot.png", target: "6 Partes destruídas", desc: "Acelera e prolonga a frequência dos ticks de dano." },
-      "CosmicBarb": { name: "Electro Zap", rank: "S", type: "Affliction", img: "Cards/zz.jpg", target: "Qualquer Parte", desc: "O Céu é o Limite!!" },
+      "BurningAttack": { name: "Blazing Inferno", rank: "B", type: "Affliction", img: "Cards/bi.png", target: "Até 6 Partes", desc: "Fogo contínuo." },
+      "PoisonAttack": { name: "Acid Drench", rank: "A", type: "Affliction", img: "Cards/ad.png", target: "Parte Afetada", desc: "Veneno corrosivo." },
+      "DecayingAttack": { name: "Decaying Strike", rank: "S", type: "Affliction", img: "Cards/ds.png", target: "Corpo", desc: "Dano colossal em partes saudáveis." },
+      "Fuse": { name: "Fusion Bomb", rank: "A", type: "Affliction", img: "Cards/fb.png", target: "Múltiplas Partes", desc: "Bombas com contagem regressiva." },
+      "Shadow": { name: "Grim Shadow", rank: "A", type: "Affliction", img: "Cards/gs.png", target: "Até 6 Partes", desc: "Acúmulo de sombras." },
+      "PlagueAttack": { name: "Thriving Plague", rank: "S", type: "Affliction", img: "Cards/tp.png", target: "1 a 3 Partes", desc: "Praga altamente concentrada." },
+      "Disease": { name: "Radioactivity", rank: "A", type: "Affliction", img: "Cards/ra.png", target: "Até 6 Partes", desc: "Radiação contínua." },
+      "Swarm": { name: "Ravenous Swarm", rank: "A", type: "Affliction", img: "Cards/rs.png", target: "6 Partes", desc: "Enxame voraz." },
+      "RuinousRust": { name: "Ruinous Rain", rank: "S", type: "Affliction", img: "Cards/rr.png", target: "Armadura", desc: "Chuva corrosiva ácida." },
+      "PowerBubble": { name: "Corrosive Bubbles", rank: "A", type: "Affliction", img: "Cards/bb.png", target: "Armadura Amaldiçoada", desc: "Bolhas ácidas explosivas." },
+      "RuneAttack": { name: "Maelstrom", rank: "S", type: "Affliction", img: "Cards/ma.png", target: "Parte Afetada", desc: "Vórtice de aflição." },
+      "MagicPotion": { name: "Amplify", rank: "S", type: "Affliction", img: "Cards/am.png", target: "Todas as Aflições", desc: "Amplifica venenos e pragas." },
+      "SandsOfTime": { name: "Sands of Time", rank: "B", type: "Affliction", img: "Cards/sot.png", target: "6 Partes", desc: "Acelera ticks de aflição." },
+      "CosmicBarb": { name: "Electro Zap", rank: "S", type: "Affliction", img: "Cards/zz.png", target: "Qualquer Parte", desc: "O Céu é o Limite!!" },
 
-      // SUPORTE (SUPPORT)
-      "ExecutionersAxe": { name: "Crushing Instinct", rank: "A", type: "Support", img: "Cards/ci.png", target: "Geral da Raid", desc: "Aumento passivo na chance crítica e poder do deck." },
-      "CrushingVoid": { name: "Insanity Void", rank: "S", type: "Support", img: "Cards/iv.png", target: "Alvo da Aflição", desc: "Aumenta o dano de cartas de aflição no alvo." },
-      "MentalFocus": { name: "Rancid Gas", rank: "B", type: "Support", img: "Cards/rg.png", target: "Parte com Veneno", desc: "Potencializa a chance de acúmulo contínuo de aflição." },
-      "ImpactAttack": { name: "Inspiring Force", rank: "A", type: "Support", img: "Cards/if.png", target: "Corpo do Titan", desc: "Bônus massivo aplicado exclusivamente em golpes no corpo." },
-      "InnerTruth": { name: "Soul Fire", rank: "B", type: "Support", img: "Cards/sf.png", target: "Peitoral ou Braços", desc: "Chamas de suporte que elevam o dano em tronco e braços." },
-      "FinisherAttack": { name: "Victory March", rank: "S", type: "Support", img: "Cards/vm.png", target: "1 parte viva s/ Armadura", desc: "Bônus gigantesco por cada parte do Titan já destruída." },
-      "SuperheatMetal": { name: "Prismatic Rift", rank: "A", type: "Support", img: "Cards/pr.png", target: "Armadura", desc: "Aquece e destrói armaduras com multiplicador extra." },
-      "BurstBoost": { name: "Ancestral Favor", rank: "S", type: "Support", img: "Cards/af.png", target: "Cartas de Explosão", desc: "Eleva a chance e o poder de ativação dos golpes de Burst." },
-      "LimbSupport": { name: "Grasping Vines", rank: "A", type: "Support", img: "Cards/gv.png", target: "Membros (Braços/Pernas)", desc: "Prende os membros concedendo dano extra a eles." },
-      "TotemFairySkill": { name: "Totem of Power", rank: "S", type: "Support", img: "Cards/tot.png", target: "Fada / Tap Focado", desc: "Invoca fadas de dano cumulativo. Não usar com outro suporte." },
-      "TeamTactics": { name: "Team Tactics", rank: "S", type: "Support", img: "Cards/tt.png", target: "Todo o Clã", desc: "Cada uso eleva o dano de todos os membros nos ciclos seguintes." },
-      "SpinalTap": { name: "Skeletal Smash", rank: "S", type: "Support", img: "Cards/ss.png", target: "1 Única Parte", desc: "Suporte focado de impacto destrutivo concentrado." },
-      "AstralEcho": { name: "Astral Echo", rank: "A", type: "Support", img: "Cards/ae.png", target: "Geral", desc: "Gera ecos astrais que duplicam e sustentam ativações." },
-      "TriangleSupport": { name: "Radiant Kaleidoscope", rank: "S", type: "Support", img: "Cards/rk.png", target: "Burst + Aflição", desc: "Suporte prismático que potencializa composições mistas." },
-      "BattleDrums": { name: "Battle Drums", rank: "B", type: "Support", img: "Cards/bd.jpg", target: "Membros", desc: "Tambores de guerra que aumentam o ritmo e dano nos membros." }
+      "ExecutionersAxe": { name: "Crushing Instinct", rank: "A", type: "Support", img: "Cards/ci.png", target: "Geral", desc: "Aumento de chance crítica." },
+      "CrushingVoid": { name: "Insanity Void", rank: "S", type: "Support", img: "Cards/iv.png", target: "Alvo da Aflição", desc: "Aumenta aflição no corpo." },
+      "MentalFocus": { name: "Rancid Gas", rank: "B", type: "Support", img: "Cards/rg.png", target: "Veneno", desc: "Potencializa acúmulo de veneno." },
+      "ImpactAttack": { name: "Inspiring Force", rank: "A", type: "Support", img: "Cards/if.png", target: "Corpo", desc: "Bônus em golpes no corpo." },
+      "InnerTruth": { name: "Soul Fire", rank: "B", type: "Support", img: "Cards/sf.png", target: "Tronco/Braços", desc: "Eleva dano em tronco e braços." },
+      "FinisherAttack": { name: "Victory March", rank: "S", type: "Support", img: "Cards/vm.png", target: "Partes Destruídas", desc: "Bônus por partes destruídas." },
+      "SuperheatMetal": { name: "Prismatic Rift", rank: "A", type: "Support", img: "Cards/pr.png", target: "Armadura", desc: "Destrói armaduras." },
+      "BurstBoost": { name: "Ancestral Favor", rank: "S", type: "Support", img: "Cards/af.png", target: "Burst", desc: "Poder de ativação de Burst." },
+      "LimbSupport": { name: "Grasping Vines", rank: "A", type: "Support", img: "Cards/gv.png", target: "Membros", desc: "Dano extra em membros." },
+      "TotemFairySkill": { name: "Totem of Power", rank: "S", type: "Support", img: "Cards/tot.png", target: "Fada / Tap", desc: "Invoca fadas cumulativas." },
+      "TeamTactics": { name: "Team Tactics", rank: "S", type: "Support", img: "Cards/tt.png", target: "Clã", desc: "Eleva dano global do clã." },
+      "SpinalTap": { name: "Skeletal Smash", rank: "S", type: "Support", img: "Cards/ss.png", target: "1 Parte", desc: "Impacto destrutivo concentrado." },
+      "AstralEcho": { name: "Astral Echo", rank: "A", type: "Support", img: "Cards/ae.png", target: "Geral", desc: "Gera ecos astrais." },
+      "TriangleSupport": { name: "Radiant Kaleidoscope", rank: "S", type: "Support", img: "Cards/rk.png", target: "Burst + Aflição", desc: "Suporte prismático misto." },
+      "BattleDrums": { name: "Battle Drums", rank: "B", type: "Support", img: "Cards/bd.png", target: "Membros", desc: "Tambores de guerra." }
     };
+
+    function carregarAbaJSONP(nomeAba) {
+      return new Promise((resolve, reject) => {
+        const callbackName = 'googleQueryCallback_' + Math.floor(Math.random() * 100000);
+        window[callbackName] = function(data) {
+          delete window[callbackName];
+          document.body.removeChild(script);
+          if (data && data.table) resolve(data.table);
+          else reject(new Error('Formato inválido'));
+        };
+
+        const script = document.createElement('script');
+        script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID_PRINCIPAL}/gviz/tq?tqx=responseHandler:${callbackName}&sheet=${encodeURIComponent(nomeAba)}`;
+        script.onerror = () => {
+          delete window[callbackName];
+          document.body.removeChild(script);
+          reject(new Error('Erro ao carregar ' + nomeAba));
+        };
+        document.body.appendChild(script);
+      });
+    }
+
+    async function inicializarSeletorMembros() {
+      try {
+        const tabela = await carregarAbaJSONP('TT_Jogadores');
+        const rows = tabela.rows || [];
+        const nomesUnicos = new Set();
+
+        rows.forEach(r => {
+          const nome = r.c && r.c[3]?.v;
+          if (nome) nomesUnicos.add(String(nome).trim());
+        });
+
+        const select = document.getElementById('clanMemberSelect');
+        Array.from(nomesUnicos).sort().forEach(nome => {
+          const opt = document.createElement('option');
+          opt.value = nome;
+          opt.textContent = nome;
+          select.appendChild(opt);
+        });
+      } catch (e) {
+        console.log('Não foi possível carregar a lista de membros do clã automaticamente.', e);
+      }
+    }
+
+    async function selecionarMembroClan(nomeJogador) {
+      if (!nomeJogador) return;
+      document.getElementById('jsonInput').value = `Carregando dados de ${nomeJogador}...`;
+      
+      try {
+        const tabela = await carregarAbaJSONP('TT_Jogadores');
+        const rows = tabela.rows || [];
+        
+        let jogadorEncontrado = null;
+        rows.forEach(r => {
+          const c = r.c;
+          if (c && String(c[3]?.v || '').trim().toLowerCase() === nomeJogador.toLowerCase()) {
+            jogadorEncontrado = c;
+          }
+        });
+
+        if (jogadorEncontrado) {
+          document.getElementById("playerSummary").style.display = "grid";
+          document.getElementById("sumStage").textContent = "-";
+          document.getElementById("sumRaidLvl").textContent = "-";
+          document.getElementById("sumLvlSum").textContent = jogadorEncontrado[4]?.f || (jogadorEncontrado[4]?.v + 'B Dano') || "-";
+          document.getElementById("sumWildcards").textContent = "-";
+          document.getElementById("sumNecrobear").textContent = "-";
+
+          document.getElementById("emptyMessage").style.display = "none";
+          document.getElementById("jsonInput").value = `// Dados de ${nomeJogador} carregados via resumo do clã. Para cartas detalhadas, cole o JSON completo do jogo.`;
+          
+          document.getElementById("secResonance").style.display = "none";
+          document.getElementById("secCatalog").style.display = "none";
+        } else {
+          alert(`Membro "${nomeJogador}" não localizado nos registros recentes.`);
+        }
+      } catch (err) {
+        alert("Erro ao buscar dados do membro na API.");
+      }
+    }
 
     async function colarDoClipboard() {
       try {
@@ -603,14 +785,14 @@
         document.getElementById("jsonInput").value = text;
         processarJSON(text);
       } catch (err) {
-        alert("Permissão negada. Cole o JSON manualmente no campo abaixo e clique em 'Processar Texto'.");
+        alert("Permissão negada. Cole o JSON manualmente no campo abaixo.");
       }
     }
 
     function processarTextoManual() {
       const text = document.getElementById("jsonInput").value.trim();
-      if (!text) {
-        alert("A caixa de texto está vazia.");
+      if (!text || text.startsWith('//')) {
+        alert("Cole um JSON válido do jogo na caixa de texto.");
         return;
       }
       processarJSON(text);
@@ -619,7 +801,6 @@
     function processarJSON(rawText) {
       try {
         const data = JSON.parse(rawText);
-
         if (!data.raidCards) {
           alert("JSON inválido ou sem a seção 'raidCards'.");
           return;
@@ -639,42 +820,76 @@
         const supportList = [];
 
         for (const [key, val] of Object.entries(data.raidCards)) {
-          const meta = CARD_METADATA[key] || { 
-            name: key, 
-            rank: "B",
-            type: "Support", 
-            img: "Cards/wc.png", 
-            target: "Geral", 
-            desc: "Sem descrição disponível." 
-          };
-          const cardObj = {
-            id: key,
-            name: meta.name,
-            rank: meta.rank || "B",
-            target: meta.target,
-            desc: meta.desc,
-            type: meta.type,
-            img: meta.img,
-            level: val.lv || 0
-          };
+          const meta = CARD_METADATA[key] || { name: key, rank: "B", type: "Support", img: "Cards/wc.png", target: "Geral", desc: "Sem descrição." };
+          const cardObj = { id: key, name: meta.name, rank: meta.rank, target: meta.target, desc: meta.desc, type: meta.type, img: meta.img, level: val.lv || 0 };
 
           if (meta.type === "Burst") burstList.push(cardObj);
           else if (meta.type === "Affliction") afflictionList.push(cardObj);
           else supportList.push(cardObj);
         }
 
+        // Ordena por nível decrescente (mais fortes primeiro)
         burstList.sort((a, b) => b.level - a.level);
         afflictionList.sort((a, b) => b.level - a.level);
         supportList.sort((a, b) => b.level - a.level);
 
-        renderGrid("gridBurst", "secBurst", burstList, "border-burst");
-        renderGrid("gridAffliction", "secAffliction", afflictionList, "border-affliction");
-        renderGrid("gridSupport", "secSupport", supportList, "border-support");
+        // 1. Renderiza a Ressonância (Top 6 de cada tipo)
+        document.getElementById("secResonance").style.display = "flex";
+        renderStrip("resStripBurst", burstList.slice(0, 6), "border-burst");
+        renderStrip("resStripAffliction", afflictionList.slice(0, 6), "border-affliction");
+        renderStrip("resStripSupport", supportList.slice(0, 6), "border-support");
+
+        // 2. Renderiza o Catálogo Completo (3 grupos de 2 colunas = 6 colunas totais)
+        document.getElementById("secCatalog").style.display = "flex";
+        document.getElementById("countBurst").textContent = `${burstList.length} cartas`;
+        document.getElementById("countAffliction").textContent = `${afflictionList.length} cartas`;
+        document.getElementById("countSupport").textContent = `${supportList.length} cartas`;
+
+        renderGrid("gridCatalogBurst", burstList, "border-burst");
+        renderGrid("gridCatalogAffliction", afflictionList, "border-affliction");
+        renderGrid("gridCatalogSupport", supportList, "border-support");
 
       } catch (err) {
-        console.error(err);
-        alert("Erro ao ler o JSON. Verifique se copiou o texto completo.");
+        alert("Erro ao interpretar o JSON colado.");
       }
+    }
+
+    function criarCardTile(card, borderClass) {
+      const div = document.createElement("div");
+      div.className = `card-tile ${borderClass}`;
+
+      div.onclick = (e) => {
+        if (window.innerWidth <= 600) {
+          abrirMobileDrawer(card, div);
+          e.stopPropagation();
+        }
+      };
+
+      div.innerHTML = `
+        <img src="${card.img}" class="card-thumb" alt="${card.name}" onerror="this.src='Cards/wc.png'">
+        <span class="card-overlay-lvl">${card.level}</span>
+        <div class="card-tooltip">
+          <div class="tooltip-header">
+            <span class="tooltip-name">${card.name}</span>
+            <span class="tooltip-rank">${card.rank}</span>
+          </div>
+          <span class="tooltip-target">${card.target}</span>
+          <span class="tooltip-desc">${card.desc}</span>
+        </div>
+      `;
+      return div;
+    }
+
+    function renderStrip(containerId, list, borderClass) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      list.forEach(card => container.appendChild(criarCardTile(card, borderClass)));
+    }
+
+    function renderGrid(containerId, list, borderClass) {
+      const container = document.getElementById(containerId);
+      container.innerHTML = "";
+      list.forEach(card => container.appendChild(criarCardTile(card, borderClass)));
     }
 
     function abrirMobileDrawer(card, elemento) {
@@ -682,7 +897,6 @@
       elemento.classList.add('active-selected');
 
       document.getElementById('mDrawerName').textContent = card.name;
-      document.getElementById('mDrawerRank').textContent = card.rank;
       document.getElementById('mDrawerTarget').textContent = card.target;
       document.getElementById('mDrawerDesc').textContent = card.desc;
 
@@ -695,52 +909,14 @@
       document.getElementById('mobileCardDrawer').classList.remove('active');
     }
 
-    function renderGrid(containerId, sectionId, list, borderClass) {
-      const container = document.getElementById(containerId);
-      const section = document.getElementById(sectionId);
-      container.innerHTML = "";
-
-      if (list.length === 0) {
-        section.style.display = "none";
-        return;
-      }
-
-      section.style.display = "block";
-
-      list.forEach(card => {
-        const div = document.createElement("div");
-        div.className = `card-tile ${borderClass}`;
-
-        div.onclick = (e) => {
-          if (window.innerWidth <= 600) {
-            abrirMobileDrawer(card, div);
-            e.stopPropagation();
-          }
-        };
-
-        div.innerHTML = `
-          <img src="${card.img}" class="card-thumb" alt="${card.name}" onerror="this.src='Cards/wc.png'">
-          <span class="card-overlay-lvl">${card.level}</span>
-          <div class="card-tooltip">
-            <div class="tooltip-header">
-              <span class="tooltip-name">${card.name}</span>
-              <span class="tooltip-rank">${card.rank}</span>
-            </div>
-            <span class="tooltip-target">${card.target}</span>
-            <span class="tooltip-desc">${card.desc}</span>
-          </div>
-        `;
-        container.appendChild(div);
-      });
-    }
-
-    // Fecha o drawer mobile ao tocar fora
     document.addEventListener('click', (e) => {
       const drawer = document.getElementById('mobileCardDrawer');
       if (drawer && !drawer.contains(e.target) && !e.target.closest('.card-tile')) {
         fecharMobileDrawer();
       }
     });
+
+    window.addEventListener('load', inicializarSeletorMembros);
   </script>
 </body>
 </html>
