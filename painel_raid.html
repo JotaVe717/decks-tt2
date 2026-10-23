@@ -189,7 +189,7 @@
     .metric-item strong.green { color: #4cd964; }
     .metric-item strong.yellow { color: #ffd166; }
 
-    /* SEÇÃO DO TITÃ */
+    /* SEÇÃO COM BOTÃO RETRÁTIL (FECHAR / ABRIR) */
     .section-block { margin-bottom: 0; }
     .section-header {
       display: flex;
@@ -201,6 +201,10 @@
       padding-bottom: 6px;
       border-bottom: 1px solid #283545;
     }
+    .section-header-clickable {
+      cursor: pointer;
+      user-select: none;
+    }
     .section-title {
       font-size: 12.5px;
       font-weight: 800;
@@ -211,8 +215,28 @@
       align-items: center;
       gap: 6px;
     }
+    .section-collapse-toggle-btn {
+      width: 26px;
+      height: 26px;
+      background: #121922;
+      border: 1px solid #2d3e52;
+      border-radius: 6px;
+      color: #f5a623;
+      font-size: 15px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      line-height: 1;
+      transition: all 0.2s;
+    }
+    .section-collapse-toggle-btn:hover {
+      background: #1c2736;
+      border-color: #f5a623;
+    }
 
-    /* BARRA SUPERIOR ONDE ESTAVA O "EM BATALHA": VOID, SMASH, VM E BUFF */
+    /* BARRA SUPERIOR: VOID, SMASH, VM E BUFF */
     .titan-status-top-bar {
       display: flex;
       align-items: center;
@@ -270,7 +294,7 @@
       white-space: nowrap;
     }
 
-    /* DETALHES NA ESQUERDA (280px) E CORPO DO TITÃ NA DIREITA (1fr) */
+    /* DETALHES NA ESQUERDA E CORPO NA DIREITA */
     .titan-dashboard-layout {
       display: grid;
       grid-template-columns: 280px 1fr;
@@ -290,7 +314,7 @@
       align-self: start;
     }
 
-    /* LINHA DO TOPO: MT1 + TITÃ 3/3 + CICLO 4 */
+    /* TOPO: MT1 + TITÃ 3/3 + CICLO 4 */
     .titan-zone-row {
       display: flex;
       align-items: center;
@@ -307,31 +331,35 @@
       flex-wrap: wrap;
     }
     .badge-zone {
-      background: #1e2a38;
-      border: 1px solid #3a4e66;
-      color: #f5a623;
+      background: rgba(179, 136, 255, 0.16);
+      border: 1.5px solid #b388ff;
+      color: #b388ff;
       font-weight: 900;
       font-size: 11px;
-      padding: 2px 7px;
-      border-radius: 5px;
+      padding: 2.5px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.4px;
     }
     .badge-tita-count {
-      background: rgba(80, 227, 194, 0.15);
-      border: 1px solid #50e3c2;
+      background: rgba(80, 227, 194, 0.16);
+      border: 1.5px solid #50e3c2;
       color: #50e3c2;
       font-size: 10.5px;
-      font-weight: 800;
-      padding: 2px 7px;
-      border-radius: 5px;
+      font-weight: 900;
+      padding: 2.5px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.3px;
     }
     .badge-ciclo-tag {
-      background: #f5a623;
-      color: #0f141c;
+      background: rgba(245, 166, 35, 0.16);
+      border: 1.5px solid #f5a623;
+      color: #f5a623;
       font-size: 10.5px;
       font-weight: 900;
-      padding: 2px 7px;
-      border-radius: 5px;
+      padding: 2.5px 8px;
+      border-radius: 6px;
       text-transform: uppercase;
+      letter-spacing: 0.4px;
     }
 
     .titan-name-row {
@@ -393,15 +421,15 @@
       transition: width 0.4s ease;
     }
 
-    /* GRID ANATÔMICO - 6 COLUNAS NO LADO DIREITO */
+    /* GRID ANATÔMICO - AMPLO, ROBUSTO E FÁCIL DE ENXERGAR */
     .anatomy-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr) !important;
-      column-gap: 5px;
-      row-gap: 8px;
+      column-gap: 8px;
+      row-gap: 10px;
       align-items: stretch;
       background: #0d131a;
-      padding: 10px 6px;
+      padding: 12px 10px;
       border-radius: 12px;
       border: 1px dashed #283748;
       width: 100%;
@@ -419,132 +447,143 @@
     .area-legR      { grid-column: 2 / span 2; }
     .area-legL      { grid-column: 4 / span 2; }
 
+    /* CARD ANATÔMICO ESPAÇOSO E PROPORCIONAL */
     .anatomy-card {
       background: #161f2a;
-      border: 1px solid #28394d;
-      border-radius: 8px;
-      padding: 8px 6px;
+      border: 1px solid #2e3f54;
+      border-radius: 10px;
+      padding: 10px 10px 8px 10px;
+      min-height: 84px;
+      width: 100%;
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.4);
+      justify-content: space-between;
+      gap: 6px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.45);
       transition: all 0.25s ease;
       position: relative;
-      min-width: 0;
     }
     .anatomy-card.has-skip {
-      border-color: rgba(255, 82, 82, 0.4);
-      background: rgba(255, 82, 82, 0.05);
+      border-color: rgba(255, 82, 82, 0.45);
+      background: rgba(255, 82, 82, 0.06);
     }
     .anatomy-card.part-dead {
       background: #10151c !important;
       border: 1px solid #1e2632 !important;
-      opacity: 0.45;
+      opacity: 0.4;
       box-shadow: none;
     }
 
     .anatomy-card.decay-target {
       border-color: #b388ff !important;
-      box-shadow: 0 0 10px rgba(179, 136, 255, 0.35) !important;
-      background: rgba(179, 136, 255, 0.06);
-    }
-    .badge-decay {
-      font-size: 8px;
-      font-weight: 900;
-      color: #ffffff;
-      background: #7c4dff;
-      border: 1px solid #b388ff;
-      padding: 1px 4px;
-      border-radius: 3px;
-      letter-spacing: 0.3px;
+      box-shadow: 0 0 12px rgba(179, 136, 255, 0.4) !important;
+      background: rgba(179, 136, 255, 0.08);
     }
     .bar-fill-armor.decay-bar,
     .bar-fill-body.decay-bar {
       background: linear-gradient(90deg, #b388ff, #7c4dff) !important;
     }
 
+    /* LINHA SUPERIOR: STATUS À ESQUERDA E CARD CINZA À DIREITA */
     .card-head-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      border-bottom: 1px solid #243142;
-      padding-bottom: 3px;
-      gap: 2px;
+      border-bottom: 1px solid rgba(43, 57, 74, 0.8);
+      padding-bottom: 5px;
+      gap: 4px;
+      width: 100%;
+    }
+    .card-head-left {
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      flex: 1;
     }
 
-    .status-badge-part {
-      font-size: 8px;
+    .badge-decay {
+      font-size: 9px;
       font-weight: 900;
-      letter-spacing: 0.2px;
+      color: #ffffff;
+      background: #7c4dff;
+      border: 1px solid #b388ff;
+      padding: 1.5px 5px;
+      border-radius: 4px;
+      letter-spacing: 0.3px;
       white-space: nowrap;
-      padding: 1px 4px;
-      border-radius: 3px;
-    }
-    .status-badge-part.target-normal {
-      color: #50e3c2;
-      background: rgba(80, 227, 194, 0.12);
-      border: 1px solid rgba(80, 227, 194, 0.3);
-    }
-    .status-badge-part.target-armor {
-      color: #4facfe;
-      background: rgba(79, 172, 254, 0.12);
-      border: 1px solid rgba(79, 172, 254, 0.3);
     }
     .badge-skip {
-      font-size: 8px;
+      font-size: 8.5px;
       font-weight: 900;
       color: #ff5252;
-      background: rgba(255, 82, 82, 0.18);
-      border: 1px solid rgba(255, 82, 82, 0.4);
-      padding: 1px 4px;
-      border-radius: 3px;
+      background: rgba(255, 82, 82, 0.2);
+      border: 1px solid rgba(255, 82, 82, 0.45);
+      padding: 1.5px 5px;
+      border-radius: 4px;
       white-space: nowrap;
     }
     .badge-destroyed {
-      font-size: 8px;
+      font-size: 8.5px;
       font-weight: 900;
       color: #8fa0b5;
-      background: rgba(143, 160, 181, 0.15);
-      border: 1px solid rgba(143, 160, 181, 0.3);
-      padding: 1px 4px;
-      border-radius: 3px;
+      background: rgba(143, 160, 181, 0.16);
+      border: 1px solid rgba(143, 160, 181, 0.35);
+      padding: 1.5px 5px;
+      border-radius: 4px;
       white-space: nowrap;
     }
 
+    /* CARD CINZA DE PORCENTAGEM DESTACADO */
+    .badge-hp-perc {
+      background: #202c38;
+      border: 1px solid #3c5066;
+      color: #e2ebf5;
+      font-size: 11px;
+      font-weight: 900;
+      padding: 2px 6px;
+      border-radius: 5px;
+      line-height: 1.1;
+      white-space: nowrap;
+      flex-shrink: 0;
+      letter-spacing: 0.3px;
+    }
+
+    /* METAS DE DANO */
     .bar-meta {
       display: flex;
       justify-content: space-between;
-      font-size: 9.5px;
+      font-size: 10.5px;
       font-weight: 700;
       align-items: center;
+      margin-top: 1px;
     }
-    .label-armor { color: #4facfe; font-weight: 700; display: inline-flex; align-items: center; gap: 3px; }
-    .label-body  { color: #ff5e62; font-weight: 700; display: inline-flex; align-items: center; gap: 3px; }
-    .bar-val     { color: #cfd9e5; font-size: 9px; font-weight: 800; }
+    .label-armor { color: #4facfe; font-weight: 800; display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; }
+    .label-body  { color: #ff5e62; font-weight: 800; display: inline-flex; align-items: center; gap: 3px; font-size: 10.5px; }
+    .bar-val     { color: #ffffff; font-size: 10.5px; font-weight: 900; letter-spacing: 0.2px; }
 
     .bar-group {
       display: flex;
       flex-direction: column;
-      gap: 3px;
+      gap: 4px;
     }
     .bar-track {
       width: 100%;
-      height: 6px;
+      height: 8px;
       background: #0a0e14;
-      border-radius: 3px;
+      border-radius: 4px;
       overflow: hidden;
-      border: 1px solid #1f2a38;
+      border: 1px solid #202c3a;
     }
     .bar-fill-armor {
       height: 100%;
       background: linear-gradient(90deg, #00f2fe, #4facfe);
-      border-radius: 3px;
+      border-radius: 4px;
       transition: width 0.3s ease;
     }
     .bar-fill-body {
       height: 100%;
       background: linear-gradient(90deg, #ff9966, #ff5e62);
-      border-radius: 3px;
+      border-radius: 4px;
       transition: width 0.3s ease;
     }
     .bar-fill-body.target-ok {
@@ -630,7 +669,7 @@
       border-spacing: 0;
       text-align: left;
       font-size: 12px;
-      min-width: 560px;
+      min-width: 500px;
     }
     thead { 
       background: #1e2836; 
@@ -766,7 +805,7 @@
       object-fit: cover;
       background: #0d131a;
       border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.4);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     }
 
     .loading-state {
@@ -826,27 +865,32 @@
         justify-content: center;
       }
 
-      /* Mantém o Titã em 6 colunas anatômicas no mobile */
       .anatomy-grid {
-        column-gap: 4px;
-        row-gap: 5px;
-        padding: 6px 4px;
+        column-gap: 5px;
+        row-gap: 6px;
+        padding: 8px 6px;
       }
       .anatomy-card {
-        padding: 5px 3px;
+        padding: 6px 5px;
+        min-height: 72px;
+        border-radius: 8px;
       }
-      .status-badge-part, .badge-decay, .badge-destroyed, .badge-skip {
+      .badge-decay, .badge-destroyed, .badge-skip {
         font-size: 7.5px;
         padding: 1px 3px;
       }
-      .bar-meta {
-        font-size: 8px;
+      .badge-hp-perc {
+        font-size: 9px;
+        padding: 1px 4px;
       }
-      .bar-val {
-        font-size: 7.5px;
+      .bar-meta {
+        font-size: 9px;
+      }
+      .label-armor, .label-body, .bar-val {
+        font-size: 9px;
       }
       .bar-track {
-        height: 5px;
+        height: 6px;
       }
     }
   </style>
@@ -882,7 +926,7 @@
           <div class="section-header">
             <span class="section-title">🎯 Titã Atual no Campo</span>
             
-            <!-- SUBSTITUÍDO O "EM BATALHA" PELOS CARDS DE SMASH, VOID, VM E BUFF +30% DANO -->
+            <!-- CARDS DE VOID, SMASH, VM E BUFF +30% DANO NO TOPO -->
             <div class="titan-status-top-bar">
               <div class="titan-support-badges">
                 <span class="badge-sup off" id="bVoid" title="Void Ativo">Void</span>
@@ -900,9 +944,9 @@
 
           <div class="titan-dashboard-layout">
             
-            <!-- DETALHES DA RAID NA ESQUERDA -->
+            <!-- DETALHES DA RAID NA ESQUERDA (280px) -->
             <div class="titan-info-box">
-              <!-- LINHA 1: MT1 + TITÃ 3/3 + CICLO 4 -->
+              <!-- LINHA 1: MT1 (ROXO) + TITÃ 3/3 (CIANO) + CICLO 4 (DOURADO) -->
               <div class="titan-zone-row">
                 <div class="titan-zone-left-tags">
                   <span class="badge-zone" id="mRaidName">MT1</span>
@@ -929,7 +973,7 @@
               </div>
             </div>
 
-            <!-- PAINEL ANATÔMICO DO TITÃ NA DIREITA -->
+            <!-- PAINEL ANATÔMICO DO TITÃ NA DIREITA (6 COLUNAS AMPLAS E LEGÍVEIS) -->
             <div class="anatomy-grid">
               <div class="anatomy-card area-shoulderR" id="card_ArmUpperRight"></div>
               <div class="anatomy-card area-head" id="card_Head"></div>
@@ -946,33 +990,37 @@
           </div>
         </div>
 
-        <!-- 2. ATAQUES EM TEMPO REAL -->
+        <!-- 2. ATAQUES EM TEMPO REAL (COM ABA RETRÁTIL E SEM A COLUNA PARTES) -->
         <div class="section-block" id="secLiveAttacks">
-          <div class="section-header">
+          <div class="section-header section-header-clickable" onclick="toggleSecao('bodyLiveAttacks', 'btnToggleAttacks')">
             <span class="section-title">⚡ Ataques em Tempo Real</span>
-            <span style="font-size: 11px; color: #50e3c2;" id="liveAttacksCount">Carregando ataques...</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 11px; color: #50e3c2;" id="liveAttacksCount">Carregando...</span>
+              <button class="section-collapse-toggle-btn" id="btnToggleAttacks">−</button>
+            </div>
           </div>
 
-          <div class="filters-bar">
-            <input type="text" id="searchAttackInput" class="filter-input" placeholder="🔍 Filtrar por jogador..." oninput="filtrarAtaquesAoVivo()">
-          </div>
+          <div id="bodyLiveAttacks">
+            <div class="filters-bar">
+              <input type="text" id="searchAttackInput" class="filter-input" placeholder="🔍 Filtrar por jogador..." oninput="filtrarAtaquesAoVivo()">
+            </div>
 
-          <div class="table-container">
-            <div id="loadingAttacks" class="loading-state">Aguardando registros de ataques em tempo real...</div>
-            <table id="liveAttacksTable" style="display: none;">
-              <thead>
-                <tr>
-                  <th style="min-width: 60px;">Horário</th>
-                  <th style="min-width: 120px;">Jogador</th>
-                  <th style="text-align: right; min-width: 80px;">Dano</th>
-                  <th style="min-width: 95px;">Deck</th>
-                  <th style="min-width: 130px;">Partes</th>
-                  <th style="min-width: 55px;">Ciclo</th>
-                  <th style="min-width: 100px;">Titã</th>
-                </tr>
-              </thead>
-              <tbody id="liveAttacksBody"></tbody>
-            </table>
+            <div class="table-container">
+              <div id="loadingAttacks" class="loading-state">Aguardando registros de ataques em tempo real...</div>
+              <table id="liveAttacksTable" style="display: none;">
+                <thead>
+                  <tr>
+                    <th style="min-width: 60px;">Horário</th>
+                    <th style="min-width: 120px;">Jogador</th>
+                    <th style="text-align: right; min-width: 80px;">Dano</th>
+                    <th style="min-width: 95px;">Deck</th>
+                    <th style="min-width: 55px;">Ciclo</th>
+                    <th style="min-width: 100px;">Titã</th>
+                  </tr>
+                </thead>
+                <tbody id="liveAttacksBody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -1004,64 +1052,69 @@
           </div>
         </div>
 
-        <!-- RANKING DE JOGADORES -->
+        <!-- RANKING DE JOGADORES (COM ABA RETRÁTIL DE FECHAR/ABRIR) -->
         <div class="section-block">
-          <div class="section-header">
+          <div class="section-header section-header-clickable" onclick="toggleSecao('bodyPlayersRanking', 'btnTogglePlayers')">
             <span class="section-title">🏆 Ranking de Ataques</span>
-            <span style="font-size: 11px; color: #8fa0b5;" id="playersCount">50 jogadores</span>
+            <div style="display: flex; align-items: center; gap: 8px;">
+              <span style="font-size: 11px; color: #8fa0b5;" id="playersCount">50 jogadores</span>
+              <button class="section-collapse-toggle-btn" id="btnTogglePlayers">−</button>
+            </div>
           </div>
 
-          <div class="filters-bar">
-            <input type="text" id="searchInput" class="filter-input" placeholder="🔍 Buscar jogador..." oninput="filtrarTabela()">
-            
-            <select id="filterTTMF" class="filter-select" onchange="filtrarTabela()">
-              <option value="todos">Status: Todos</option>
-              <option value="atk_ok">✔️ Fez todos Ataques</option>
-              <option value="atk_fail">❌ Faltou Ataques</option>
-              <option value="tt_ok">✔️ Usou TT em todos</option>
-              <option value="tt_fail">❌ Faltou TT</option>
-              <option value="mf_ok">✔️ Usou MF em todos</option>
-              <option value="mf_fail">❌ Faltou MF</option>
-            </select>
+          <div id="bodyPlayersRanking">
+            <div class="filters-bar">
+              <input type="text" id="searchInput" class="filter-input" placeholder="🔍 Buscar jogador..." oninput="filtrarTabela()">
+              
+              <select id="filterTTMF" class="filter-select" onchange="filtrarTabela()">
+                <option value="todos">Status: Todos</option>
+                <option value="atk_ok">✔️ Fez todos Ataques</option>
+                <option value="atk_fail">❌ Faltou Ataques</option>
+                <option value="tt_ok">✔️ Usou TT em todos</option>
+                <option value="tt_fail">❌ Faltou TT</option>
+                <option value="mf_ok">✔️ Usou MF em todos</option>
+                <option value="mf_fail">❌ Faltou MF</option>
+              </select>
 
-            <select id="sortFieldSelect" class="filter-select" onchange="filtrarTabela()">
-              <option value="dano">Dano Total</option>
-              <option value="media">Média / Atk</option>
-              <option value="ataques">Qtd. Ataques</option>
-              <option value="tt">Contagem TT</option>
-              <option value="mf">Contagem MF</option>
-            </select>
+              <select id="sortFieldSelect" class="filter-select" onchange="filtrarTabela()">
+                <option value="dano">Dano Total</option>
+                <option value="media">Média / Atk</option>
+                <option value="ataques">Qtd. Ataques</option>
+                <option value="tt">Contagem TT</option>
+                <option value="mf">Contagem MF</option>
+              </select>
 
-            <button id="sortDirectionBtn" class="sort-direction-btn" onclick="alternarDirecaoOrdenacao()" title="Alternar direção">
-              <span id="sortDirectionIcon">↓</span> <span id="sortDirectionText">Maior &rarr; Menor</span>
-            </button>
+              <button id="sortDirectionBtn" class="sort-direction-btn" onclick="alternarDirecaoOrdenacao()" title="Alternar direção">
+                <span id="sortDirectionIcon">↓</span> <span id="sortDirectionText">Maior &rarr; Menor</span>
+              </button>
 
-            <button id="btnSomAlerta" class="sort-direction-btn" onclick="alternarSomAlertas()" style="color: #ffd166;" title="Sons de alerta">
-              🔔 <span id="txtSomAlerta">Som: Ligado</span>
-            </button>
-          </div>
+              <button id="btnSomAlerta" class="sort-direction-btn" onclick="alternarSomAlertas()" style="color: #ffd166;" title="Sons de alerta">
+                🔔 <span id="txtSomAlerta">Som: Ligado</span>
+              </button>
+            </div>
 
-          <div class="table-container">
-            <div id="loading" class="loading-state">Conectando e carregando dados das planilhas...</div>
-            <table id="playersTable" style="display: none;">
-              <thead>
-                <tr>
-                  <th class="td-rank">#</th>
-                  <th style="min-width: 120px;">Jogador</th>
-                  <th style="text-align: center; min-width: 70px;">Atks</th>
-                  <th class="th-card-only">
-                    <img src="cards/tt.png" alt="TT" title="Team Tactics" class="card-th-icon" loading="lazy" onerror="tratarErroImagemTT(this)">
-                  </th>
-                  <th class="th-card-only">
-                    <img src="cards/mf.png" alt="MF" title="Mirror Force" class="card-th-icon" loading="lazy" onerror="tratarErroImagemMF(this)">
-                  </th>
-                  <th style="min-width: 80px;">Dano Total</th>
-                  <th style="min-width: 80px;">Média / Atk</th>
-                  <th style="min-width: 65px;">% Raid</th>
-                </tr>
-              </thead>
-              <tbody id="playersBody"></tbody>
-            </table>
+            <div class="table-container">
+              <div id="loading" class="loading-state">Conectando e carregando dados das planilhas...</div>
+              <table id="playersTable" style="display: none;">
+                <thead>
+                  <tr>
+                    <th class="td-rank">#</th>
+                    <th style="min-width: 120px;">Jogador</th>
+                    <th style="text-align: center; min-width: 70px;">Atks</th>
+                    <th class="th-card-only">
+                      <img src="cards/tt.png" alt="TT" title="Team Tactics" class="card-th-icon" loading="lazy" onerror="tratarErroImagemTT(this)">
+                    </th>
+                    <th class="th-card-only">
+                      <img src="cards/mf.png" alt="MF" title="Mirror Force" class="card-th-icon" loading="lazy" onerror="tratarErroImagemMF(this)">
+                    </th>
+                    <th style="min-width: 80px;">Dano Total</th>
+                    <th style="min-width: 80px;">Média / Atk</th>
+                    <th style="min-width: 65px;">% Raid</th>
+                  </tr>
+                </thead>
+                <tbody id="playersBody"></tbody>
+              </table>
+            </div>
           </div>
         </div>
 
@@ -1105,6 +1158,21 @@
 
     let somAtivado = true;
     let suporteAnterior = { smash: false, void: false, vm: false };
+
+    function toggleSecao(bodyId, btnId) {
+      const body = document.getElementById(bodyId);
+      const btn = document.getElementById(btnId);
+      if (!body || !btn) return;
+
+      const estaOculto = body.style.display === 'none';
+      if (estaOculto) {
+        body.style.display = 'block';
+        btn.textContent = '−';
+      } else {
+        body.style.display = 'none';
+        btn.textContent = '+';
+      }
+    }
 
     function alternarSomAlertas() {
       somAtivado = !somAtivado;
@@ -1231,7 +1299,6 @@
           const ultimaRaid = linhasRaids[linhasRaids.length - 1].c;
           nomeRaidAtual = String(ultimaRaid[0]?.v || '').trim();
           raidStatus = ultimaRaid[6]?.v || 'Em andamento';
-          const buffRaid = String(ultimaRaid[7]?.v || '').trim();
           totalCiclosDaRaid = Number(ultimaRaid[9]?.v || 4);
           limiteAtaquesAtual = totalCiclosDaRaid * 6;
           totalTitansDaRaid = Number(ultimaRaid[14]?.v || 3);
@@ -1239,7 +1306,6 @@
           document.getElementById('mRaidName').textContent = nomeRaidAtual || 'MT1';
           document.getElementById('cRaidCycle').textContent = `Ciclo ${totalCiclosDaRaid}`;
 
-          // Configuração do Buff com cor azul e +30% DANO
           document.getElementById('mBuffRaid').textContent = '+30% DANO';
           document.getElementById('buffRaidImg').src = 'Cards/a.png';
 
@@ -1498,7 +1564,7 @@
 
         if (isPartDead) {
           statusTagHtml = '<span class="badge-destroyed">DESTRUÍDA</span>';
-          labelTipo = '🛡️ Destruída';
+          labelTipo = '🛡️ Armadura';
           classLabel = 'label-armor';
           hpAtual = 0;
           percAtual = 0;
@@ -1518,14 +1584,14 @@
           percAtual = data.armorCur > 0 ? percArmor : percBody;
           classBarra = data.armorCur > 0 ? 'bar-fill-armor decay-bar' : 'bar-fill-body decay-bar';
         } else if (data.armorCur > 0) {
-          statusTagHtml = '<span class="status-badge-part target-armor">ARMADURA</span>';
+          statusTagHtml = '';
           labelTipo = '🛡️ Armadura';
           classLabel = 'label-armor';
           hpAtual = data.armorCur;
           percAtual = percArmor;
           classBarra = 'bar-fill-armor';
         } else {
-          statusTagHtml = '<span class="status-badge-part target-normal">CORPO</span>';
+          statusTagHtml = '';
           labelTipo = '❤️ Corpo';
           classLabel = 'label-body';
           hpAtual = data.bodyCur;
@@ -1533,15 +1599,18 @@
           classBarra = 'bar-fill-body target-ok';
         }
 
+        const badgePercText = (isPartDead || percAtual <= 0) ? '-' : `${percAtual.toFixed(0)}%`;
+
         el.innerHTML = `
           <div class="card-head-row">
-            ${statusTagHtml}
+            <div class="card-head-left">${statusTagHtml}</div>
+            <span class="badge-hp-perc">${badgePercText}</span>
           </div>
 
           <div class="bar-group">
             <div class="bar-meta">
               <span class="${classLabel}">${labelTipo}</span>
-              <span class="bar-val">${isPartDead ? '0' : formatarHp(hpAtual) + ' (' + percAtual.toFixed(0) + '%)'}</span>
+              <span class="bar-val">${isPartDead ? '0' : formatarHp(hpAtual)}</span>
             </div>
             <div class="bar-track">
               <div class="${classBarra}" style="width: ${percAtual}%;"></div>
@@ -1580,19 +1649,20 @@
           statusTagHtml = '<span class="badge-destroyed">DESTRUÍDA</span>';
         } else if (isSkip) {
           statusTagHtml = '<span class="badge-skip">NÃO ATACAR</span>';
-        } else {
-          statusTagHtml = '<span class="status-badge-part target-normal">ALVO</span>';
         }
+
+        const badgePercText = isDead ? '-' : (isSkip ? '-' : '100%');
 
         el.innerHTML = `
           <div class="card-head-row">
-            ${statusTagHtml}
+            <div class="card-head-left">${statusTagHtml}</div>
+            <span class="badge-hp-perc">${badgePercText}</span>
           </div>
 
           <div class="bar-group">
             <div class="bar-meta">
               <span class="label-body">❤️ Corpo</span>
-              <span class="bar-val">${isDead ? '0' : (isSkip ? 'Ignorar' : '100%')}</span>
+              <span class="bar-val">${isDead ? '0' : 'Alvo'}</span>
             </div>
             <div class="bar-track">
               <div class="bar-fill-body ${!isSkip && !isDead ? 'target-ok' : ''}" style="width: ${isDead || isSkip ? 0 : 100}%;"></div>
@@ -1623,7 +1693,6 @@
               jogador: r[2]?.v || 'Desconhecido',
               ciclo: r[3]?.v || 1,
               titan: r[5]?.v ? `#${r[4]?.v || ''} ${r[5].v}` : (r[4]?.v ? `#${r[4].v}` : '-'),
-              partes: r[6]?.v || '-',
               dano: Number(r[7]?.v || 0),
               danoFormatado: r[7]?.f || (r[7]?.v ? Math.round(r[7].v) + 'M' : '-'),
               c1: r[8]?.v || '',
@@ -1653,7 +1722,7 @@
 
       const filtrados = todosAtaquesAoVivo.filter(a => {
         if (!busca) return true;
-        const texto = `${a.jogador} ${a.c1} ${a.c2} ${a.c3} ${a.partes}`.toLowerCase();
+        const texto = `${a.jogador} ${a.c1} ${a.c2} ${a.c3}`.toLowerCase();
         return texto.includes(busca);
       });
 
@@ -1663,7 +1732,7 @@
       tbody.innerHTML = '';
 
       if (filtrados.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: #8fa0b5; padding: 20px;">Nenhum ataque correspondente.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #8fa0b5; padding: 20px;">Nenhum ataque correspondente.</td></tr>`;
         return;
       }
 
@@ -1685,7 +1754,6 @@
           </td>
           <td style="text-align: right;" class="td-dmg">${a.danoFormatado}</td>
           <td style="text-align: center;">${deckHtml}</td>
-          <td>${a.partes}</td>
           <td><span class="tag-status" style="background:#1b2838; color:#ffd166;">C${a.ciclo}</span></td>
           <td style="color: #f5a623; font-weight:700;">${a.titan}</td>
         `;
