@@ -61,7 +61,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 4px;
+      margin-bottom: 12px;
       gap: 10px;
     }
     .title {
@@ -112,48 +112,67 @@
       color: #50e3c2;
     }
 
-    /* SEÇÃO */
     .section-block { margin-bottom: 0; }
-    .section-header {
+
+    /* DETALHES NA ESQUERDA (280px) E CORPO NA DIREITA */
+    .titan-dashboard-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .titan-info-box {
+      background: #121922;
+      border: 1.5px solid #3a4b60;
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+      align-self: start;
+    }
+
+    /* TOPO: MT1 + BUFF À ESQUERDA | VOID, SMASH, VM À DIREITA */
+    .titan-zone-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 8px;
+      gap: 6px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       padding-bottom: 6px;
-      border-bottom: 1px solid #283545;
     }
-    .section-title {
-      font-size: 12.5px;
-      font-weight: 800;
-      color: #f5a623;
-      text-transform: uppercase;
-      letter-spacing: 0.4px;
+    .titan-zone-left-tags {
       display: flex;
       align-items: center;
       gap: 6px;
+      flex-wrap: wrap;
+    }
+    .badge-zone {
+      background: rgba(179, 136, 255, 0.16);
+      border: 1.5px solid #b388ff;
+      color: #b388ff;
+      font-weight: 900;
+      font-size: 11px;
+      padding: 2.5px 8px;
+      border-radius: 6px;
+      letter-spacing: 0.4px;
     }
 
-    /* BARRA SUPERIOR: VOID, SMASH, VM */
-    .titan-status-top-bar {
-      display: flex;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
+    /* BADGES DE SUPORTE */
     .titan-support-badges {
       display: flex;
       align-items: center;
-      gap: 5px;
+      gap: 4px;
     }
     .badge-sup {
-      font-size: 9.5px;
+      font-size: 9px;
       font-weight: 900;
-      padding: 3px 7px;
+      padding: 2.5px 6px;
       border-radius: 4px;
       text-transform: uppercase;
-      letter-spacing: 0.4px;
+      letter-spacing: 0.3px;
       transition: all 0.25s ease;
     }
     .badge-sup.active {
@@ -193,51 +212,6 @@
       white-space: nowrap;
     }
 
-    /* DETALHES NA ESQUERDA (280px) E CORPO NA DIREITA */
-    .titan-dashboard-layout {
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 12px;
-      align-items: start;
-    }
-
-    .titan-info-box {
-      background: #121922;
-      border: 1.5px solid #3a4b60;
-      border-radius: 12px;
-      padding: 10px 12px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.4);
-      align-self: start;
-    }
-
-    /* TOPO: MT1 + BUFF */
-    .titan-zone-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 6px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-      padding-bottom: 6px;
-    }
-    .titan-zone-left-tags {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-    .badge-zone {
-      background: rgba(179, 136, 255, 0.16);
-      border: 1.5px solid #b388ff;
-      color: #b388ff;
-      font-weight: 900;
-      font-size: 11px;
-      padding: 2.5px 8px;
-      border-radius: 6px;
-      letter-spacing: 0.4px;
-    }
     .badge-tita-count {
       background: rgba(80, 227, 194, 0.16);
       border: 1.5px solid #50e3c2;
@@ -554,27 +528,17 @@
         border-radius: 12px;
       }
 
-      /* TÍTULO PRINCIPAL GRANDE NO ESPAÇO DO TITÃ */
+      /* TÍTULO PRINCIPAL GRANDE */
       .top-header-bar {
-        margin-bottom: 6px;
+        margin-bottom: 8px;
       }
       .title {
-        font-size: 23px;
+        font-size: 24px;
         font-weight: 900;
         letter-spacing: 0.5px;
       }
       .subtitle {
         display: none !important;
-      }
-
-      /* OCULTA O TEXTO "🎯 TITÃ ATUAL NO CAMPO" PARA LIBERAR ESPAÇO AO TÍTULO */
-      .section-title {
-        display: none !important;
-      }
-      .section-header {
-        justify-content: flex-end;
-        margin-bottom: 6px;
-        padding-bottom: 4px;
       }
 
       .countdown-banner {
@@ -640,35 +604,31 @@
 
     <div class="subtitle" id="lastUpdateText">Sincronizando com as suas planilhas...</div>
 
-    <!-- TITÃ ATUAL NO CAMPO -->
+    <!-- PAINEL DO TITÃ -->
     <div class="section-block" id="secCurrentTitan" style="display: none;">
-      <div class="section-header">
-        <span class="section-title">🎯 Titã Atual no Campo</span>
-        
-        <!-- CARDS DE VOID, SMASH E VM NO TOPO -->
-        <div class="titan-status-top-bar">
-          <div class="titan-support-badges">
-            <span class="badge-sup off" id="bVoid" title="Void Ativo">Void</span>
-            <span class="badge-sup off" id="bSmash" title="Smash Ativo">Smash</span>
-            <span class="badge-sup off" id="bVM" title="VM Ativo">VM</span>
-          </div>
-        </div>
-      </div>
 
       <div class="titan-dashboard-layout">
         
         <!-- DETALHES DA RAID NA ESQUERDA (EXATOS 280px) -->
         <div class="titan-info-box">
-          <!-- LINHA 1: MT1 (ROXO) + BUFF DA RAID (+30% DANO) AO LADO -->
+          
+          <!-- LINHA 1: MT1 + BUFF DA RAID À ESQUERDA | BADGES VOID/SMASH/VM À DIREITA -->
           <div class="titan-zone-row">
             <div class="titan-zone-left-tags">
               <span class="badge-zone" id="mRaidName">MT1</span>
               
-              <!-- BUFF DA RAID EM AZUL COM ÍCONE DE AFLIÇÃO -->
+              <!-- BUFF DA RAID (+30% DANO) AO LADO DE MT1 -->
               <div class="buff-badge-display" id="buffRaidContainer">
                 <img src="Cards/a.png" alt="Aflição" class="buff-badge-icon" id="buffRaidImg" onerror="this.src='Cards/b.png'">
                 <span class="buff-badge-text" id="mBuffRaid">+30% DANO</span>
               </div>
+            </div>
+
+            <!-- BADGES DE SUPORTE NO CANTO SUPERIOR DIREITO -->
+            <div class="titan-support-badges">
+              <span class="badge-sup off" id="bVoid" title="Void Ativo">Void</span>
+              <span class="badge-sup off" id="bSmash" title="Smash Ativo">Smash</span>
+              <span class="badge-sup off" id="bVM" title="VM Ativo">VM</span>
             </div>
           </div>
 
@@ -685,6 +645,7 @@
             </div>
           </div>
 
+          <!-- VIDA DO TITÃ -->
           <div class="hp-overall-box">
             <div class="hp-overall-labels">
               <span>Vida do Titã</span>
